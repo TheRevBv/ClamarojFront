@@ -1,1 +1,16 @@
-<p>admin-panel works!</p>
+<div class="flex">
+
+  <div class="flex flex-column w-full">
+    <!-- Menu -->
+    <app-menu></app-menu>
+    <!-- Fin Menu -->
+    <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+  <!-- Fin Sidebar -->
+    <!-- Contenido -->
+    <div class="flex w-full">
+      <router-outlet></router-outlet>
+    </div>
+    <!-- Fin Contenido -->
+  </div>
+</div>

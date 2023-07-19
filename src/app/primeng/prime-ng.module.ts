@@ -7,6 +7,7 @@ import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { SidebarModule } from 'primeng/sidebar';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 // import { MenuItem } from 'primeng/api';
 
 @NgModule({
@@ -16,7 +17,8 @@ import { SidebarModule } from 'primeng/sidebar';
     MenuModule,
     MenubarModule,
     PanelMenuModule,
-    SidebarModule ,
+    SidebarModule,
+    ScrollPanelModule,
   ],
 })
 export class PrimeNgModule {}

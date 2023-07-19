@@ -6,12 +6,12 @@ const routes: Routes = [
   {
     path: '',
     component : AdminPanelComponent,
-    children: [
-      {
-        path: 'inicio',
-        // loadChildren: () => import('@modules/inicio-clientes/inicio-clientes.module').then(m => m.InicioClientesModule)
-    },
-    ]
+    // children: [
+    //   {
+    //     path: 'inicio',
+    //     // loadChildren: () => import('@modules/inicio-clientes/inicio-clientes.module').then(m => m.InicioClientesModule)
+    // },
+    // ]
   }
 ];
 
