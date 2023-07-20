@@ -4,12 +4,16 @@
     <!-- Menu -->
     <app-menu></app-menu>
     <!-- Fin Menu -->
-    <!-- Sidebar -->
-  <app-sidebar></app-sidebar>
-  <!-- Fin Sidebar -->
-    <!-- Contenido -->
-    <div class="flex w-full">
-      <router-outlet></router-outlet>
+    <div class="flex">
+      <!-- Sidebar -->
+      <div class="flex flex-column h-full mr-5">
+        <app-sidebar></app-sidebar>
+      </div>
+      <!-- Fin Sidebar -->
+      <!-- Contenido -->
+      <div class="flex flex-column w-full my-5">
+        <router-outlet></router-outlet>
+      </div>
     </div>
     <!-- Fin Contenido -->
   </div>

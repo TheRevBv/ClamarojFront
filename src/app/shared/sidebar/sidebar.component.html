@@ -1,25 +1,16 @@
 <!-- Sidebar -->
-<div class="flex flex-column h-full">
-  <!-- [@sidebarAnimation]="sidebarVisible ? 'visible' : 'hidden'"  -->
-  <div *ngIf="sidebarVisible; else sidebar"
-  [@sidebarAnimation]="sidebarVisible ? 'visible' : 'hidden'"
-  >
-    <p-menu
-      [model]="items"
-      class="overflow-y-auto m-5"
-      [style]="{ height: 'calc(100vh - 60px)' }"
-    >
-      <!-- [popup]="sidebarVisible" -->
-    </p-menu>
-  </div>
-  <ng-template #sidebar>
-    <p-menu
-      [model]="itemsIcons"
-      class="overflow-y-auto my-5 mr-5"
-      [style]="{ height: 'calc(100vh - 60px)' , width: '64px' }"
-    >
-    </p-menu>
-  </ng-template>
+<!-- <div class="flex flex-row h-full"> -->
+<!-- [@sidebarAnimation]="sidebarVisible ? 'visible' : 'hidden'"  -->
+<div *ngIf="sidebarVisible; else sidebar" [@sidebarAnimation]="sidebarVisible ? 'visible' : 'hidden'">
+  <p-menu [model]="items" class="overflow-y-auto m-5" [style]="{ height: 'calc(100vh - 60px)' }">
+    <!-- [popup]="sidebarVisible" -->
+  </p-menu>
 </div>
+<ng-template #sidebar>
+  <p-menu [model]="itemsIcons" class="overflow-y-auto my-5 mr-5"
+    [style]="{ height: 'calc(100vh - 60px)' , width: '64px' }">
+  </p-menu>
+</ng-template>
+<!-- </div> -->
 <!-- #menu [popup]="true"  -->
 <!-- Fin Sidebar -->

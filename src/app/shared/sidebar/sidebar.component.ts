@@ -1,7 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { LayoutService } from '@shared/services/layout.service';
-import { trigger, state, style, animate, transition } from '@angular/animations';
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+} from '@angular/animations';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -13,19 +20,17 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
       state('hidden', style({ opacity: 0 })),
       transition('visible => hidden', animate('300ms ease-out')),
       transition('hidden => visible', animate('300ms ease-in')),
-    ])
-  ]
+    ]),
+  ],
 })
 export class SidebarComponent implements OnInit {
   items: MenuItem[] = [];
   itemsIcons: MenuItem[] = [];
   sidebarVisible = true;
+  ruta: string = '';
 
-  constructor(private layoutSvc: LayoutService) {
-
-  }
-
-  ngOnInit(): void {
+  constructor(private layoutSvc: LayoutService, private router: Router) {
+    // this.ruta = this.router.url;
     this.items = [
       {
         label: 'Dashboard',
@@ -35,7 +40,7 @@ export class SidebarComponent implements OnInit {
       {
         label: 'Usuarios',
         icon: 'pi pi-fw pi-user',
-        routerLink: '/admin',
+        routerLink: '/usuarios',
       },
       {
         label: 'Clientes',
@@ -116,5 +121,25 @@ export class SidebarComponent implements OnInit {
     this.layoutSvc.sidebarVisible$.subscribe((value) => {
       this.sidebarVisible = value;
     });
+    // Obtener la ruta padre dinámica
+    this.router.events.subscribe((event) => {
+      // if (event instanceof Scroll) {
+      if (event instanceof NavigationEnd) {
+        // const urlSegments = event.routerEvent.url.split('/'); // Obtener los segmentos de la ruta
+        const urlSegments = event.url.split('/'); // Obtener los segmentos de la ruta
+        const parentRoute = urlSegments[1] || ''; // Obtener el primer segmento después del primer slash
+
+        // Agregar la ruta padre a las rutas secundarias
+        this.items.forEach((item) => {
+          item.routerLink = `/${parentRoute}${item.routerLink}`;
+        });
+
+        this.itemsIcons.forEach((item) => {
+          item.routerLink = `/${parentRoute}${item.routerLink}`;
+        });
+      }
+    });
   }
+
+  ngOnInit(): void {}
 }
