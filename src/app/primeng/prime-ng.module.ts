@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 //PrimeNg
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { CheckboxModule } from 'primeng/checkbox';
+import { InputTextModule } from 'primeng/inputtext';
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { PanelMenuModule } from 'primeng/panelmenu';
@@ -16,6 +18,8 @@ import { TableModule } from 'primeng/table';
   exports: [
     ButtonModule,
     CardModule,
+    CheckboxModule,
+    InputTextModule,
     MenuModule,
     MenubarModule,
     PanelMenuModule,

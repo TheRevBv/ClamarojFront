@@ -1,19 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ClientesListComponent } from './clientes-list/clientes-list.component';
+import { ClientesAddComponent } from './clientes-add/clientes-add.component';
 
 const routes: Routes = [
   {
     path: '',
     component: ClientesListComponent,
     // canActivate: [],
-    /* children: [
+    children: [
       {
         path: 'agregar',
-        // component: ClientesFormComponent,
+        component: ClientesAddComponent,
         // canActivate: [],
       },
-      {
+    /*
+    {
         path: 'editar/:id',
         // component: ClientesFormComponent,
         // canActivate: [],
@@ -23,7 +25,8 @@ const routes: Routes = [
         // component: ClientesFormComponent,
         // canActivate: [],
       },
-    ], */
+      */
+    ],
   },
   {
     path: '**',
