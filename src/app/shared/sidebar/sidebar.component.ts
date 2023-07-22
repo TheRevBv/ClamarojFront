@@ -128,13 +128,20 @@ export class SidebarComponent implements OnInit {
         // const urlSegments = event.routerEvent.url.split('/'); // Obtener los segmentos de la ruta
         const urlSegments = event.url.split('/'); // Obtener los segmentos de la ruta
         const parentRoute = urlSegments[1] || ''; // Obtener el primer segmento después del primer slash
-
         // Agregar la ruta padre a las rutas secundarias
         this.items.forEach((item) => {
+          //valida si ya tiene una ruta padre igual a la añadida
+          if (item.routerLink.includes(parentRoute)) {
+            return;
+          }
           item.routerLink = `/${parentRoute}${item.routerLink}`;
         });
 
         this.itemsIcons.forEach((item) => {
+          //valida si ya tiene una ruta padre igual a la añadida
+          if (item.routerLink.includes(parentRoute)) {
+            return;
+          }
           item.routerLink = `/${parentRoute}${item.routerLink}`;
         });
       }
