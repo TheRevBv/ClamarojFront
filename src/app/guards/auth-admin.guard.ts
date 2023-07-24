@@ -9,7 +9,8 @@ export const adminGuard: CanActivateFn = (route, state) => {
 
 export const adminChildGuard: CanActivateChildFn = (route, state) => {
   return adminGuard(route, state);
-}; */
+};
+ */
 
 import { Injectable } from '@angular/core';
 import {

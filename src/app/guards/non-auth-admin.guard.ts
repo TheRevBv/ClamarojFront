@@ -1,4 +1,21 @@
-import { Injectable } from '@angular/core';
+import { CanActivateFn, CanActivateChildFn } from '@angular/router';
+
+export const nonAdminGuard: CanActivateFn = (route, state) => {
+  if (
+    !localStorage.getItem('access_token') &&
+    !localStorage.getItem('access_token_cliente') &&
+    !localStorage.getItem('access_token_proveedor')
+  ) {
+    return true;
+  }
+  return false;
+};
+
+export const nonAdminChildGuard: CanActivateChildFn = (route, state) => {
+  return nonAdminGuard(route, state);
+};
+
+/* import { Injectable } from '@angular/core';
 import {
   CanActivate,
   CanActivateChild,
@@ -34,7 +51,7 @@ export class NonAuthGuard implements CanActivate, CanActivateChild {
     ) {
       return true;
     }
-    // this.router.navigate(['/admin/login']);
+    this.router.navigate(['/admin/login']);
     return false;
   }
 
@@ -49,3 +66,4 @@ export class NonAuthGuard implements CanActivate, CanActivateChild {
     return this.canActivate(next, state);
   }
 }
+ */
