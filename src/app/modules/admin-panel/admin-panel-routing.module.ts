@@ -1,12 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminPanelComponent } from './admin-panel.component';
+// import { adminChildGuard, adminGuard } from '@guards/auth-admin.guard';
+import {
+  nonAdminGuard,
+  nonAdminChildGuard,
+} from '@guards/non-auth-admin.guard';
+import { LoginComponent } from './login/login.component';
+import { AuthAdminGuard } from '@app/guards/auth-admin.guard';
+// import { NonAuthGuard } from '@app/guards/non-auth-admin.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: AdminPanelComponent,
-    canActivate: [],
+    // // canActivate: [adminGuard],
+    // // canActivateChild: [adminChildGuard],
+    // canActivate: [AuthAdminGuard],
+    // canActivateChild: [AuthAdminGuard],
     children: [
       {
         path: 'dashboard',
@@ -70,12 +81,17 @@ const routes: Routes = [
             (m) => m.ConfiguracionModule
           ),
       },
-      {
-        path: '**',
-        redirectTo: 'dashboard',
-        pathMatch: 'full',
-      },
     ],
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    canActivate: [nonAdminGuard],
+  },
+  {
+    path: '**',
+    redirectTo: 'dashboard',
+    pathMatch: 'full',
   },
 ];
 
