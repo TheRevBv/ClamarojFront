@@ -1,11 +1,14 @@
+import { Rol } from '@models/rol';
+
 export interface Usuario {
   id: number;
   nombre: string;
   email: string;
   password: string;
   password_confirmation?: string;
-  foto: string;
-  fechaNacimiento: string;
+  foto: any; // Blob | File;
+  fechaNacimiento: Date;
+  fechaRegistro: Date;
   idStatus: number;
-  idRoles?: number[];
+  idRoles?: Rol[];
 }

@@ -1,0 +1,89 @@
+<p-card>
+  <ng-template pTemplate="header">
+    <div class="flex flex-row justify-content-between mx-5">
+      <div class="flex flex-row">
+        <div class="flex flex-column justify-content-center align-items-center">
+          <i class="pi pi-users text-2xl"></i>
+        </div>
+        <div class="flex flex-column justify-content-center">
+          <h1 class="text-xl font-bold">Usuarios</h1>
+        </div>
+      </div>
+      <div class="flex flex-row">
+        <div class="flex flex-column justify-content-center align-items-center">
+          <button
+            pButton
+            type="button"
+            icon="pi pi-plus"
+            class="p-button-rounded p-button-success p-mr-2"
+          ></button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <p-table
+    [value]="usuarios"
+    [lazy]="true"
+    (onLazyLoad)="loadUsuarios($event)"
+    dataKey="id"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [selection]="selectedUsuarios"
+    (selectionChange)="onSelectionChange($event)"
+    [paginator]="true"
+    [rows]="10"
+    [totalRecords]="totalRecords"
+    [loading]="loading"
+    [globalFilterFields]="['nombre', 'apellido', 'correo', 'fechaNacimiento']"
+  >
+    <!-- [selectAll]="selectAll" -->
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 2rem"></th>
+        <th pSortableColumn="id">Code <p-sortIcon field="id"></p-sortIcon></th>
+        <th pSortableColumn="nombre">
+          Nombre <p-sortIcon field="nombre"></p-sortIcon>
+        </th>
+        <th pSortableColumn="apellido">
+          Apellido <p-sortIcon field="apellido"></p-sortIcon>
+        </th>
+        <th pSortableColumn="correo">
+          Correo <p-sortIcon field="correo"></p-sortIcon>
+        </th>
+        <th pSortableColumn="fechaNacimiento">
+          Fecha de Nacimiento <p-sortIcon field="fechaNacimiento"></p-sortIcon>
+        </th>
+      </tr>
+      <tr>
+        <th style="width: 2rem"></th>
+        <th>
+          <p-columnFilter type="text" field="id"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="nombre"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="apellido"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="correo"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="fechaNacimiento"></p-columnFilter>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-usuario>
+      <tr>
+        <td>
+          <p-tableRadioButton [value]="usuario"></p-tableRadioButton>
+        </td>
+        <td>{{ usuario.id }}</td>
+        <td>{{ usuario.nombre }}</td>
+        <td>{{ usuario.apellido }}</td>
+        <td>{{ usuario.correo }}</td>
+        <td>{{ usuario.fechaNacimiento | date : "dd/MM/yyyy" }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

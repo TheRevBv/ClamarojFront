@@ -8,10 +8,18 @@ import { AdminPanelComponent } from './admin-panel.component';
 import { SharedModule } from '@shared/shared.module';
 import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './registro/registro.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AdminPanelComponent, LoginComponent, RegistroComponent],
-  imports: [CommonModule, SharedModule, PrimeNgModule, AdminPanelRoutingModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SharedModule,
+    PrimeNgModule,
+    AdminPanelRoutingModule,
+  ],
   exports: [AdminPanelComponent, LoginComponent],
 })
 export class AdminPanelModule {}

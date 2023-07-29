@@ -11,6 +11,8 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { SidebarModule } from 'primeng/sidebar';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { TableModule } from 'primeng/table';
+import { PaginatorModule } from 'primeng/paginator';
+import { ToastModule } from 'primeng/toast';
 // import { ScrollPanelModule } from 'primeng/scrollpanel';
 // import { MenuItem } from 'primeng/api';
 
@@ -26,6 +28,8 @@ import { TableModule } from 'primeng/table';
     SidebarModule,
     ScrollTopModule,
     TableModule,
+    PaginatorModule,
+    ToastModule,
     // ScrollPanelModule,
   ],
 })

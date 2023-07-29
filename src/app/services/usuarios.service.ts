@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -22,7 +22,7 @@ export class UsuariosService {
   ) {}
 
   login(data: Login): Observable<any> {
-    return this.http.post<Login>(`/api/auth/login`, data, {
+    return this.http.post<Login>(`/api/Auth/login`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'X-CSRFToken': this.getCookie('csrftoken') || '',
@@ -30,23 +30,8 @@ export class UsuariosService {
     });
   }
 
-  onLogin(data: Login) {
-    this.login(data).subscribe(
-      (res) => {
-        localStorage.setItem('access_token', res.access_token);
-        localStorage.setItem('usuario', JSON.stringify(res.usuario));
-        this.usuario = res.usuario;
-        this.router.navigate(['/dashboard']).then((r) => r);
-      },
-      (err) => {
-        console.log(err);
-        this.toastr.error('Usuario o contraseña incorrectos', 'Error');
-      }
-    );
-  }
-
   registrar(data: Usuario): Observable<any> {
-    return this.http.post<Usuario>(`/api/auth/registrar`, data, {
+    return this.http.post<Usuario>(`/api/Auth/registrar`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'X-CSRFToken': this.getCookie('csrftoken') || '',
@@ -55,7 +40,7 @@ export class UsuariosService {
   }
 
   getUsuarioByEmail(email: string): Observable<Usuario> {
-    return this.http.get<Usuario>(`/api/auth/usuario/${email}`, {
+    return this.http.get<Usuario>(`/api/Auth/usuario/${email}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'X-CSRFToken': this.getCookie('csrftoken') || '',
@@ -63,18 +48,21 @@ export class UsuariosService {
     });
   }
 
-  getUsuarios(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(`/api/auth/usuarios`, {
+  getUsuarios(params?: any): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(`/api/Usuarios`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'X-CSRFToken': this.getCookie('csrftoken') || '',
         Authorization: 'Bearer ' + localStorage.getItem('access_token') || '',
       }),
+      params: new HttpParams({
+        fromObject: params,
+      }),
     });
   }
 
   getUsuario(id: number): Observable<Usuario> {
-    return this.http.get<Usuario>(`/api/auth/usuario/${id}`, {
+    return this.http.get<Usuario>(`/api/Usuario/${id}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'X-CSRFToken': this.getCookie('csrftoken') || '',
@@ -84,7 +72,7 @@ export class UsuariosService {
   }
 
   updateUsuario(data: Usuario): Observable<Usuario> {
-    return this.http.put<Usuario>(`/api/auth/usuario`, data, {
+    return this.http.put<Usuario>(`/api/Usuario`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'X-CSRFToken': this.getCookie('csrftoken') || '',
@@ -104,7 +92,7 @@ export class UsuariosService {
   }
 
   deleteUsuario(id: number): Observable<Usuario> {
-    return this.http.delete<Usuario>(`/api/auth/usuario/${id}`, {
+    return this.http.delete<Usuario>(`/api/Usuario/${id}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'X-CSRFToken': this.getCookie('csrftoken') || '',
@@ -118,7 +106,7 @@ export class UsuariosService {
     localStorage.removeItem('usuario');
     localStorage.clear();
     this.usuario = null;
-    this.router.navigate(['/login']).then((r) => r);
+    this.router.navigate(['/admin/login']).then((r) => r);
   }
 
   getCookie(key: string): string | undefined {

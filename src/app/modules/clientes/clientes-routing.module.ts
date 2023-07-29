@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ClientesListComponent } from './clientes-list/clientes-list.component';
-import { ClientesAddComponent } from './clientes-add/clientes-add.component';
+import { ClientesFormComponent } from './clientes-form/clientes-form.component';
 
 const routes: Routes = [
   {
@@ -11,10 +11,10 @@ const routes: Routes = [
     children: [
       {
         path: 'agregar',
-        component: ClientesAddComponent,
+        component: ClientesFormComponent,
         // canActivate: [],
       },
-    /*
+      /*
     {
         path: 'editar/:id',
         // component: ClientesFormComponent,
