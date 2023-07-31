@@ -1,1 +1,115 @@
-<p>clientes-form works!</p>
+<p-card>
+  <ng-template pTemplate="header">
+    <div class="flex flex-row justify-content-between mx-5">
+      <div class="flex flex-row">
+        <div class="flex flex-column justify-content-center align-items-center">
+          <i class="pi pi-users text-2xl"></i>
+        </div>
+        <div class="flex flex-column justify-content-center">
+          <h1 class="text-xl font-bold"> {{ title }} </h1>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="body">
+    <form [formGroup]="clienteForm" (ngSubmit)="onSubmit()">
+      <div class="formgrid grid">
+        <!-- <div class="field grid"> -->
+        <div class="field col-12 md:col-4 mb-5">
+          <!-- <span class="p-float-label"> -->
+          <!-- <input pInputText id="id" formControlName="idCliente" [disabled]="true" class="w-full" /> -->
+          <!-- <label htmlFor="id">Id</label> -->
+          <!-- </span> -->
+
+          <input id="disabled-input" type="text" pInputText [disabled]="true" class="w-full"
+            [value]="cliente.idCliente" />
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <input pInputText id="nombre" formControlName="nombre" class="w-full" [required]="true" [minlength]="3"
+              [maxlength]="45" />
+            <label htmlFor="nombre">Nombre</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <input pInputText id="apellido" formControlName="apellido" class="w-full" [required]="true" [minlength]="3"
+              [maxlength]="45" />
+            <label htmlFor="apellido">Apellido</label>
+          </span>
+        </div>
+        <!-- <div class="field grid"> -->
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <input pInputText id="direccion" formControlName="direccion" class="w-full" [required]="true"
+              [minlength]="3" [maxlength]="45" />
+            <label htmlFor="direccion">Direccion</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <p-inputMask mask="(999) 999-9999" formControlName="telefono" styleClass="w-full" [minlength]="14"
+              [required]="true" [maxlength]="14"></p-inputMask>
+            <label htmlFor="telefono">Telefono</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <input pInputText id="rfc" formControlName="rfc" class="w-full" [required]="true" [minlength]="12"
+              [maxlength]="13" [pattern]="patternRFC" />
+            <label htmlFor="rfc">RFC</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <p-calendar formControlName="fechaNacimiento" dateFormat="dd/mm/yy" styleClass="w-full" [minDate]="minDate"
+              [showIcon]="true" [maxDate]="maxDate" [readonlyInput]="true" [touchUI]="true"></p-calendar>
+            <label htmlFor="fechaNacimiento">Fecha Nacimiento</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <input pInputText id="correo" formControlName="correo" class="w-full" [email]="true" [required]="true"
+              [minlength]="10" [maxlength]="255" />
+            <label htmlFor="correo">Correo</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <p-password formControlName="password" [toggleMask]="true"></p-password>
+            <label htmlFor="password">Password</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <p-dropdown [options]="estatus" formControlName="idStatus" [style]="{width: '100%'}" [showClear]="true"
+              placeholder="Seleccione un estatus">
+            </p-dropdown>
+            <label for="float-label">Estatus</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <!-- <span class="p-float-label"> -->
+          <p-toast></p-toast>
+          <!-- <p-fileUpload mode="basic" chooseLabel="Elige una imagen" name="image"
+            (onUpload)="onUpload($event)"></p-fileUpload> -->
+          <p-fileUpload name="image" chooseLabel="Seleccionar imagen" (onSelect)="onSelectFile($event)"
+            [maxFileSize]="1000000" accept="image/*"></p-fileUpload>
+          <!-- </span> -->
+        </div>
+      </div>
+      <div class="flex flex-row justify-content-end">
+        <div class="p-col-12 p-md-3 p-lg-3 mr-3">
+          <button pButton pRipple type="submit" label="Guardar"
+            class="p-button-success p-button-rounded p-button-outlined">
+          </button>
+        </div>
+        <div class="p-col-12 p-md-3 p-lg-3">
+          <button pButton pRipple type="button" label="Cancelar" (click)="cancelar()"
+            class="p-button-danger p-button-rounded p-button-outlined">
+          </button>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+</p-card>

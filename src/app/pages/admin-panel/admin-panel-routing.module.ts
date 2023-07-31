@@ -7,8 +7,9 @@ import {
   nonAdminChildGuard,
 } from '@guards/non-auth-admin.guard';
 import { LoginComponent } from './login/login.component';
-import { AuthAdminGuard } from '@app/guards/auth-admin.guard';
-// import { NonAuthGuard } from '@app/guards/non-auth-admin.guard';
+import { AuthAdminGuard } from '@guards/auth-admin.guard';
+import { RegistroComponent } from './registro/registro.component';
+// import { NonAuthGuard } from '@guards/non-auth-admin.guard';
 
 const routes: Routes = [
   {
@@ -86,6 +87,11 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+    canActivate: [nonAdminGuard],
+  },
+  {
+    path: 'registro',
+    component: RegistroComponent,
     canActivate: [nonAdminGuard],
   },
   {

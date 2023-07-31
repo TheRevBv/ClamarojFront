@@ -10,6 +10,9 @@ import { TableLazyLoadEvent } from 'primeng/table';
   styleUrls: ['./clientes-list.component.css'],
 })
 export class ClientesListComponent implements OnInit {
+  showDialog() {
+    throw new Error('Method not implemented.');
+  }
   clientes!: Cliente[];
   totalRecords!: number;
   loading = true;

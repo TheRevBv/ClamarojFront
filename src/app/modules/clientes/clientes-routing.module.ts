@@ -8,25 +8,16 @@ const routes: Routes = [
     path: '',
     component: ClientesListComponent,
     // canActivate: [],
-    children: [
-      {
-        path: 'agregar',
-        component: ClientesFormComponent,
-        // canActivate: [],
-      },
-      /*
-    {
-        path: 'editar/:id',
-        // component: ClientesFormComponent,
-        // canActivate: [],
-      },
-      {
-        path: 'eliminar/:id',
-        // component: ClientesFormComponent,
-        // canActivate: [],
-      },
-      */
-    ],
+  },
+  {
+    path: 'agregar',
+    component: ClientesFormComponent,
+    // canActivate: [],
+  },
+  {
+    path: 'editar/:id',
+    component: ClientesFormComponent,
+    // canActivate: [],
   },
   {
     path: '**',

@@ -1,9 +1,10 @@
 import { Rol } from '@models/rol';
 
 export interface Usuario {
-  id: number;
+  id?: number;
   nombre: string;
-  email: string;
+  apellido: string;
+  correo: string;
   password: string;
   password_confirmation?: string;
   foto: any; // Blob | File;

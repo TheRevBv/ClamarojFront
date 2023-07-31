@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { PrimeNgModule } from '@primeng/prime-ng.module';
+import { SharedModule } from '@shared/shared.module';
 
 import { AdminPanelRoutingModule } from './admin-panel-routing.module';
 import { AdminPanelComponent } from './admin-panel.component';
-import { SharedModule } from '@shared/shared.module';
 import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './registro/registro.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AdminPanelComponent, LoginComponent, RegistroComponent],
@@ -20,6 +20,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     PrimeNgModule,
     AdminPanelRoutingModule,
   ],
-  exports: [AdminPanelComponent, LoginComponent],
+  // exports: [AdminPanelComponent, LoginComponent],
 })
 export class AdminPanelModule {}

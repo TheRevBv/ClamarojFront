@@ -1,7 +1,7 @@
 <p-card>
   <ng-template pTemplate="header">
     <div class="flex flex-row justify-content-between mx-5">
-      <div class="flex flex-row">
+      <div class="flex flex-row mt-3">
         <div class="flex flex-column justify-content-center align-items-center">
           <i class="pi pi-users text-2xl"></i>
         </div>
@@ -9,9 +9,10 @@
           <h1 class="text-xl font-bold">Clientes</h1>
         </div>
       </div>
-      <div class="flex flex-row">
+      <div class="flex flex-row mt-3">
         <div class="flex flex-column justify-content-center align-items-center">
-          <button pButton type="button" icon="pi pi-plus" class="p-button-rounded p-button-success p-mr-2"></button>
+          <p-button label="Nuevo" icon="pi pi-plus" styleClass="p-button-rounded p-button-success p-mr-2"
+            [routerLink]="['agregar']" (onClick)="showDialog()"></p-button>
         </div>
       </div>
     </div>
@@ -33,7 +34,7 @@
       </tr>
       <tr>
         <th style="width: 4rem">
-          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+          <!-- <p-tableHeaderCheckbox></p-tableHeaderCheckbox> -->
         </th>
         <th>
           <p-columnFilter type="text" field="nombre"></p-columnFilter>
@@ -52,7 +53,7 @@
     <ng-template pTemplate="body" let-cliente>
       <tr>
         <td>
-          <p-tableCheckbox [value]="cliente"></p-tableCheckbox>
+          <p-tableRadioButton [value]="cliente"></p-tableRadioButton>
         </td>
         <td>{{ cliente.nombre }}</td>
         <td>{{ cliente.apellido }}</td>

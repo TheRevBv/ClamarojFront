@@ -3,15 +3,21 @@ import { NgModule } from '@angular/core';
 //PrimeNg
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputMaskModule } from 'primeng/inputmask';
+import { FileUploadModule } from 'primeng/fileupload';
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
+import { MessagesModule } from 'primeng/messages';
+import { PaginatorModule } from 'primeng/paginator';
 import { PanelMenuModule } from 'primeng/panelmenu';
+import { PasswordModule } from 'primeng/password';
 import { SidebarModule } from 'primeng/sidebar';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { TableModule } from 'primeng/table';
-import { PaginatorModule } from 'primeng/paginator';
 import { ToastModule } from 'primeng/toast';
 // import { ScrollPanelModule } from 'primeng/scrollpanel';
 // import { MenuItem } from 'primeng/api';
@@ -20,15 +26,21 @@ import { ToastModule } from 'primeng/toast';
   exports: [
     ButtonModule,
     CardModule,
+    CalendarModule,
     CheckboxModule,
     InputTextModule,
+    InputNumberModule,
+    InputMaskModule,
+    FileUploadModule,
     MenuModule,
     MenubarModule,
+    MessagesModule,
+    PaginatorModule,
     PanelMenuModule,
+    PasswordModule,
     SidebarModule,
     ScrollTopModule,
     TableModule,
-    PaginatorModule,
     ToastModule,
     // ScrollPanelModule,
   ],
