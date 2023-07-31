@@ -53,9 +53,9 @@ export class SidebarComponent implements OnInit {
         routerLink: '/proveedores',
       },
       {
-        label: 'Productos',
-        icon: 'pi pi-fw pi-shopping-cart',
-        routerLink: '/productos',
+        label: 'Inventario',
+        icon: 'fa fa-fw fa-cubes',
+        routerLink: '/inventario',
       },
       {
         label: 'Ventas',

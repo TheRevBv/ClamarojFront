@@ -34,10 +34,13 @@ const routes: Routes = [
             (m) => m.UsuariosModule
           ),
       },
-      // {
-      //   path: 'productos',
-      //   // loadChildren: () => import('@modules/productos/productos.module').then(m => m.ProductosModule),
-      // },
+      {
+        path: 'inventario',
+        loadChildren: () =>
+          import('@modules/inventario/inventario.module').then(
+            (m) => m.InventarioModule
+          ),
+      },
       {
         path: 'produccion',
         loadChildren: () =>

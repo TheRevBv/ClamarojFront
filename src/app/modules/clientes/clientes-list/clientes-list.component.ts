@@ -3,23 +3,28 @@ import { Component, OnInit } from '@angular/core';
 import { Cliente } from '@models/clientes';
 import { ClientesService } from '@services/clientes.service';
 import { TableLazyLoadEvent } from 'primeng/table';
+import { MessageService } from 'primeng/api';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-clientes-list',
   templateUrl: './clientes-list.component.html',
   styleUrls: ['./clientes-list.component.css'],
+  providers: [MessageService],
 })
 export class ClientesListComponent implements OnInit {
-  showDialog() {
-    throw new Error('Method not implemented.');
-  }
   clientes!: Cliente[];
   totalRecords!: number;
   loading = true;
   selectAll: boolean = false;
-  selectedClientes!: Cliente[];
+  selectedCliente!: Cliente;
 
-  constructor(private clientesSvc: ClientesService) {}
+  constructor(
+    private clientesSvc: ClientesService,
+    private messageSvc: MessageService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {}
 
@@ -36,22 +41,14 @@ export class ClientesListComponent implements OnInit {
     }, 1000);
   }
 
-  onSelectionChange(value = []) {
-    this.selectAll = value.length === this.totalRecords;
-    this.selectedClientes = value;
-  }
-
-  onSelectAllChange(event: any) {
-    const checked = event.checked;
-
-    if (checked) {
-      this.clientesSvc.getClientes().subscribe((res) => {
-        this.selectedClientes = res;
-        this.selectAll = true;
-      });
-    } else {
-      this.selectedClientes = [];
-      this.selectAll = false;
-    }
+  onRowSelect(event: any) {
+    this.router.navigate(['editar', event.data.idCliente], {
+      relativeTo: this.activatedRoute,
+    });
+    this.messageSvc.add({
+      severity: 'info',
+      summary: 'Cliente seleccionado',
+      detail: `${event.data.nombre}`,
+    });
   }
 }

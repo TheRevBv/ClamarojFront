@@ -11,25 +11,46 @@
       </div>
       <div class="flex flex-row mt-3">
         <div class="flex flex-column justify-content-center align-items-center">
-          <p-button label="Nuevo" icon="pi pi-plus" styleClass="p-button-rounded p-button-success p-mr-2"
-            [routerLink]="['agregar']" (onClick)="showDialog()"></p-button>
+          <p-button
+            label="Nuevo"
+            icon="pi pi-plus"
+            styleClass="p-button-rounded p-button-success p-mr-2"
+            [routerLink]="['agregar']"
+          ></p-button>
         </div>
       </div>
     </div>
   </ng-template>
-
-  <p-table [value]="clientes" [lazy]="true" (onLazyLoad)="loadClientes($event)" dataKey="id"
-    [tableStyle]="{ 'min-width': '50rem' }" [selection]="selectedClientes" (selectionChange)="onSelectionChange($event)"
-    [selectAll]="selectAll" (selectAllChange)="onSelectAllChange($event)" [paginator]="true" [rows]="10"
-    [totalRecords]="totalRecords" [loading]="loading"
-    [globalFilterFields]="['nombre', 'apellido', 'direccion', 'telefono']">
+  <p-toast></p-toast>
+  <p-table
+    [value]="clientes"
+    [lazy]="true"
+    (onLazyLoad)="loadClientes($event)"
+    dataKey="id"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [selection]="selectedCliente"
+    [paginator]="true"
+    [rows]="10"
+    [totalRecords]="totalRecords"
+    [loading]="loading"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    (onRowSelect)="onRowSelect($event)"
+    [globalFilterFields]="['nombre', 'apellido', 'direccion', 'telefono']"
+  >
     <ng-template pTemplate="header">
       <tr>
         <th style="width: 4rem"></th>
-        <th pSortableColumn="nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon></th>
-        <th pSortableColumn="apellido">Apellido <p-sortIcon field="apellido"></p-sortIcon></th>
-        <th pSortableColumn="direccion">Direccion <p-sortIcon field="direccion"></p-sortIcon></th>
-        <th pSortableColumn="telefono">Telefono <p-sortIcon field="telefono"></p-sortIcon>
+        <th pSortableColumn="nombre">
+          Nombre <p-sortIcon field="nombre"></p-sortIcon>
+        </th>
+        <th pSortableColumn="apellido">
+          Apellido <p-sortIcon field="apellido"></p-sortIcon>
+        </th>
+        <th pSortableColumn="direccion">
+          Direccion <p-sortIcon field="direccion"></p-sortIcon>
+        </th>
+        <th pSortableColumn="telefono">
+          Telefono <p-sortIcon field="telefono"></p-sortIcon>
         </th>
       </tr>
       <tr>
