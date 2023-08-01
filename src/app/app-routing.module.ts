@@ -6,7 +6,7 @@ const routes: Routes = [
     path: 'inicio',
     title: 'Inicio Clamaroj',
     loadChildren: () =>
-      import('@modules/inicio-clientes/inicio-clientes.module').then(
+      import('@pages/inicio-clientes/inicio-clientes.module').then(
         (m) => m.InicioClientesModule
       ),
   },
