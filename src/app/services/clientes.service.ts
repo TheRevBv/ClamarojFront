@@ -26,7 +26,7 @@ export class ClientesService {
     return this.http.put<Cliente>(`api/clientes/${cliente.idCliente}`, cliente);
   }
 
-  deleteCliente(idCliente: number): Observable<Cliente> {
-    return this.http.delete<Cliente>(`api/clientes/${idCliente}`);
+  deleteCliente(idCliente: number): Observable<any> {
+    return this.http.delete<any>(`api/clientes/${idCliente}`);
   }
 }

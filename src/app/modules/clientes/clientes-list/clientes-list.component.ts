@@ -3,27 +3,32 @@ import { Component, OnInit } from '@angular/core';
 import { Cliente } from '@models/clientes';
 import { ClientesService } from '@services/clientes.service';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { MessageService } from 'primeng/api';
+import {
+  ConfirmationService,
+  MessageService,
+  ConfirmEventType,
+} from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-clientes-list',
   templateUrl: './clientes-list.component.html',
   styleUrls: ['./clientes-list.component.css'],
-  providers: [MessageService],
+  providers: [ConfirmationService, MessageService],
 })
 export class ClientesListComponent implements OnInit {
   clientes!: Cliente[];
   totalRecords!: number;
   loading = true;
   selectAll: boolean = false;
-  selectedCliente!: Cliente;
+  selectedCliente!: any;
 
   constructor(
+    private activatedRoute: ActivatedRoute,
     private clientesSvc: ClientesService,
+    private confirmationSvc: ConfirmationService,
     private messageSvc: MessageService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
@@ -42,13 +47,51 @@ export class ClientesListComponent implements OnInit {
   }
 
   onRowSelect(event: any) {
-    this.router.navigate(['editar', event.data.idCliente], {
-      relativeTo: this.activatedRoute,
-    });
+    // this.selectedCliente = event.data;
+    // console.log(this.selectedCliente);
     this.messageSvc.add({
       severity: 'info',
       summary: 'Cliente seleccionado',
       detail: `${event.data.nombre}`,
+    });
+  }
+
+  deleteCliente() {
+    // console.log(this.selectedCliente);
+    this.confirmationSvc.confirm({
+      message: `¿Está seguro de eliminar al cliente ${this.selectedCliente.nombre}?`,
+      header: 'Confirmación de eliminación',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.clientesSvc
+          .deleteCliente(this.selectedCliente.idCliente!)
+          .subscribe((res) => {
+            this.messageSvc.add({
+              severity: 'success',
+              summary: 'Cliente eliminado',
+              detail: `${this.selectedCliente.nombre} ha sido eliminado`,
+            });
+            this.router.navigate(['/admin/clientes']);
+          });
+      },
+      reject: (type: any) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageSvc.add({
+              severity: 'error',
+              summary: 'Eliminación cancelada',
+              detail: `${this.selectedCliente.nombre} no ha sido eliminado`,
+            });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageSvc.add({
+              severity: 'warn',
+              summary: 'Eliminación cancelada',
+              detail: `${this.selectedCliente.nombre} no ha sido eliminado`,
+            });
+            break;
+        }
+      },
     });
   }
 }

@@ -14,6 +14,7 @@ import { MessageService } from 'primeng/api';
 })
 export class ClientesFormComponent implements OnInit {
   clienteForm!: FormGroup;
+  tipoForm: string = '';
   title = '';
   cliente: Cliente = {
     idCliente: 0,
@@ -27,7 +28,7 @@ export class ClientesFormComponent implements OnInit {
       correo: '',
       password: '',
       foto: '',
-      fechaNacimiento: new Date(),
+      fechaNacimiento: new Date(1900, 0, 1),
       fechaRegistro: new Date(),
       idStatus: 0,
     },
@@ -35,7 +36,11 @@ export class ClientesFormComponent implements OnInit {
   estatus: Estatus[] = [];
   minDate: Date = new Date('1900-01-01');
   maxDate!: Date;
-  patternRFC: string = '^([A-ZÑ&]{3,4})\\d{6}([A-V1-9][A-Z1-9])?$';
+  // El rfc debe tener 13 caracteres
+  // Los primeros 4 caracteres deben ser letras mayúsculas
+  // Los siguientes 6 caracteres deben ser números
+  // Los últimos 3 caracteres pueden ser letras mayúsculas o números
+  patternRFC: string = '^[A-Z]{4}[0-9]{6}[A-Z0-9]{3}$';
 
   constructor(
     private clienteSvc: ClientesService,
@@ -45,7 +50,6 @@ export class ClientesFormComponent implements OnInit {
     private messageSvc: MessageService
   ) {
     this.clienteForm = this.fb.group({
-      // idCliente: [0],
       nombre: [''],
       apellido: [''],
       correo: [''],
@@ -55,8 +59,7 @@ export class ClientesFormComponent implements OnInit {
       foto: [''],
       rfc: [''],
       idStatus: [''],
-      fechaNacimiento: [''],
-      // fechaRegistro: [''],
+      fechaNacimiento: new Date(1900, 0, 1),
     });
   }
 
@@ -66,8 +69,30 @@ export class ClientesFormComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.title = `Editar cliente ${id}`;
+      this.clienteSvc.getCliente(+id).subscribe((cliente) => {
+        console.log(cliente);
+        this.cliente = cliente;
+        this.clienteForm.patchValue({
+          nombre: this.cliente.usuario.nombre,
+          apellido: this.cliente.usuario.apellido,
+          correo: this.cliente.usuario.correo,
+          password: this.cliente.usuario.password,
+          telefono: this.cliente.telefono,
+          direccion: this.cliente.direccion,
+          foto: this.cliente.usuario.foto,
+          rfc: this.cliente.rfc,
+          idStatus: this.cliente.usuario.idStatus,
+          fechaNacimiento: new Date(this.cliente.usuario.fechaNacimiento!),
+        });
+      });
+      // this.clienteForm.get('correo')?.disable();
+      this.clienteForm.get('password')?.disable();
+      //TODO:AGREGAR SERVICIO DE ESTATUS
+      this.clienteForm.get('idStatus')?.disable();
+      this.tipoForm = 'edit';
     } else {
       this.title = 'Agregar cliente';
+      this.tipoForm = 'add';
     }
   }
 
@@ -76,11 +101,8 @@ export class ClientesFormComponent implements OnInit {
     const reader = new FileReader();
     reader.readAsDataURL(file[0]);
     reader.onload = (e: any) => {
-      // console.log(e.target.result);
       this.clienteForm.get('foto')?.setValue(e.target.result);
-      console.log(this.clienteForm.get('foto')?.value);
     };
-    console.log(this.clienteForm.get('foto')?.value);
     this.messageSvc.add({
       severity: 'info',
       summary: 'Archivo seleccionado',
@@ -89,9 +111,16 @@ export class ClientesFormComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('submit');
-    // console.log(this.clienteForm.value);
-    this.agregar();
+    switch (this.tipoForm) {
+      case 'add':
+        this.agregar();
+        break;
+      case 'edit':
+        this.editar();
+        break;
+      default:
+        break;
+    }
   }
 
   cancelar() {
@@ -110,7 +139,6 @@ export class ClientesFormComponent implements OnInit {
       rfc,
       idStatus,
       fechaNacimiento,
-      // fechaRegistro,
     } = this.clienteForm.value;
     let telefonoStr: string = telefono
       .toString()
@@ -124,7 +152,7 @@ export class ClientesFormComponent implements OnInit {
     let rfcStr: string = rfc.toString().trim().toUpperCase();
 
     const cliente: Cliente = {
-      // idCliente: 0,
+      idCliente: 0,
       telefono: telefonoStr,
       direccion,
       rfc: rfcStr,
@@ -144,7 +172,7 @@ export class ClientesFormComponent implements OnInit {
 
     this.clienteSvc.addCliente(cliente).subscribe(
       (res) => {
-        console.log(res);
+        // console.log(res);
         this.messageSvc.add({
           severity: 'success',
           summary: 'Cliente agregado',
@@ -157,6 +185,72 @@ export class ClientesFormComponent implements OnInit {
         this.messageSvc.add({
           severity: 'error',
           summary: 'Error al agregar cliente',
+          detail: '',
+        });
+      }
+    );
+  }
+
+  editar() {
+    let {
+      nombre,
+      apellido,
+      // correo,
+      // password,
+      telefono,
+      direccion,
+      foto,
+      rfc,
+      //TODO:AGREGAR SERVICIO DE ESTATUS
+      idStatus,
+      fechaNacimiento,
+      // fechaRegistro,
+    } = this.clienteForm.value;
+    let telefonoStr: string = telefono
+      .toString()
+      .replace('(', '')
+      .replace(')', '')
+      .replace('-', '')
+      .replace(' ', '')
+      .trim();
+
+    let rfcStr: string = rfc.toString().trim().toUpperCase();
+
+    const cliente: Cliente = {
+      idCliente: this.cliente.idCliente,
+      telefono: telefonoStr,
+      direccion,
+      rfc: rfcStr,
+      usuario: {
+        id: this.cliente.usuario.id,
+        nombre,
+        apellido,
+        correo: this.cliente.usuario.correo,
+        password: this.cliente.usuario.password,
+        foto,
+        fechaNacimiento,
+        fechaRegistro: this.cliente.usuario.fechaRegistro,
+        //TODO:CAMBIAR POR EL IDSTATUS DEL CLIENTE
+        idStatus: this.cliente.usuario.idStatus,
+      },
+    };
+    console.log(cliente);
+
+    this.clienteSvc.updateCliente(cliente).subscribe(
+      (res) => {
+        // console.log(res);
+        this.messageSvc.add({
+          severity: 'success',
+          summary: 'Cliente editado',
+          detail: '',
+        });
+        this.router.navigate(['admin', 'clientes']);
+      },
+      (err) => {
+        console.log(err);
+        this.messageSvc.add({
+          severity: 'error',
+          summary: 'Error al editar cliente',
           detail: '',
         });
       }

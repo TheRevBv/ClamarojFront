@@ -5,6 +5,8 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ImageModule } from 'primeng/image';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputMaskModule } from 'primeng/inputmask';
@@ -28,6 +30,8 @@ import { ToastModule } from 'primeng/toast';
     CardModule,
     CalendarModule,
     CheckboxModule,
+    ConfirmDialogModule,
+    ImageModule,
     InputTextModule,
     InputNumberModule,
     InputMaskModule,

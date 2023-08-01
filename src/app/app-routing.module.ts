@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: 'inicio',
+    title: 'Inicio Clamaroj',
     loadChildren: () =>
       import('@modules/inicio-clientes/inicio-clientes.module').then(
         (m) => m.InicioClientesModule
@@ -11,6 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'admin',
+    title: 'Admin Panel',
     loadChildren: () =>
       import('@pages/admin-panel/admin-panel.module').then(
         (m) => m.AdminPanelModule

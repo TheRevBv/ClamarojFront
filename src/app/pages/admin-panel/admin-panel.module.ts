@@ -15,10 +15,10 @@ import { RegistroComponent } from './registro/registro.component';
   imports: [
     CommonModule,
     FormsModule,
+    AdminPanelRoutingModule,
     ReactiveFormsModule,
     SharedModule,
     PrimeNgModule,
-    AdminPanelRoutingModule,
   ],
   // exports: [AdminPanelComponent, LoginComponent],
 })
