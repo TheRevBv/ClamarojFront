@@ -1,0 +1,64 @@
+<p-card>
+    <ng-template pTemplate="header">
+        <div class="flex flex-row justify-content-between mx-5">
+            <div class="flex flex-row">
+                <div class="flex flex-column justify-content-center align-items-center">
+                    <i class="pi pi-users text-2xl"></i>
+                </div>
+                <div class="flex flex-column justify-content-center">
+                    <h1 class="text-xl font-bold">Proveedores</h1>
+                </div>
+            </div>
+            <div class="flex flex-row">
+                <div class="flex flex-column justify-content-center align-items-center">
+                    <button pButton type="button" icon="pi pi-plus" routerLink="agregar"
+                        class="p-button-rounded p-button-success p-mr-2"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <p-table [value]="proveedores" [lazy]="true" (onLazyLoad)="loadProveedores($event)" dataKey="id"
+        [tableStyle]="{ 'min-width': '50rem' }" [selection]="selectedProveedores"
+        (selectionChange)="onSelectionChange($event)" [selectAll]="selectAll"
+        (selectAllChange)="onSelectAllChange($event)" [paginator]="true" [rows]="10" [totalRecords]="totalRecords"
+        [loading]="loading" [globalFilterFields]="['nombre', 'apellido', 'direccion', 'telefono']">
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 4rem"></th>
+                <th pSortableColumn="nombre">Nombre <p-sortIcon field="nombre"></p-sortIcon></th>
+                <th pSortableColumn="direccion">Direccion <p-sortIcon field="direccion"></p-sortIcon></th>
+                <th pSortableColumn="telefono">Telefono <p-sortIcon field="telefono"></p-sortIcon></th>
+                <th pSortableColumn="telefono">Actions<p-sortIcon field="telefono"></p-sortIcon></th>
+            </tr>
+            <tr>
+                <th style="width: 4rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="nombre"></p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="direccion"></p-columnFilter>
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="telefono"></p-columnFilter>
+                </th>
+                
+                <th>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-proveedor>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="proveedor"></p-tableCheckbox>
+                </td>
+                <td>{{ proveedor.nombre }}</td>
+                <td>{{ proveedor.direccion }}</td>
+                <td>{{ proveedor.telefono }}</td>
+                <td> <a  pButton routerLink="editar/{{proveedor.idProveedor}}" class="btn btn-primary btn-sm" icon="pi pi-user-edit"></a>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</p-card>

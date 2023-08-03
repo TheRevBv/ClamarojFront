@@ -1,0 +1,122 @@
+<p-card>
+    <ng-template pTemplate="header">
+        <div class="flex flex-row justify-content-between mx-5">
+            <div class="flex flex-row">
+                <div class="flex flex-column justify-content-center align-items-center">
+                    <i class="pi pi-users text-2xl"></i>
+                </div>
+                <div class="flex flex-column justify-content-center">
+                    <h1 class="text-xl font-bold"> Editar de Proveedor: #{{proveedor.idProveedor}}</h1>
+                </div>
+            </div>
+            <div class="flex flex-row">
+                <div class="flex flex-column justify-content-center align-items-center">
+                    <button pButton type="button" icon="pi pi-arrow-left" routerLink="../"
+                        class="p-button-rounded p-button-primary p-mr-2"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <div class="w-full max-w-lg">
+        <form #form="ngForm" (ngSubmit)="UpdateData(form)">
+            <div class="grid grid-rows-3 grid-flow-col gap-3">
+                <span class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Nombre</label>
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon"> <i class="pi pi-user"></i></span>
+                        <input pInputText placeholder="Nombre" required="" [(ngModel)]="proveedor.nombre"
+                            name="nombre" />
+                    </div>
+                    <!-- <p class="text-red-500 text-xs italic">Please fill out this field.</p> -->
+                </span>
+                <!-- direccion  -->
+                <span class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Dirección</label>
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon"> <i class="pi pi-user"></i></span>
+                        <input pInputText placeholder="Dirección" required="" [(ngModel)]="proveedor.direccion"
+                            name="direccion" />
+                    </div>
+                    <!-- <p class="text-red-500 text-xs italic">Please fill out this field.</p> -->
+                </span>
+                <!-- telefono  -->
+                <span class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Teléfono</label>
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon"> <i class="pi pi-user"></i></span>
+                        <input pInputText placeholder="Teléfono" required="" [(ngModel)]="proveedor.telefono"
+                            name="telefono" />
+                    </div>
+                    <!-- <p class="text-red-500 text-xs italic">Please fill out this field.</p> -->
+                </span>
+                <!-- correo  -->
+                <span class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Correo</label>
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon"> <i class="pi pi-user"></i></span>
+                        <input pInputText placeholder="Correo" required="" [(ngModel)]="proveedor.correo"
+                            name="correo" />
+                    </div>
+                    <!-- <p class="text-red-500 text-xs italic">Please fill out this field.</p> -->
+                </span>
+                <!-- password  -->
+                <span class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Password</label>
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon"> <i class="pi pi-user"></i></span>
+                        <input pInputText placeholder="Password" required="" [(ngModel)]="proveedor.password"
+                            name="password" />
+                    </div>
+                    <!-- <p class="text-red-500 text-xs italic">Please fill out this field.</p> -->
+                </span>
+                <!-- foto  -->
+                <span class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Foto</label>
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon"> <i class="pi pi-user"></i></span>
+                        <input pInputText placeholder="Foto" required="" [(ngModel)]="proveedor.foto" name="foto" />
+                    </div>
+                    <!-- <p class="text-red-500 text-xs italic">Please fill out this field.</p> -->
+                </span>
+                <!-- rfc  -->
+                <span class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">RFC</label>
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon"> <i class="pi pi-user"></i></span>
+                        <input pInputText placeholder="RFC" required="" [(ngModel)]="proveedor.rfc" name="rfc" />
+                    </div>
+                    <!-- <p class="text-red-500 text-xs italic">Please fill out this field.</p> -->
+                </span>
+                <!-- razonSocial  -->
+
+                <span class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Razón
+                        Social</label>
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon"> <i class="pi pi-user"></i></span>
+                        <input pInputText placeholder="Razón Social" required="" [(ngModel)]="proveedor.razonSocial"
+                            name="razonSocial" />
+                    </div>
+                    <!-- <p class="text-red-500 text-xs italic">Please fill out this field.</p> -->
+                </span>
+                <!-- idStatus  -->
+
+                <span class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">Estatus</label>
+                    <div class="p-inputgroup">
+                        <span class="p-inputgroup-addon"> <i class="pi pi-user"></i></span>
+                        <input pInputText placeholder="Estatus" required="" [(ngModel)]="proveedor.idStatus"
+                            name="idStatus" />
+                    </div>
+                    <!-- <p class="text-red-500 text-xs italic">Please fill out this field.</p> -->
+                </span>
+                <!-- Button  -->
+                <span class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <div class="p-inputgroup">
+                        <input type="submit" pButton  value="Guardar Valor" class="p-button-success">
+                    </div>
+                </span>
+            </div>
+        </form>
+    </div>
+</p-card>
