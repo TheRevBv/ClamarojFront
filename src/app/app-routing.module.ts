@@ -18,6 +18,19 @@ const routes: Routes = [
         (m) => m.AdminPanelModule
       ),
   },
+  {
+    path: 'portal-proveedores',
+    title: 'Portal Proveedores Clamaroj',
+    loadChildren: () =>
+      import('@pages/portal-proveedores/portal-proveedores.module').then(
+        (m) => m.PortalProveedoresModule
+      ),
+  },
+  {
+    path: '**',
+    pathMatch: 'full',
+    redirectTo: 'inicio',
+  },
 ];
 
 @NgModule({
