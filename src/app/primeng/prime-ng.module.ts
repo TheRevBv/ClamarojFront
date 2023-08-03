@@ -14,6 +14,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { MessagesModule } from 'primeng/messages';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { PaginatorModule } from 'primeng/paginator';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { PasswordModule } from 'primeng/password';
@@ -39,6 +40,7 @@ import { ToastModule } from 'primeng/toast';
     MenuModule,
     MenubarModule,
     MessagesModule,
+    MultiSelectModule,
     PaginatorModule,
     PanelMenuModule,
     PasswordModule,

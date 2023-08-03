@@ -35,86 +35,113 @@ export class SidebarComponent implements OnInit {
       {
         label: 'Dashboard',
         icon: 'pi pi-fw pi-home',
-        routerLink: '/dashboard',
+        items: [
+          {
+            label: 'Dashboard',
+            icon: 'pi pi-fw pi-home',
+            routerLink: '/dashboard',
+          },
+          {
+            label: 'Reportes',
+            icon: 'pi pi-fw pi-chart-bar',
+            routerLink: '/reportes',
+          },
+        ],
       },
       {
         label: 'Usuarios',
         icon: 'pi pi-fw pi-user',
-        routerLink: '/usuarios',
-      },
-      {
-        label: 'Clientes',
-        icon: 'pi pi-fw pi-users',
-        routerLink: '/clientes',
-      },
-      {
-        label: 'Proveedores',
-        icon: 'pi pi-fw pi-truck',
-        routerLink: '/proveedores',
+        items: [
+          {
+            label: 'Usuarios',
+            icon: 'pi pi-fw pi-user',
+            routerLink: '/usuarios',
+          },
+          {
+            label: 'Clientes',
+            icon: 'pi pi-fw pi-users',
+            routerLink: '/clientes',
+          },
+          {
+            label: 'Proveedores',
+            icon: 'pi pi-fw pi-truck',
+            routerLink: '/proveedores',
+          },
+        ],
       },
       {
         label: 'Inventario',
         icon: 'fa fa-fw fa-cubes',
-        routerLink: '/inventario',
+        items: [
+          {
+            label: 'Productos',
+            icon: 'fa fa-beer fa-fw',
+            routerLink: '/inventario/productos',
+          },
+          {
+            label: 'Materia Prima',
+            icon: 'fa fa-fw fa-cubes',
+            routerLink: '/inventario/materia-prima',
+          },
+          // {
+          //   label: 'Categorías',
+          //   icon: 'pi pi-fw pi-users',
+          //   routerLink: '/inventario/categorias',
+          // }
+        ],
       },
       {
         label: 'Ventas',
         icon: 'pi pi-fw pi-dollar',
-        routerLink: '/ventas',
+        items: [
+          {
+            label: 'Ventas',
+            icon: 'pi pi-fw pi-dollar',
+            routerLink: '/ventas',
+          },
+          // {
+          //   label: 'Cotizaciones',
+          //   icon: 'pi pi-fw pi-dollar',
+          //   routerLink: '/cotizaciones',
+          // },
+        ],
       },
       {
         label: 'Compras',
         icon: 'pi pi-fw pi-shopping-cart',
-        routerLink: '/compras',
-      },
-      {
-        label: 'Reportes',
-        icon: 'pi pi-fw pi-chart-bar',
-        routerLink: '/reportes',
+        items: [
+          {
+            label: 'Compras',
+            icon: 'pi pi-fw pi-shopping-cart',
+            routerLink: '/compras',
+          },
+          // {
+          //   label: 'Cotizaciones',
+          //   icon: 'pi pi-fw pi-dollar',
+          //   routerLink: '/cotizaciones',
+          // },
+        ],
       },
       {
         label: 'Configuración',
         icon: 'pi pi-fw pi-cog',
-        routerLink: '/configuracion',
-      },
-    ];
-
-    this.itemsIcons = [
-      {
-        icon: 'pi pi-fw pi-home',
-        routerLink: '/dashboard',
-      },
-      {
-        icon: 'pi pi-fw pi-user',
-        routerLink: '/admin',
-      },
-      {
-        icon: 'pi pi-fw pi-users',
-        routerLink: '/clientes',
-      },
-      {
-        icon: 'pi pi-fw pi-truck',
-        routerLink: '/proveedores',
-      },
-      {
-        icon: 'pi pi-fw pi-shopping-cart',
-        routerLink: '/productos',
-      },
-      {
-        icon: 'pi pi-fw pi-dollar',
-        routerLink: '/ventas',
-      },
-      {
-        icon: 'pi pi-fw pi-shopping-cart',
-        routerLink: '/compras',
-      },
-      {
-        icon: 'pi pi-fw pi-chart-bar',
-        routerLink: '/reportes',
-      },
-      {
-        icon: 'pi pi-fw pi-cog',
-        routerLink: '/configuracion',
+        items: [
+          {
+            label: 'Roles',
+            icon: 'pi pi-fw pi-users',
+            routerLink: '/configuracion/roles',
+          },
+          {
+            label: 'Estatus',
+            icon: 'pi pi-fw pi-users',
+            routerLink: '/configuracion/estatus',
+          },
+          // {
+          //   label: 'Categorías',
+          //   icon: 'pi pi-fw pi-users',
+          //   routerLink: '/configuracion/categorias',
+          // }
+        ],
       },
     ];
 
@@ -131,19 +158,27 @@ export class SidebarComponent implements OnInit {
         // Agregar la ruta padre a las rutas secundarias
         this.items.forEach((item) => {
           //valida si ya tiene una ruta padre igual a la añadida
-          if (item.routerLink.includes(parentRoute)) {
-            return;
-          }
-          item.routerLink = `/${parentRoute}${item.routerLink}`;
+          item.items?.forEach((subItem) => {
+            if (subItem.routerLink.includes(parentRoute)) {
+              return;
+            }
+            subItem.routerLink = `/${parentRoute}${subItem.routerLink}`;
+          });
         });
-
-        this.itemsIcons.forEach((item) => {
-          //valida si ya tiene una ruta padre igual a la añadida
-          if (item.routerLink.includes(parentRoute)) {
-            return;
-          }
-          item.routerLink = `/${parentRoute}${item.routerLink}`;
-        });
+        // console.log(this.items);
+        // Mostrar solo iconos en el sidebar para las rutas secundarias
+        if (this.sidebarVisible) {
+          this.itemsIcons = this.items.map((item) => {
+            const newItem = { ...item };
+            newItem.label = newItem.label?.substring(0, 1);
+            newItem.items = item.items?.map((subItem) => {
+              const newSubItem = { ...subItem };
+              newSubItem.label = '';
+              return newSubItem;
+            });
+            return newItem;
+          });
+        }
       }
     });
   }

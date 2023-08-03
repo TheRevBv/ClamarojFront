@@ -62,7 +62,7 @@ export class UsuariosService {
   }
 
   getUsuario(id: number): Observable<Usuario> {
-    return this.http.get<Usuario>(`/api/Usuario/${id}`, {
+    return this.http.get<Usuario>(`/api/Usuarios/${id}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'X-CSRFToken': this.getCookie('csrftoken') || '',
@@ -72,7 +72,7 @@ export class UsuariosService {
   }
 
   updateUsuario(data: Usuario): Observable<Usuario> {
-    return this.http.put<Usuario>(`/api/Usuario`, data, {
+    return this.http.put<Usuario>(`/api/Usuarios`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'X-CSRFToken': this.getCookie('csrftoken') || '',
@@ -92,7 +92,7 @@ export class UsuariosService {
   }
 
   deleteUsuario(id: number): Observable<Usuario> {
-    return this.http.delete<Usuario>(`/api/Usuario/${id}`, {
+    return this.http.delete<Usuario>(`/api/Usuarios/${id}`, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'X-CSRFToken': this.getCookie('csrftoken') || '',

@@ -11,5 +11,5 @@ export interface Usuario {
   fechaNacimiento: Date;
   fechaRegistro: Date;
   idStatus: number;
-  idRoles?: Rol[];
+  roles?: Rol[];
 }

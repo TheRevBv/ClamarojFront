@@ -11,32 +11,61 @@
       </div>
       <div class="flex flex-row mt-3 gap-2">
         <div class="flex flex-column justify-content-center align-items-center">
-          <p-button label="Nuevo" icon="pi pi-plus" styleClass="p-button-rounded p-button-success p-mr-2"
-            [routerLink]="['agregar']"></p-button>
+          <p-button
+            label="Nuevo"
+            icon="pi pi-plus"
+            styleClass="p-button-rounded p-button-success p-mr-2"
+            [routerLink]="['agregar']"
+          ></p-button>
         </div>
         <div class="flex flex-column justify-content-center align-items-center">
-          <p-button label="Editar" icon="pi pi-pencil" styleClass="p-button-rounded p-button-warning p-mr-2"
-            [routerLink]="['editar', selectedUsuario?.id]" [disabled]="!selectedUsuario"></p-button>
+          <p-button
+            label="Editar"
+            icon="pi pi-pencil"
+            styleClass="p-button-rounded p-button-warning"
+            [routerLink]="['editar', selectedUsuario?.id]"
+            [disabled]="!selectedUsuario"
+          ></p-button>
         </div>
         <div class="flex flex-column justify-content-center align-items-center">
           <p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>
-          <p-button label="Eliminar" icon="pi pi-trash" styleClass="p-button-rounded p-button-danger"
-            (click)="deleteUsuario()" [disabled]="!selectedUsuario"></p-button>
+          <p-button
+            label="Eliminar"
+            icon="pi pi-trash"
+            styleClass="p-button-rounded p-button-danger"
+            (click)="deleteUsuario()"
+            [disabled]="!selectedUsuario"
+          ></p-button>
         </div>
       </div>
     </div>
   </ng-template>
   <p-toast position="top-left"></p-toast>
-  <p-table [value]="usuarios" [lazy]="true" (onRowSelect)="onRowSelect($event)" (onLazyLoad)="loadUsuarios($event)"
-    dataKey="id" [tableStyle]="{ 'min-width': '50rem' }" [(selection)]="selectedUsuario" [paginator]="true" [rows]="10"
-    [totalRecords]="totalRecords" [loading]="loading" [rowsPerPageOptions]="[10, 25, 50]"
-    [globalFilterFields]="['id','nombre', 'apellido', 'correo', 'fechaNacimiento']">
+  <p-table
+    [value]="usuarios"
+    [lazy]="true"
+    (onRowSelect)="onRowSelect($event)"
+    (onLazyLoad)="loadUsuarios($event)"
+    dataKey="id"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [(selection)]="selectedUsuario"
+    [paginator]="true"
+    [rows]="10"
+    [totalRecords]="totalRecords"
+    [loading]="loading"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [globalFilterFields]="[
+      'id',
+      'nombre',
+      'apellido',
+      'correo',
+      'fechaNacimiento'
+    ]"
+  >
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 4rem"></th>
-        <th pSortableColumn="id">
-          ID <p-sortIcon field="id"></p-sortIcon>
-        </th>
+        <th style="width: 1rem"></th>
+        <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
         <th pSortableColumn="nombre">
           Nombre <p-sortIcon field="nombre"></p-sortIcon>
         </th>
@@ -51,8 +80,7 @@
         </th>
       </tr>
       <tr>
-        <th style="width: 4rem">
-        </th>
+        <th style="width: 1rem"></th>
         <th>
           <p-columnFilter type="text" field="id"></p-columnFilter>
         </th>
@@ -79,7 +107,7 @@
         <td>{{ usuario.nombre }}</td>
         <td>{{ usuario.apellido }}</td>
         <td>{{ usuario.correo }}</td>
-        <td>{{ usuario.fechaNacimiento | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ usuario.fechaNacimiento | date : "dd/MM/yyyy" }}</td>
       </tr>
     </ng-template>
   </p-table>
