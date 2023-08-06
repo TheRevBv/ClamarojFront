@@ -1,0 +1,167 @@
+<p-card>
+  <ng-template pTemplate="header">
+    <div class="flex flex-row justify-content-between mx-5">
+      <div class="flex flex-row">
+        <div class="flex flex-column justify-content-center align-items-center">
+          <i class="pi pi-users text-2xl"></i>
+        </div>
+        <div class="flex flex-column justify-content-center">
+          <h1 class="text-xl font-bold">{{ title }}</h1>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="body">
+    <form [formGroup]="productoForm" (ngSubmit)="onSubmit()">
+      <div class="formgrid grid">
+        <!-- <div class="field grid"> -->
+        <div class="field col-12 md:col-4 mb-5">
+          <!-- <span class="p-float-label"> -->
+          <!-- <input pInputText id="id" formControlName="idCliente" [disabled]="true" class="w-full" /> -->
+          <!-- <label htmlFor="id">Id</label> -->
+          <!-- </span> -->
+
+          <input
+            id="disabled-input"
+            type="text"
+            pInputText
+            [disabled]="true"
+            class="w-full"
+            [value]="producto.idProducto"
+          />
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <input
+              pInputText
+              id="codigo"
+              formControlName="codigo"
+              class="w-full"
+              [required]="true"
+              [minlength]="3"
+              [maxlength]="10"
+            />
+            <label htmlFor="codigo">Código</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <input
+              pInputText
+              id="nombre"
+              formControlName="nombre"
+              class="w-full"
+              [required]="true"
+              [minlength]="3"
+              [maxlength]="45"
+            />
+            <label htmlFor="nombre">Nombre</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <input
+              pInputText
+              id="descripcion"
+              formControlName="descripcion"
+              class="w-full"
+              [required]="true"
+              [minlength]="3"
+              [maxlength]="120"
+            />
+            <label htmlFor="descripcion">Descripcion</label>
+          </span>
+        </div>
+        <!-- <div class="field grid"> -->
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <input
+              pInputNumber
+              id="precio"
+              formControlName="precio"
+              class="w-full"
+              mode="decimal"
+              prefix="$ "
+              [required]="true"
+              [min]="1"
+            />
+            <label htmlFor="precio">Precio</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <input
+              pInputNumber
+              id="precio"
+              formControlName="merma"
+              class="w-full"
+              mode="decimal"
+              prefix="$ "
+              [required]="true"
+              [min]="1"
+            />
+            <label htmlFor="merma">Merma</label>
+          </span>
+        </div>
+        
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <p-dropdown
+              [options]="estatus"
+              formControlName="idStatus"
+              [style]="{ width: '100%' }"
+              [showClear]="true"
+              placeholder="Seleccione un estatus"
+            >
+            </p-dropdown>
+            <label for="float-label">Estatus</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <!-- <span class="p-float-label"> -->
+          <p-toast></p-toast>
+          <!-- <p-fileUpload mode="basic" chooseLabel="Elige una imagen" name="image"
+            (onUpload)="onUpload($event)"></p-fileUpload> -->
+          <p-fileUpload
+            name="image"
+            chooseLabel="Seleccionar imagen"
+            [showUploadButton]="false"
+            (onSelect)="onSelectFile($event)"
+            [maxFileSize]="1000000"
+            accept="image/*"
+          ></p-fileUpload>
+          <!-- </span> -->
+        </div>
+        <div class="field col-12 md:col-4 mb-5" *ngIf="producto.foto">
+          <p-image
+            [src]="producto.foto"
+            alt="Image"
+            width="250"
+            [preview]="true"
+          ></p-image>
+        </div>
+      </div>
+      <div class="flex flex-row justify-content-end">
+        <div class="p-col-12 p-md-3 p-lg-3 mr-3">
+          <button
+            pButton
+            pRipple
+            type="submit"
+            label="Guardar"
+            class="p-button-success p-button-rounded p-button-outlined"
+          ></button>
+        </div>
+        <div class="p-col-12 p-md-3 p-lg-3">
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Cancelar"
+            (click)="cancelar()"
+            class="p-button-danger p-button-rounded p-button-outlined"
+          ></button>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+</p-card>
