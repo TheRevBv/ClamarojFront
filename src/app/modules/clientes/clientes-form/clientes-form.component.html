@@ -48,7 +48,7 @@
         </div>
         <div class="field col-12 md:col-4 mb-5">
           <span class="p-float-label">
-            <input pInputText id="rfc" formControlName="rfc" class="w-full" [required]="true" [minlength]="13"
+            <input pInputText id="rfc" formControlName="rfc" class="w-full uppercase" [required]="true" [minlength]="13"
               [maxlength]="13" [pattern]="patternRFC" />
             <label htmlFor="rfc">RFC</label>
           </span>
@@ -70,8 +70,8 @@
         </div>
         <div class="field col-12 md:col-4 mb-5">
           <span class="p-float-label">
-            <input pInputText id="correo" formControlName="correo" class="w-full" [email]="true" [required]="true"
-              [minlength]="10" [maxlength]="255" />
+            <input pInputText id="correo" formControlName="correo" class="w-full lowercase" [email]="true"
+              [required]="true" [minlength]="10" [maxlength]="255" />
             <label htmlFor="correo">Correo</label>
           </span>
         </div>
@@ -85,7 +85,8 @@
         <div class="field col-12 md:col-4 mb-5">
           <span class="p-float-label">
             <p-dropdown [options]="estatus" formControlName="idStatus" [style]="{ width: '100%' }" [showClear]="true"
-              placeholder="Seleccione un estatus">
+              optionValue="idEstatus" optionLabel="nombre" [filter]="true" [required]="true"
+              [placeholder]="'Seleccione un estatus'">
             </p-dropdown>
             <label for="float-label">Estatus</label>
           </span>

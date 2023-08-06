@@ -30,6 +30,7 @@
   <p-table [value]="clientes" [lazy]="true" (onRowSelect)="onRowSelect($event)" (onLazyLoad)="loadClientes($event)"
     dataKey="idCliente" [tableStyle]="{ 'min-width': '50rem' }" [(selection)]="selectedCliente" [paginator]="true"
     [rows]="10" [totalRecords]="totalRecords" [loading]="loading" [rowsPerPageOptions]="[10, 25, 50]"
+    [paginatorPosition]="'bottom'" [responsive]="true" [reorderableColumns]="true"
     [globalFilterFields]="['nombre', 'apellido', 'direccion', 'telefono']">
     <ng-template pTemplate="header">
       <tr>

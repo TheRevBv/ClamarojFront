@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 
+import { EstatusService } from '@services/estatus.service';
 import { UsuariosService } from '@services/usuarios.service';
 import { Estatus } from '@models/estatus';
 import { Usuario } from '@models/usuarios';
@@ -37,6 +38,7 @@ export class UsuariosFormComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private statusSvc: EstatusService,
     private fb: FormBuilder,
     private messageSvc: MessageService,
     private router: Router,
@@ -51,11 +53,12 @@ export class UsuariosFormComponent implements OnInit {
       foto: [''],
       fechaNacimiento: new Date(1900, 0, 1),
       // fechaRegistro: [''],
-      idStatus: [''],
+      idStatus: new FormControl<Estatus | null>(null),
       roles: new FormControl<Rol[] | null>(null),
-      // roles: [''],
     });
-    // this.usuarioForm.addControl('roles', new FormControl<Rol[] | null>(null));
+    this.statusSvc.getEstatus().subscribe((data) => {
+      this.estatus = data;
+    });
   }
 
   ngOnInit(): void {
@@ -75,17 +78,17 @@ export class UsuariosFormComponent implements OnInit {
           nombre: this.usuario.nombre,
           apellido: this.usuario.apellido,
           correo: this.usuario.correo,
-          password: this.usuario.password,
-          password_confirmation: this.usuario.password,
+          // password: this.usuario.password,
+          // password_confirmation: this.usuario.password,
           foto: this.usuario.foto,
           fechaNacimiento: new Date(this.usuario.fechaNacimiento!),
           idStatus: this.usuario.idStatus,
           // roles: this.usuario.roles,
         });
       });
-      console.log(this.usuarioForm);
-      this.usuarioForm.get('correo')?.disable();
-      this.usuarioForm.get('idStatus')?.disable();
+      // console.log(this.usuarioForm);
+      // this.usuarioForm.get('correo')?.disable();
+      // this.usuarioForm.get('idStatus')?.disable();
     } else {
       this.title = 'Nuevo usuario';
       this.tipoForm = 'N';
@@ -93,7 +96,6 @@ export class UsuariosFormComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log('submit');
     switch (this.tipoForm) {
       case 'N':
         this.agregar();
@@ -121,31 +123,90 @@ export class UsuariosFormComponent implements OnInit {
   }
 
   agregar(): void {
-    // this.usuario = this.usuarioForm.value;
-    // this.usuariosSvc.addUsuario(this.usuario).subscribe((data) => {
-    //   this.messageSvc.add({
-    //     severity: 'success',
-    //     summary: 'Usuario agregado',
-    //     detail: `El usuario ${data.nombre} ${data.apellido} ha sido agregado correctamente`,
-    //   });
-    //   this.router.navigate(['/usuarios']);
-    // });
+    let {
+      nombre,
+      apellido,
+      correo,
+      password,
+      idStatus,
+      foto,
+      fechaNacimiento,
+      roles,
+    } = this.usuarioForm.value;
+    const usuario: Usuario = {
+      nombre,
+      apellido,
+      correo: correo.toLowerCase(),
+      password,
+      foto,
+      fechaNacimiento,
+      idStatus: idStatus ? idStatus : 1,
+      // roles: roles ? roles : [],
+    };
+    console.log(usuario);
+    this.usuariosSvc.addUsuario(usuario).subscribe(
+      (data) => {
+        this.messageSvc.add({
+          severity: 'success',
+          summary: 'Usuario agregado',
+          detail: `El usuario ${data.nombre} ${data.apellido} ha sido agregado correctamente`,
+        });
+        this.router.navigate(['admin', 'usuarios']);
+      },
+      (err) => {
+        this.messageSvc.add({
+          severity: 'error',
+          summary: 'Error al agregar usuario',
+          detail: err.error.message,
+        });
+      }
+    );
   }
 
   editar(): void {
-    // this.usuario = this.usuarioForm.value;
-    // this.usuario.id = this.route.snapshot.params.id;
-    // this.usuariosSvc.editUsuario(this.usuario).subscribe((data) => {
-    //   this.messageSvc.add({
-    //     severity: 'success',
-    //     summary: 'Usuario editado',
-    //     detail: `El usuario ${data.nombre} ${data.apellido} ha sido editado correctamente`,
-    //   });
-    //   this.router.navigate(['/usuarios']);
-    // });
+    let {
+      nombre,
+      apellido,
+      correo,
+      password,
+      foto,
+      fechaNacimiento,
+      idStatus,
+    } = this.usuarioForm.value;
+    const usuario: Usuario = {
+      id: this.usuario.id,
+      nombre,
+      apellido,
+      correo: correo.toLowerCase(),
+      password: password === '' ? this.usuario.password : password,
+      foto,
+      fechaNacimiento,
+      idStatus: idStatus ? idStatus.id : this.usuario.idStatus,
+      // roles: this.usuario.roles,
+      // fechaRegistro: this.usuario.fechaRegistro,
+    };
+    console.log(usuario);
+    this.usuariosSvc.updateUsuario(usuario).subscribe(
+      (data) => {
+        this.messageSvc.add({
+          severity: 'success',
+          summary: 'Usuario actualizado',
+          detail: `El usuario ${usuario.nombre} ${usuario.apellido} ha sido actualizado correctamente`,
+        });
+        this.router.navigate(['admin', 'usuarios']);
+      },
+      (err) => {
+        console.log(err);
+        this.messageSvc.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: `El usuario ${usuario.nombre} ${usuario.apellido} no se pudo actualizar`,
+        });
+      }
+    );
   }
 
   cancelar(): void {
-    this.router.navigate(['/usuarios']);
+    this.router.navigate(['admin', 'usuarios']);
   }
 }

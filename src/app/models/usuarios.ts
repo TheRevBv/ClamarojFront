@@ -9,7 +9,7 @@ export interface Usuario {
   password_confirmation?: string;
   foto: any; // Blob | File;
   fechaNacimiento: Date;
-  fechaRegistro: Date;
+  fechaRegistro?: Date;
   idStatus: number;
   roles?: Rol[];
 }
