@@ -3,10 +3,10 @@
     <div class="flex flex-row justify-content-between mx-5">
       <div class="flex flex-row">
         <div class="flex flex-column justify-content-center align-items-center">
-          <i class="pi pi-users text-2xl"></i>
+          <i class="pi pi-shopping-bag text-2xl"></i>
         </div>
         <div class="flex flex-column justify-content-center">
-          <h1 class="text-xl font-bold">{{ title }}</h1>
+          <h1 class="text-xl font-bold">&nbsp;{{ title }}</h1>
         </div>
       </div>
     </div>
@@ -111,7 +111,11 @@
               formControlName="idStatus"
               [style]="{ width: '100%' }"
               [showClear]="true"
-              placeholder="Seleccione un estatus"
+              optionValue="idEstatus"
+              optionLabel="nombre"
+              [filter]="true"
+              [required]="true"
+              [placeholder]="'Seleccione un estatus'"
             >
             </p-dropdown>
             <label for="float-label">Estatus</label>

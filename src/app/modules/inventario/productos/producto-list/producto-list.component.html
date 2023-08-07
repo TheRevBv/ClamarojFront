@@ -1,0 +1,112 @@
+<p-card>
+    <ng-template pTemplate="header">
+      <div class="flex flex-row justify-content-between mx-5">
+        <div class="flex flex-row mt-3">
+          <div class="flex flex-column justify-content-center align-items-center">
+            <i class="pi pi-shopping-bag text-2xl"></i>
+          </div>
+          <div class="flex flex-column justify-content-center">
+            <h1 class="text-xl font-bold">&nbsp;Productos</h1>
+          </div>
+        </div>
+        <div class="flex flex-row mt-3 gap-2">
+          <div class="flex flex-column justify-content-center align-items-center">
+            <p-button
+              label="Nuevo"
+              icon="pi pi-plus"
+              styleClass="p-button-rounded p-button-success p-mr-2"
+              [routerLink]="['agregar']"
+            ></p-button>
+          </div>
+          <div class="flex flex-column justify-content-center align-items-center">
+            <p-button
+              label="Editar"
+              icon="pi pi-pencil"
+              styleClass="p-button-rounded p-button-warning p-mr-2"
+              [routerLink]="['editar', selectedProducto?.idProducto]"
+              [disabled]="!selectedProducto"
+            ></p-button>
+          </div>
+          <div class="flex flex-column justify-content-center align-items-center">
+            <p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>
+            <p-button
+              label="Eliminar"
+              icon="pi pi-trash"
+              styleClass="p-button-rounded p-button-danger"
+              (click)="deleteProducto()"
+              [disabled]="!selectedProducto"
+            ></p-button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <p-toast></p-toast>
+    <p-table
+      [value]="productos"
+      [lazy]="true"
+      (onRowSelect)="onRowSelect($event)"
+      (onLazyLoad)="loadProductos($event)"
+      dataKey="idProducto"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      [(selection)]="selectedProducto"
+      [paginator]="true"
+      [rows]="10"
+      [totalRecords]="totalRecords"
+      [loading]="loading"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [globalFilterFields]="['codigo', 'nombre', 'descripcion', 'precio', 'idStatus']"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <th style="width: 4rem"></th>
+          <th pSortableColumn="codigo">
+            Código <p-sortIcon field="codigo"></p-sortIcon>
+          </th>
+          <th pSortableColumn="nombre">
+            Nombre <p-sortIcon field="nombre"></p-sortIcon>
+          </th>
+          <th pSortableColumn="descripcion">
+            Descripción <p-sortIcon field="descripcion"></p-sortIcon>
+          </th>
+          <th pSortableColumn="precio">
+            Precio <p-sortIcon field="precio"></p-sortIcon>
+          </th>
+          <th pSortableColumn="idStatus">
+            Estatus <p-sortIcon field="idStatus"></p-sortIcon>
+          </th>
+        </tr>
+        <tr>
+          <th style="width: 4rem">
+            <!-- <p-tableHeaderCheckbox></p-tableHeaderCheckbox> -->
+          </th>
+          <th>
+            <p-columnFilter type="text" field="codigo"></p-columnFilter>
+          </th>
+          <th>
+            <p-columnFilter type="text" field="nombre"></p-columnFilter>
+          </th>
+          <th>
+            <p-columnFilter type="text" field="descripcion"></p-columnFilter>
+          </th>
+          <th>
+            <p-columnFilter type="text" field="precio"></p-columnFilter>
+          </th>
+          <th>
+            <p-columnFilter type="text" field="idStatus"></p-columnFilter>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-producto>
+        <tr>
+          <td>
+            <p-tableRadioButton [value]="producto"></p-tableRadioButton>
+          </td>
+          <td>{{ producto.codigo }}</td>
+          <td>{{ producto.nombre }}</td>
+          <td>{{ producto.descripcion }}</td>
+          <td>{{ producto.precio }}</td>
+          <td>{{ producto.idStatus }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
