@@ -14,12 +14,14 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { MessagesModule } from 'primeng/messages';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { PaginatorModule } from 'primeng/paginator';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { PasswordModule } from 'primeng/password';
 import { SidebarModule } from 'primeng/sidebar';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 // import { ScrollPanelModule } from 'primeng/scrollpanel';
 // import { MenuItem } from 'primeng/api';
@@ -39,12 +41,14 @@ import { ToastModule } from 'primeng/toast';
     MenuModule,
     MenubarModule,
     MessagesModule,
+    MultiSelectModule,
     PaginatorModule,
     PanelMenuModule,
     PasswordModule,
     SidebarModule,
     ScrollTopModule,
     TableModule,
+    TagModule,
     ToastModule,
     // ScrollPanelModule,
   ],

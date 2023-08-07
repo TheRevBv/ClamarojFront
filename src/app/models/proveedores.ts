@@ -1,12 +1,10 @@
+import { Usuario } from '@models/usuarios';
+
 export interface Proveedor {
-    idProveedor?: number,
-    nombre?: string,
-    direccion?: string,
-    telefono?: string,
-    correo?: string,
-    password?: string,
-    foto?: string,
-    rfc?: string,
-    razonSocial?: string,
-    idStatus?: number
+  idProveedor: number;
+  direccion: string;
+  telefono: string;
+  rfc: string;
+  razonSocial: string;
+  usuario: Usuario;
 }

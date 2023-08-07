@@ -1,26 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UsuariosListComponent } from '@modules/usuarios/usuarios-list/usuarios-list.component';
+import { UsuariosFormComponent } from '@modules/usuarios/usuarios-form/usuarios-form.component';
 
 const routes: Routes = [
   {
     path: '',
     component: UsuariosListComponent,
-    children: [
-      /* {
-        path: 'agregar',
-        component: UsuariosFormComponent,
-      },
-      {
-        path: 'editar/:id',
-        component: UsuariosFormComponent,
-      },
-      {
-        path: 'eliminar/:id',
-        component: UsuariosFormComponent,
-      },
-      */
-    ],
+    // canActivate: [],
+  },
+  {
+    path: 'agregar',
+    component: UsuariosFormComponent,
+    // canActivate: [],
+  },
+  {
+    path: 'editar/:id',
+    component: UsuariosFormComponent,
+    // canActivate: [],
   },
   {
     path: '**',

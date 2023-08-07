@@ -1,31 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { PrimeNgModule } from '@app/primeng/prime-ng.module';
-
-import { ProveedoresRoutingModule } from './proveedores-routing.module';
-import { ProveedorListComponent } from './proveedor-list/proveedor-list.component';
-import { CreateComponent } from './create/create.component';
-import { EditComponent } from './edit/edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { PrimeNgModule } from '@primeng/prime-ng.module';
+
+import { ProveedoresRoutingModule } from './proveedores-routing.module';
+import { ProveedoresListComponent } from './proveedores-list/proveedores-list.component';
+import { ProveedoresFormComponent } from './proveedores-form/proveedores-form.component';
 
 @NgModule({
-  declarations: [
-    ProveedorListComponent,
-    CreateComponent,
-    EditComponent
-  ],
+  declarations: [ProveedoresListComponent, ProveedoresFormComponent],
   imports: [
     CommonModule,
     ProveedoresRoutingModule,
     PrimeNgModule,
     FormsModule,
     ReactiveFormsModule,
-    FormsModule,
   ],
-  exports: [
-    ProveedorListComponent
-  ]
 })
-export class ProveedoresModule { }
+export class ProveedoresModule {}

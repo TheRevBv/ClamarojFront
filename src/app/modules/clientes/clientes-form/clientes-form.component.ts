@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+
+import { MessageService } from 'primeng/api';
+
 import { Cliente } from '@models/clientes';
 import { Estatus } from '@models/estatus';
 import { ClientesService } from '@services/clientes.service';
-import { MessageService } from 'primeng/api';
+import { EstatusService } from '@services/estatus.service';
 
 @Component({
   selector: 'app-clientes-form',
@@ -43,11 +46,12 @@ export class ClientesFormComponent implements OnInit {
   patternRFC: string = '^[A-Z]{4}[0-9]{6}[A-Z0-9]{3}$';
 
   constructor(
-    private clienteSvc: ClientesService,
-    private router: Router,
     private route: ActivatedRoute,
+    private clienteSvc: ClientesService,
+    private statusSvc: EstatusService,
     private fb: FormBuilder,
-    private messageSvc: MessageService
+    private messageSvc: MessageService,
+    private router: Router
   ) {
     this.clienteForm = this.fb.group({
       nombre: [''],
@@ -58,8 +62,12 @@ export class ClientesFormComponent implements OnInit {
       direccion: [''],
       foto: [''],
       rfc: [''],
-      idStatus: [''],
+      idStatus: new FormControl<Estatus | null>(null),
       fechaNacimiento: new Date(1900, 0, 1),
+    });
+    this.statusSvc.getEstatus().subscribe((estatus) => {
+      console.log(estatus);
+      this.estatus = estatus;
     });
   }
 
@@ -75,20 +83,16 @@ export class ClientesFormComponent implements OnInit {
         this.clienteForm.patchValue({
           nombre: this.cliente.usuario.nombre,
           apellido: this.cliente.usuario.apellido,
-          correo: this.cliente.usuario.correo,
-          password: this.cliente.usuario.password,
+          correo: this.cliente.usuario.correo.toLowerCase(),
+          // password: this.cliente.usuario.password,
           telefono: this.cliente.telefono,
           direccion: this.cliente.direccion,
           foto: this.cliente.usuario.foto,
-          rfc: this.cliente.rfc,
+          rfc: this.cliente.rfc?.toUpperCase(),
           idStatus: this.cliente.usuario.idStatus,
           fechaNacimiento: new Date(this.cliente.usuario.fechaNacimiento!),
         });
       });
-      // this.clienteForm.get('correo')?.disable();
-      this.clienteForm.get('password')?.disable();
-      //TODO:AGREGAR SERVICIO DE ESTATUS
-      this.clienteForm.get('idStatus')?.disable();
       this.tipoForm = 'edit';
     } else {
       this.title = 'Agregar cliente';
@@ -148,7 +152,6 @@ export class ClientesFormComponent implements OnInit {
       .replace(' ', '')
       .trim();
     let fechaRegistro = new Date();
-    idStatus = 1;
     let rfcStr: string = rfc.toString().trim().toUpperCase();
 
     const cliente: Cliente = {
@@ -195,8 +198,8 @@ export class ClientesFormComponent implements OnInit {
     let {
       nombre,
       apellido,
-      // correo,
-      // password,
+      correo,
+      password,
       telefono,
       direccion,
       foto,
@@ -204,7 +207,6 @@ export class ClientesFormComponent implements OnInit {
       //TODO:AGREGAR SERVICIO DE ESTATUS
       idStatus,
       fechaNacimiento,
-      // fechaRegistro,
     } = this.clienteForm.value;
     let telefonoStr: string = telefono
       .toString()
@@ -225,13 +227,11 @@ export class ClientesFormComponent implements OnInit {
         id: this.cliente.usuario.id,
         nombre,
         apellido,
-        correo: this.cliente.usuario.correo,
-        password: this.cliente.usuario.password,
+        correo: correo.toLowerCase(),
+        password: password === '' ? this.cliente.usuario.password : password,
         foto,
         fechaNacimiento,
-        fechaRegistro: this.cliente.usuario.fechaRegistro,
-        //TODO:CAMBIAR POR EL IDSTATUS DEL CLIENTE
-        idStatus: this.cliente.usuario.idStatus,
+        idStatus: idStatus ? idStatus : this.cliente.usuario.idStatus,
       },
     };
     console.log(cliente);

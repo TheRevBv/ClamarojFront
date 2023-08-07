@@ -1,7 +1,7 @@
 <p-card>
   <ng-template pTemplate="header">
     <div class="flex flex-row justify-content-between mx-5">
-      <div class="flex flex-row">
+      <div class="flex flex-row mt-3">
         <div class="flex flex-column justify-content-center align-items-center">
           <i class="pi pi-users text-2xl"></i>
         </div>
@@ -9,38 +9,63 @@
           <h1 class="text-xl font-bold">Usuarios</h1>
         </div>
       </div>
-      <div class="flex flex-row">
+      <div class="flex flex-row mt-3 gap-2">
         <div class="flex flex-column justify-content-center align-items-center">
-          <button
-            pButton
-            type="button"
+          <p-button
+            label="Nuevo"
             icon="pi pi-plus"
-            class="p-button-rounded p-button-success p-mr-2"
-          ></button>
+            styleClass="p-button-rounded p-button-success p-mr-2"
+            [routerLink]="['agregar']"
+          ></p-button>
+        </div>
+        <div class="flex flex-column justify-content-center align-items-center">
+          <p-button
+            label="Editar"
+            icon="pi pi-pencil"
+            styleClass="p-button-rounded p-button-warning"
+            [routerLink]="['editar', selectedUsuario?.id]"
+            [disabled]="!selectedUsuario"
+          ></p-button>
+        </div>
+        <div class="flex flex-column justify-content-center align-items-center">
+          <p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>
+          <p-button
+            label="Eliminar"
+            icon="pi pi-trash"
+            styleClass="p-button-rounded p-button-danger"
+            (click)="deleteUsuario()"
+            [disabled]="!selectedUsuario"
+          ></p-button>
         </div>
       </div>
     </div>
   </ng-template>
-
+  <p-toast position="top-left"></p-toast>
   <p-table
     [value]="usuarios"
     [lazy]="true"
+    (onRowSelect)="onRowSelect($event)"
     (onLazyLoad)="loadUsuarios($event)"
     dataKey="id"
     [tableStyle]="{ 'min-width': '50rem' }"
-    [selection]="selectedUsuarios"
-    (selectionChange)="onSelectionChange($event)"
+    [(selection)]="selectedUsuario"
     [paginator]="true"
     [rows]="10"
     [totalRecords]="totalRecords"
     [loading]="loading"
-    [globalFilterFields]="['nombre', 'apellido', 'correo', 'fechaNacimiento']"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [globalFilterFields]="[
+      'id',
+      'nombre',
+      'apellido',
+      'correo',
+      'fechaNacimiento'
+    ]"
   >
-    <!-- [selectAll]="selectAll" -->
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 2rem"></th>
-        <th pSortableColumn="id">Code <p-sortIcon field="id"></p-sortIcon></th>
+        <th style="width: 1rem"></th>
+        <th pSortableColumn="id">ID <p-sortIcon field="id"></p-sortIcon></th>
         <th pSortableColumn="nombre">
           Nombre <p-sortIcon field="nombre"></p-sortIcon>
         </th>
@@ -51,11 +76,14 @@
           Correo <p-sortIcon field="correo"></p-sortIcon>
         </th>
         <th pSortableColumn="fechaNacimiento">
-          Fecha de Nacimiento <p-sortIcon field="fechaNacimiento"></p-sortIcon>
+          Fecha de nacimiento <p-sortIcon field="fechaNacimiento"></p-sortIcon>
+        </th>
+        <th pSortableColumn="estatus">
+          Estatus <p-sortIcon field="estatus"></p-sortIcon>
         </th>
       </tr>
       <tr>
-        <th style="width: 2rem"></th>
+        <th style="width: 1rem"></th>
         <th>
           <p-columnFilter type="text" field="id"></p-columnFilter>
         </th>
@@ -71,6 +99,9 @@
         <th>
           <p-columnFilter type="text" field="fechaNacimiento"></p-columnFilter>
         </th>
+        <th>
+          <p-columnFilter type="text" field="estatus"></p-columnFilter>
+        </th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-usuario>
@@ -83,6 +114,12 @@
         <td>{{ usuario.apellido }}</td>
         <td>{{ usuario.correo }}</td>
         <td>{{ usuario.fechaNacimiento | date : "dd/MM/yyyy" }}</td>
+        <td>
+          <p-tag
+            [value]="usuario.estatus"
+            [severity]="getSeverity(usuario.estatus)"
+          ></p-tag>
+        </td>
       </tr>
     </ng-template>
   </p-table>

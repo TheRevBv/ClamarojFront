@@ -1,35 +1,29 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProveedorListComponent } from './proveedor-list/proveedor-list.component';
-import { CreateComponent } from './create/create.component';
-import { EditComponent } from './edit/edit.component';
+import { ProveedoresListComponent } from './proveedores-list/proveedores-list.component';
+import { ProveedoresFormComponent } from './proveedores-form/proveedores-form.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ProveedorListComponent,
-  },// children: [
+    component: ProveedoresListComponent,
+  },
   {
     path: 'agregar',
-    component: CreateComponent,
+    component: ProveedoresFormComponent,
   },
   {
     path: 'editar/:id',
-    component: EditComponent,
+    component: ProveedoresFormComponent,
   },
-  // ]},
   {
     path: '**',
     redirectTo: '',
-    pathMatch: 'full',
   },
 ];
 
-
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-
-
-export class ProveedoresRoutingModule { }
+export class ProveedoresRoutingModule {}

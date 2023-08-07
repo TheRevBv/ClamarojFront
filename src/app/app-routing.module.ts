@@ -6,7 +6,7 @@ const routes: Routes = [
     path: 'inicio',
     title: 'Inicio Clamaroj',
     loadChildren: () =>
-      import('@modules/inicio-clientes/inicio-clientes.module').then(
+      import('@pages/inicio-clientes/inicio-clientes.module').then(
         (m) => m.InicioClientesModule
       ),
   },
@@ -17,6 +17,19 @@ const routes: Routes = [
       import('@pages/admin-panel/admin-panel.module').then(
         (m) => m.AdminPanelModule
       ),
+  },
+  {
+    path: 'portal-proveedores',
+    title: 'Portal Proveedores Clamaroj',
+    loadChildren: () =>
+      import('@pages/portal-proveedores/portal-proveedores.module').then(
+        (m) => m.PortalProveedoresModule
+      ),
+  },
+  {
+    path: '**',
+    pathMatch: 'full',
+    redirectTo: 'inicio',
   },
 ];
 

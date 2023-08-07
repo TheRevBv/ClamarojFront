@@ -1,5 +1,5 @@
 export interface Estatus {
-  id: number;
+  idEstatus: number;
   nombre: string;
   // descripcion: string;
 }
