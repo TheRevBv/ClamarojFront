@@ -41,9 +41,9 @@ export class ProductoFormComponent implements OnInit{
       codigo: [''],
       nombre: [''],
       descripcion: [''],
-      precio: 0,
+      precio: [''],
       foto: [''],
-      merma: 0,
+      merma: [''],
       idStatus: [''],
     });
   }
@@ -105,7 +105,7 @@ export class ProductoFormComponent implements OnInit{
   }
 
   cancelar() {
-    this.router.navigate(['admin', 'producto']);
+    this.router.navigate(['admin', 'inventario', 'productos']);
   }
 
   agregar() {
@@ -144,7 +144,7 @@ export class ProductoFormComponent implements OnInit{
           summary: 'Producto agregado',
           detail: '',
         });
-        this.router.navigate(['admin', 'productos']);
+        this.router.navigate(['admin', 'inventario', 'productos']);
       },
       (err) => {
         console.log(err);
@@ -192,7 +192,7 @@ export class ProductoFormComponent implements OnInit{
           summary: 'Producto editado',
           detail: '',
         });
-        this.router.navigate(['admin', 'productos']);
+        this.router.navigate(['admin', 'inventario', 'productos']);
       },
       (err) => {
         console.log(err);
