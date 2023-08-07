@@ -21,6 +21,7 @@ import { PasswordModule } from 'primeng/password';
 import { SidebarModule } from 'primeng/sidebar';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 // import { ScrollPanelModule } from 'primeng/scrollpanel';
 // import { MenuItem } from 'primeng/api';
@@ -47,6 +48,7 @@ import { ToastModule } from 'primeng/toast';
     SidebarModule,
     ScrollTopModule,
     TableModule,
+    TagModule,
     ToastModule,
     // ScrollPanelModule,
   ],

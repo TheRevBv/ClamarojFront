@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TableLazyLoadEvent } from 'primeng/table';
-import { Usuario } from '@models/usuarios';
-import { UsuariosService } from '@services/usuarios.service';
 import {
   ConfirmEventType,
   ConfirmationService,
   MessageService,
 } from 'primeng/api';
-import { ActivatedRoute, Router } from '@angular/router';
+import { EstatusService } from '@services/estatus.service';
+import { UsuariosService } from '@services/usuarios.service';
+import { Estatus } from '@models/estatus';
+import { Usuario } from '@models/usuarios';
 
 @Component({
   selector: 'app-usuarios-list',
@@ -21,13 +23,15 @@ export class UsuariosListComponent implements OnInit {
   loading = true;
   selectAll: boolean = false;
   selectedUsuario!: any;
+  estatus: Estatus[] = [];
 
   constructor(
-    private usuariosSvc: UsuariosService,
+    private activatedRoute: ActivatedRoute,
+    private confirmationSvc: ConfirmationService,
     private messageSvc: MessageService,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private confirmationSvc: ConfirmationService
+    private statusSvc: EstatusService,
+    private usuariosSvc: UsuariosService
   ) {}
 
   ngOnInit(): void {}
@@ -42,12 +46,13 @@ export class UsuariosListComponent implements OnInit {
           this.totalRecords = usuario.length;
           this.loading = false;
         });
+      this.statusSvc.getEstatus().subscribe((data) => {
+        this.estatus = data;
+      });
     }, 1000);
   }
 
   onRowSelect(event: any) {
-    // this.selectedUsuario = event.data;
-    // console.log(this.selectedUsuario);
     this.messageSvc.add({
       severity: 'info',
       summary: 'Usuario seleccionado',
@@ -70,8 +75,10 @@ export class UsuariosListComponent implements OnInit {
               summary: 'Usuario eliminado',
               detail: `${this.selectedUsuario.nombre} ha sido eliminado`,
             });
-            this.router.navigate(['/admin/usuarios']);
+            // this.router.navigate(['admin', 'usuarios']);
           });
+        this.loadUsuarios({ first: 0, rows: 10 });
+        this.router.navigate(['admin', 'usuarios']);
       },
       reject: (type: any) => {
         switch (type) {
@@ -92,5 +99,18 @@ export class UsuariosListComponent implements OnInit {
         }
       },
     });
+  }
+
+  getSeverity(status: string): string {
+    switch (status.toLowerCase()) {
+      case 'inactivo':
+        return 'danger';
+      case 'activo':
+        return 'success';
+      case 'pendiente':
+        return 'warning';
+      default:
+        return 'info';
+    }
   }
 }
