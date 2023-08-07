@@ -8,6 +8,7 @@ import { UsuariosService } from '@services/usuarios.service';
 import { Estatus } from '@models/estatus';
 import { Usuario } from '@models/usuarios';
 import { Rol } from '@models/rol';
+import { RolesService } from '@services/roles.service';
 
 @Component({
   selector: 'app-usuarios-form',
@@ -42,6 +43,7 @@ export class UsuariosFormComponent implements OnInit {
     private fb: FormBuilder,
     private messageSvc: MessageService,
     private router: Router,
+    private rolesSvc: RolesService,
     private usuariosSvc: UsuariosService
   ) {
     this.usuarioForm = this.fb.group({
@@ -56,9 +58,8 @@ export class UsuariosFormComponent implements OnInit {
       idStatus: new FormControl<Estatus | null>(null),
       roles: new FormControl<Rol[] | null>(null),
     });
-    this.statusSvc.getEstatus().subscribe((data) => {
-      this.estatus = data;
-    });
+    this.getRoles();
+    this.getEstatus();
   }
 
   ngOnInit(): void {
@@ -72,7 +73,7 @@ export class UsuariosFormComponent implements OnInit {
       this.title = `Editar usuario ${id}`;
       this.tipoForm = 'E';
       this.usuariosSvc.getUsuario(+id).subscribe((data) => {
-        console.log(data);
+        // console.log(data);
         this.usuario = data;
         this.usuarioForm.patchValue({
           nombre: this.usuario.nombre,
@@ -83,10 +84,11 @@ export class UsuariosFormComponent implements OnInit {
           foto: this.usuario.foto,
           fechaNacimiento: new Date(this.usuario.fechaNacimiento!),
           idStatus: this.usuario.idStatus,
-          // roles: this.usuario.roles,
+          // rols: this.usuario.roles?.map((rol) => rol.id),
+          roles: this.getRolesIds(this.usuario.roles!),
         });
       });
-      // console.log(this.usuarioForm);
+      // console.log(this.usuarioForm.value);
       // this.usuarioForm.get('correo')?.disable();
       // this.usuarioForm.get('idStatus')?.disable();
     } else {
@@ -95,7 +97,41 @@ export class UsuariosFormComponent implements OnInit {
     }
   }
 
+  getRoles(): void {
+    this.rolesSvc.getRoles().subscribe((data) => {
+      this.roles = data;
+    });
+  }
+
+  getEstatus(): void {
+    this.statusSvc.getEstatus().subscribe((data) => {
+      this.estatus = data;
+    });
+  }
+
+  //Convertir arreglo de roles a arreglo de numeros
+  getRolesIds(roles: Rol[]): number[] {
+    let rolesIds: number[] = [];
+    roles.forEach((rol) => {
+      rolesIds.push(rol.id);
+    });
+    return rolesIds;
+  }
+
+  //Convertir arreglo de numeros a arreglo de roles
+  getRolesFromIds(rolesIds: number[]): Rol[] {
+    let roles: Rol[] = [];
+    rolesIds.forEach((rolId) => {
+      let rol = this.roles.find((rol) => rol.id === rolId);
+      if (rol) {
+        roles.push(rol);
+      }
+    });
+    return roles;
+  }
+
   onSubmit(): void {
+    // console.log(this.usuarioForm.value);
     switch (this.tipoForm) {
       case 'N':
         this.agregar();
@@ -141,7 +177,7 @@ export class UsuariosFormComponent implements OnInit {
       foto,
       fechaNacimiento,
       idStatus: idStatus ? idStatus : 1,
-      // roles: roles ? roles : [],
+      roles: roles ? this.getRolesFromIds(roles) : [],
     };
     console.log(usuario);
     this.usuariosSvc.addUsuario(usuario).subscribe(
@@ -172,6 +208,7 @@ export class UsuariosFormComponent implements OnInit {
       foto,
       fechaNacimiento,
       idStatus,
+      roles,
     } = this.usuarioForm.value;
     const usuario: Usuario = {
       id: this.usuario.id,
@@ -181,8 +218,8 @@ export class UsuariosFormComponent implements OnInit {
       password: password === '' ? this.usuario.password : password,
       foto,
       fechaNacimiento,
-      idStatus: idStatus ? idStatus.id : this.usuario.idStatus,
-      // roles: this.usuario.roles,
+      idStatus: idStatus ? idStatus : this.usuario.idStatus,
+      roles: roles ? this.getRolesFromIds(roles) : [],
       // fechaRegistro: this.usuario.fechaRegistro,
     };
     console.log(usuario);

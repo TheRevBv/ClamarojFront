@@ -115,14 +115,16 @@
         </div>
         <div class="field col-12 md:col-4 mb-5">
           <span class="p-float-label">
-            <!-- <form [formGroup]="formGroup"> -->
             <p-multiSelect
               [options]="roles"
               formControlName="roles"
-              optionLabel="name"
+              optionLabel="nombre"
+              optionValue="id"
+              display="chip"
               styleClass="w-full"
+              [filter]="true"
+              [required]="true"
             ></p-multiSelect>
-            <!-- </form> -->
             <label for="float-label">Roles</label>
           </span>
         </div>
