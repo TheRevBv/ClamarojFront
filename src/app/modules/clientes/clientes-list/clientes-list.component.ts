@@ -93,5 +93,6 @@ export class ClientesListComponent implements OnInit {
         }
       },
     });
+    this.router.navigate(['admin', 'clientes']);
   }
 }

@@ -91,6 +91,27 @@ export class SidebarComponent implements OnInit {
         ],
       },
       {
+        label: 'Producción',
+        icon: 'pi pi-fw pi-cog',
+        items: [
+          // {
+          //   label: 'Producción',
+          //   icon: 'pi pi-fw pi-cog',
+          //   routerLink: '/produccion',
+          // },
+          {
+            label: 'Recetas',
+            icon: 'fa fa-book fa-fw',
+            routerLink: '/produccion/recetas',
+          },
+          {
+            label: 'Unidades de Medida',
+            icon: 'fa fa-cutlery fa-fw',
+            routerLink: '/produccion/unidades-medida',
+          },
+        ],
+      },
+      {
         label: 'Ventas',
         icon: 'pi pi-fw pi-dollar',
         items: [

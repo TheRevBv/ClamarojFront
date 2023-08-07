@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProveedoresListComponent } from './proveedores-list/proveedores-list.component';
-import { ProveedoresFormComponent } from './proveedores-form/proveedores-form.component';
+import { RecetasListComponent } from './recetas-list/recetas-list.component';
+import { RecetasFormComponent } from './recetas-form/recetas-form.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ProveedoresListComponent,
+    component: RecetasListComponent,
   },
   {
     path: 'agregar',
-    component: ProveedoresFormComponent,
+    component: RecetasFormComponent,
   },
   {
     path: 'editar/:id',
-    component: ProveedoresFormComponent,
+    component: RecetasFormComponent,
   },
   {
     path: '**',
@@ -26,4 +26,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ProveedoresRoutingModule {}
+export class RecetasRoutingModule {}
