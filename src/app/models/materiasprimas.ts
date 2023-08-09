@@ -1,5 +1,5 @@
-//import { Proveedor } from '@models/proveedor';
-//import { UnidadMedida } from '@models/unidadmedida';
+import { Proveedor } from "./proveedores";
+import { UnidadMedida } from "./unidades-medida";
 
 export interface MateriaPrima {
     id?: number;
@@ -10,10 +10,10 @@ export interface MateriaPrima {
     stock: number;
     cant_minima: number;
     cant_maxima:number;
-    unidad_medida?: number; //Medida
+    unidad_medida: UnidadMedida;
     precio: number;
     foto: any;
-    proveedor?: number; //Proveedor
+    proveedor: Proveedor;
     idStatus: number;
     fechaRegistro: Date;
     fechaModificacion: Date;

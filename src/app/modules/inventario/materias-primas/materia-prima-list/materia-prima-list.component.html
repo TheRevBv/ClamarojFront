@@ -3,10 +3,10 @@
       <div class="flex flex-row justify-content-between mx-5">
         <div class="flex flex-row mt-3">
           <div class="flex flex-column justify-content-center align-items-center">
-            <i class="fa fa-beer fa-fw text-2xl"></i>
+            <i class="fa fa-fw fa-cubes text-2xl"></i>
           </div>
           <div class="flex flex-column justify-content-center">
-            <h1 class="text-xl font-bold">&nbsp;Productos</h1>
+            <h1 class="text-xl font-bold">&nbsp;Materias Primas</h1>
           </div>
         </div>
         <div class="flex flex-row mt-3 gap-2">
@@ -23,8 +23,8 @@
               label="Editar"
               icon="pi pi-pencil"
               styleClass="p-button-rounded p-button-warning p-mr-2"
-              [routerLink]="['editar', selectedProducto?.idProducto]"
-              [disabled]="!selectedProducto"
+              [routerLink]="['editar', selectedMateriaPrima?.id]"
+              [disabled]="!selectedMateriaPrima"
             ></p-button>
           </div>
           <div class="flex flex-column justify-content-center align-items-center">
@@ -33,8 +33,8 @@
               label="Eliminar"
               icon="pi pi-trash"
               styleClass="p-button-rounded p-button-danger"
-              (click)="deleteProducto()"
-              [disabled]="!selectedProducto"
+              (click)="deleteMateriaPrima()"
+              [disabled]="!selectedMateriaPrima"
             ></p-button>
           </div>
         </div>
@@ -42,19 +42,19 @@
     </ng-template>
     <p-toast></p-toast>
     <p-table
-      [value]="productos"
+      [value]="materiasPrimas"
       [lazy]="true"
       (onRowSelect)="onRowSelect($event)"
-      (onLazyLoad)="loadProductos($event)"
-      dataKey="idProducto"
+      (onLazyLoad)="loadMateriasPrimas($event)"
+      dataKey="id"
       [tableStyle]="{ 'min-width': '50rem' }"
-      [(selection)]="selectedProducto"
+      [(selection)]="selectedMateriaPrima"
       [paginator]="true"
       [rows]="10"
       [totalRecords]="totalRecords"
       [loading]="loading"
       [rowsPerPageOptions]="[10, 25, 50]"
-      [globalFilterFields]="['codigo', 'nombre', 'descripcion', 'precio', 'idStatus']"
+      [globalFilterFields]="['codigo', 'nombre', 'descripcion', 'stock', 'precio', 'proveedor.razonSocial', 'idStatus']"
     >
       <ng-template pTemplate="header">
         <tr>
@@ -68,8 +68,14 @@
           <th pSortableColumn="descripcion">
             Descripción <p-sortIcon field="descripcion"></p-sortIcon>
           </th>
+          <th pSortableColumn="stock">
+            Stock <p-sortIcon field="stock"></p-sortIcon>
+          </th>
           <th pSortableColumn="precio">
             Precio <p-sortIcon field="precio"></p-sortIcon>
+          </th>
+          <th pSortableColumn="proveedor.razonSocial">
+            Proveedor <p-sortIcon field="proveedor.razonSocial"></p-sortIcon>
           </th>
           <th pSortableColumn="idStatus">
             Estatus <p-sortIcon field="idStatus"></p-sortIcon>
@@ -89,23 +95,31 @@
             <p-columnFilter type="text" field="descripcion"></p-columnFilter>
           </th>
           <th>
+            <p-columnFilter type="text" field="stock"></p-columnFilter>
+          </th>
+          <th>
             <p-columnFilter type="text" field="precio"></p-columnFilter>
+          </th>
+          <th>
+            <p-columnFilter type="text" field="proveedor"></p-columnFilter>
           </th>
           <th>
             <p-columnFilter type="text" field="idStatus"></p-columnFilter>
           </th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-producto>
+      <ng-template pTemplate="body" let-materiaPrima>
         <tr>
           <td>
-            <p-tableRadioButton [value]="producto"></p-tableRadioButton>
+            <p-tableRadioButton [value]="materiaPrima"></p-tableRadioButton>
           </td>
-          <td>{{ producto.codigo }}</td>
-          <td>{{ producto.nombre }}</td>
-          <td>{{ producto.descripcion }}</td>
-          <td>{{ producto.precio }}</td>
-          <td>{{ producto.idStatus }}</td>
+          <td>{{ materiaPrima.codigo }}</td>
+          <td>{{ materiaPrima.nombre }}</td>
+          <td>{{ materiaPrima.descripcion }}</td>
+          <td>{{ materiaPrima.stock }}</td>
+          <td>{{ materiaPrima.precio }}</td>
+          <td>{{ materiaPrima.proveedor.razonSocial }}</td>
+          <td>{{ materiaPrima.idStatus }}</td>
         </tr>
       </ng-template>
     </p-table>

@@ -81,7 +81,7 @@ export class SidebarComponent implements OnInit {
           {
             label: 'Materia Prima',
             icon: 'fa fa-fw fa-cubes',
-            routerLink: '/inventario/materia-prima',
+            routerLink: '/inventario/materias-primas',
           },
           // {
           //   label: 'Categorías',
