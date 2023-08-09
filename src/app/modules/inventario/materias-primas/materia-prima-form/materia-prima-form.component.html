@@ -1,239 +1,238 @@
 <p-card>
-    <ng-template pTemplate="header">
-      <div class="flex flex-row justify-content-between mx-5">
-        <div class="flex flex-row">
-          <div class="flex flex-column justify-content-center align-items-center">
-            <i class="fa fa-fw fa-cubes text-2xl"></i>
-          </div>
-          <div class="flex flex-column justify-content-center">
-            <h1 class="text-xl font-bold">&nbsp;{{ title }}</h1>
-          </div>
+  <ng-template pTemplate="header">
+    <div class="flex flex-row justify-content-between mx-5">
+      <div class="flex flex-row">
+        <div class="flex flex-column justify-content-center align-items-center">
+          <i class="fa fa-fw fa-cubes text-2xl"></i>
+        </div>
+        <div class="flex flex-column justify-content-center">
+          <h1 class="text-xl font-bold">&nbsp;{{ title }}</h1>
         </div>
       </div>
-    </ng-template>
-    <ng-template pTemplate="body">
-      <form [formGroup]="materiaPrimaForm" (ngSubmit)="onSubmit()">
-        <div class="formgrid grid">
-          <div class="field col-12 md:col-4 mb-5">
+    </div>
+  </ng-template>
+  <ng-template pTemplate="body">
+    <form [formGroup]="materiaPrimaForm" (ngSubmit)="onSubmit()">
+      <div class="formgrid grid">
+        <div class="field col-12 md:col-4 mb-5">
+          <input
+            id="disabled-input"
+            type="text"
+            pInputText
+            [disabled]="true"
+            class="w-full"
+            [value]="materiaPrima.id"
+          />
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
             <input
-              id="disabled-input"
-              type="text"
               pInputText
-              [disabled]="true"
+              id="codigo"
+              formControlName="codigo"
               class="w-full"
-              [value]="materiaPrima.id"
+              [required]="true"
+              [minlength]="3"
+              [maxlength]="45"
             />
-          </div>
-          <div class="field col-12 md:col-4 mb-5">
-            <span class="p-float-label">
-              <input
-                pInputText
-                id="codigo"
-                formControlName="codigo"
-                class="w-full"
-                [required]="true"
-                [minlength]="3"
-                [maxlength]="45"
-              />
-              <label htmlFor="nombre">Código</label>
-            </span>
-          </div>
-          <div class="field col-12 md:col-4 mb-5">
-            <span class="p-float-label">
-              <input
-                pInputText
-                id="nombre"
-                formControlName="nombre"
-                class="w-full"
-                [required]="true"
-                [minlength]="3"
-                [maxlength]="45"
-              />
-              <label htmlFor="nombre">Nombre</label>
-            </span>
-          </div>
-          <div class="field col-12 md:col-4 mb-5">
-            <span class="p-float-label">
-              <input
-                pInputText
-                id="descripcion"
-                formControlName="descripcion"
-                class="w-full"
-                [required]="true"
-                [minlength]="3"
-                [maxlength]="45"
-              />
-              <label htmlFor="descripcion">Descripción</label>
-            </span>
-          </div>
-          <div class="field col-12 md:col-4 mb-5">
-            <span class="p-float-label">
-              <input
-                pInputNumber
-                id="perecedero"
-                formControlName="perecedero"
-                class="w-full"
-                mode="decimal"
-                prefix="$ "
-                [required]="true"
-                [min]="1"
-              />
-              <label htmlFor="perecedero">Perecedero</label>
-            </span>
-          </div>
-          <div class="field col-12 md:col-4 mb-5">
-            <span class="p-float-label">
-              <input
-                pInputNumber
-                id="stock"
-                formControlName="stock"
-                class="w-full"
-                mode="decimal"
-                prefix="$ "
-                [required]="true"
-                [min]="1"
-              />
-              <label htmlFor="stock">Stock</label>
-            </span>
-          </div>
-          <div class="field col-12 md:col-4 mb-5">
-            <span class="p-float-label">
-              <input
-                pInputNumber
-                id="cant_minima"
-                formControlName="cant_minima"
-                class="w-full"
-                mode="decimal"
-                prefix="$ "
-                [required]="true"
-                [min]="1"
-              />
-              <label htmlFor="cant_minima">Cantidad Mínima</label>
-            </span>
-          </div>
-          <div class="field col-12 md:col-4 mb-5">
-            <span class="p-float-label">
-              <input
-                pInputNumber
-                id="cant_maxima"
-                formControlName="cant_maxima"
-                class="w-full"
-                mode="decimal"
-                prefix="$ "
-                [required]="true"
-                [min]="1"
-              />
-              <label htmlFor="cant_maxima">Cantidad Máxima</label>
-            </span>
-          </div>
-          <div class="field col-12 md:col-4 mb-5">
-            <span class="p-float-label">
-              <input
-                pInputNumber
-                id="precio"
-                formControlName="precio"
-                class="w-full"
-                mode="decimal"
-                prefix="$ "
-                [required]="true"
-                [min]="1"
-              />
-              <label htmlFor="precio">Precio</label>
-            </span>
-          </div>
-          <div class="field col-12 md:col-4 mb-5">
-            <span class="p-float-label">
-              <p-dropdown
-                [options]="estatus"
-                formControlName="idStatus"
-                [style]="{ width: '100%' }"
-                [showClear]="true"
-                optionValue="idEstatus"
-                optionLabel="nombre"
-                [filter]="true"
-                [required]="true"
-                [placeholder]="'Seleccione un estatus'"
-              >
-              </p-dropdown>
-              <label for="float-label">Estatus</label>
-            </span>
-          </div>
-          <div class="field col-12 md:col-4 mb-5">
-            <span class="p-float-label">
-              <p-dropdown
-                [options]="unidades_medida"
-                formControlName="unidad_medida"
-                [style]="{ width: '100%' }"
-                [showClear]="true"
-                optionValue="idUnidadMedida"
-                optionLabel="abreviatura"
-                [filter]="true"
-                [required]="true"
-                [placeholder]="'Seleccione una unidad de medida'"
-              >
-              </p-dropdown>
-              <label for="float-label">Unidad de Medida</label>
-            </span>
-          </div>
-          <div class="field col-12 md:col-4 mb-5">
-            <span class="p-float-label">
-              <p-dropdown
-                [options]="proveedores"
-                formControlName="proveedor"
-                [style]="{ width: '100%' }"
-                [showClear]="true"
-                optionValue="idProveedor"
-                optionLabel="razonSocial"
-                [filter]="true"
-                [required]="true"
-                [placeholder]="'Seleccione un proveedor'"
-              >
-              </p-dropdown>
-              <label for="float-label">Proveedor</label>
-            </span>
-          </div>
-          <div class="field col-12 md:col-4 mb-5">
-            <p-toast position="top-left"></p-toast>
-            <p-fileUpload
-              name="image"
-              chooseLabel="Seleccionar imagen"
-              [showUploadButton]="false"
-              (onSelect)="onSelectFile($event)"
-              [maxFileSize]="1000000"
-              accept="image/*"
-            ></p-fileUpload>
-          </div>
-          <div class="field col-12 md:col-4 mb-5" *ngIf="materiaPrima.foto">
-            <p-image
-              [src]="materiaPrima.foto"
-              alt="Image"
-              width="250"
-              [preview]="true"
-            ></p-image>
-          </div>
+            <label htmlFor="nombre">Código</label>
+          </span>
         </div>
-        <div class="flex flex-row justify-content-end">
-          <div class="p-col-12 p-md-3 p-lg-3 mr-3">
-            <button
-              pButton
-              pRipple
-              type="submit"
-              label="Guardar"
-              class="p-button-success p-button-rounded p-button-outlined"
-            ></button>
-          </div>
-          <div class="p-col-12 p-md-3 p-lg-3">
-            <button
-              pButton
-              pRipple
-              type="button"
-              label="Cancelar"
-              (click)="cancelar()"
-              class="p-button-danger p-button-rounded p-button-outlined"
-            ></button>
-          </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <input
+              pInputText
+              id="nombre"
+              formControlName="nombre"
+              class="w-full"
+              [required]="true"
+              [minlength]="3"
+              [maxlength]="45"
+            />
+            <label htmlFor="nombre">Nombre</label>
+          </span>
         </div>
-      </form>
-    </ng-template>
-  </p-card>
-  
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <input
+              pInputText
+              id="descripcion"
+              formControlName="descripcion"
+              class="w-full"
+              [required]="true"
+              [minlength]="3"
+              [maxlength]="45"
+            />
+            <label htmlFor="descripcion">Descripción</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <input
+              pInputNumber
+              id="perecedero"
+              formControlName="perecedero"
+              class="w-full"
+              mode="decimal"
+              prefix="$ "
+              [required]="true"
+              [min]="1"
+            />
+            <label htmlFor="perecedero">Perecedero</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <input
+              pInputNumber
+              id="stock"
+              formControlName="stock"
+              class="w-full"
+              mode="decimal"
+              prefix="$ "
+              [required]="true"
+              [min]="1"
+            />
+            <label htmlFor="stock">Stock</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <input
+              pInputNumber
+              id="cant_minima"
+              formControlName="cant_minima"
+              class="w-full"
+              mode="decimal"
+              prefix="$ "
+              [required]="true"
+              [min]="1"
+            />
+            <label htmlFor="cant_minima">Cantidad Mínima</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <input
+              pInputNumber
+              id="cant_maxima"
+              formControlName="cant_maxima"
+              class="w-full"
+              mode="decimal"
+              prefix="$ "
+              [required]="true"
+              [min]="1"
+            />
+            <label htmlFor="cant_maxima">Cantidad Máxima</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <input
+              pInputNumber
+              id="precio"
+              formControlName="precio"
+              class="w-full"
+              mode="decimal"
+              prefix="$ "
+              [required]="true"
+              [min]="1"
+            />
+            <label htmlFor="precio">Precio</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <p-dropdown
+              [options]="estatus"
+              formControlName="idStatus"
+              [style]="{ width: '100%' }"
+              [showClear]="true"
+              optionValue="idEstatus"
+              optionLabel="nombre"
+              [filter]="true"
+              [required]="true"
+              [placeholder]="'Seleccione un estatus'"
+            >
+            </p-dropdown>
+            <label for="float-label">Estatus</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <p-dropdown
+              [options]="unidades_medida"
+              formControlName="unidad_medida"
+              [style]="{ width: '100%' }"
+              [showClear]="true"
+              optionValue="idUnidadMedida"
+              optionLabel="abreviatura"
+              [filter]="true"
+              [required]="true"
+              [placeholder]="'Seleccione una unidad de medida'"
+            >
+            </p-dropdown>
+            <label for="float-label">Unidad de Medida</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <p-dropdown
+              [options]="proveedores"
+              formControlName="proveedor"
+              [style]="{ width: '100%' }"
+              [showClear]="true"
+              optionValue="idProveedor"
+              optionLabel="razonSocial"
+              [filter]="true"
+              [required]="true"
+              [placeholder]="'Seleccione un proveedor'"
+            >
+            </p-dropdown>
+            <label for="float-label">Proveedor</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <p-toast position="top-left"></p-toast>
+          <p-fileUpload
+            name="image"
+            chooseLabel="Seleccionar imagen"
+            [showUploadButton]="false"
+            (onSelect)="onSelectFile($event)"
+            [maxFileSize]="1000000"
+            accept="image/*"
+          ></p-fileUpload>
+        </div>
+        <div class="field col-12 md:col-4 mb-5" *ngIf="materiaPrima.foto">
+          <p-image
+            [src]="materiaPrima.foto"
+            alt="Image"
+            width="250"
+            [preview]="true"
+          ></p-image>
+        </div>
+      </div>
+      <div class="flex flex-row justify-content-end">
+        <div class="p-col-12 p-md-3 p-lg-3 mr-3">
+          <button
+            pButton
+            pRipple
+            type="submit"
+            label="Guardar"
+            class="p-button-success p-button-rounded p-button-outlined"
+          ></button>
+        </div>
+        <div class="p-col-12 p-md-3 p-lg-3">
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Cancelar"
+            (click)="cancelar()"
+            class="p-button-danger p-button-rounded p-button-outlined"
+          ></button>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+</p-card>

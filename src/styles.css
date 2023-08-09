@@ -9,3 +9,7 @@ body {
 .input-password .p-password-input {
   width: 100% !important;
 }
+
+.input-numbers #currency-us {
+  width: 100% !important;
+}

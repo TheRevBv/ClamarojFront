@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Proveedor } from '@models/proveedores';
 import { UnidadMedida } from '@models/unidades-medida';
@@ -17,8 +17,7 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./materia-prima-form.component.css'],
   providers: [MessageService],
 })
-export class MateriaPrimaFormComponent implements OnInit{
-
+export class MateriaPrimaFormComponent implements OnInit {
   materiaPrimaForm!: FormGroup;
   title = '';
   tipoForm: string = '';
@@ -43,7 +42,7 @@ export class MateriaPrimaFormComponent implements OnInit{
     proveedor: this.proveedor,
     idStatus: 0,
     fechaRegistro: new Date(),
-    fechaModificacion: new Date()
+    fechaModificacion: new Date(),
   };
 
   constructor(
@@ -70,7 +69,7 @@ export class MateriaPrimaFormComponent implements OnInit{
       proveedor: new FormControl<Proveedor | null>(null),
       idStatus: new FormControl<Estatus | null>(null),
       fechaRegistro: new Date(),
-      fechaModificacion: new Date()
+      fechaModificacion: new Date(),
     });
     this.getEstatus();
     this.getProveedores();
@@ -79,8 +78,7 @@ export class MateriaPrimaFormComponent implements OnInit{
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    if(id !== null)
-    {
+    if (id !== null) {
       this.title = `Editar materia prima ${id}`;
       this.tipoForm = 'E';
       this.materiaPrimaSvc.getMateriaPrima(+id).subscribe((data) => {
@@ -97,12 +95,10 @@ export class MateriaPrimaFormComponent implements OnInit{
           precio: this.materiaPrima.precio,
           foto: this.materiaPrima.foto,
           proveedor: this.materiaPrima.proveedor.idProveedor,
-          idStatus: this.materiaPrima.idStatus
+          idStatus: this.materiaPrima.idStatus,
         });
       });
-    }
-    else
-    {
+    } else {
       this.title = 'Nueva materia prima';
       this.tipoForm = 'N';
     }
@@ -127,8 +123,7 @@ export class MateriaPrimaFormComponent implements OnInit{
   }
 
   onSubmit(): void {
-    switch(this.tipoForm)
-    {
+    switch (this.tipoForm) {
       case 'N':
         this.agregar();
         break;
@@ -154,8 +149,7 @@ export class MateriaPrimaFormComponent implements OnInit{
     });
   }
 
-  agregar():void
-  {
+  agregar(): void {
     let {
       codigo,
       nombre,
@@ -168,7 +162,7 @@ export class MateriaPrimaFormComponent implements OnInit{
       precio,
       foto,
       proveedor,
-      idStatus
+      idStatus,
     } = this.materiaPrimaForm.value;
 
     let fechaRegistro = new Date();
@@ -188,7 +182,7 @@ export class MateriaPrimaFormComponent implements OnInit{
       proveedor: proveedor.idProveedor,
       idStatus: idStatus ? idStatus : 1,
       fechaModificacion: fechaModificacion,
-      fechaRegistro: fechaRegistro
+      fechaRegistro: fechaRegistro,
     };
     console.log(materiaPrima);
     this.materiaPrimaSvc.createMateriaPrima(materiaPrima).subscribe(
@@ -198,7 +192,7 @@ export class MateriaPrimaFormComponent implements OnInit{
           summary: 'Materia prima agregrada',
           detail: `La materia prima ${data.nombre} ha sido agregada correctamente`,
         });
-        this.router.navigate(['admin','inventario','materiaprimas']);
+        this.router.navigate(['admin', 'inventario', 'materiaprimas']);
       },
       (err) => {
         this.messageSvc.add({
@@ -210,8 +204,7 @@ export class MateriaPrimaFormComponent implements OnInit{
     );
   }
 
-  editar():void
-  {
+  editar(): void {
     let {
       codigo,
       nombre,
@@ -224,7 +217,7 @@ export class MateriaPrimaFormComponent implements OnInit{
       precio,
       foto,
       proveedor,
-      idStatus
+      idStatus,
     } = this.materiaPrimaForm.value;
 
     let fechaModificacion = new Date();
@@ -243,7 +236,7 @@ export class MateriaPrimaFormComponent implements OnInit{
       proveedor: proveedor.idProveedor,
       idStatus: idStatus ? idStatus : 1,
       fechaModificacion: fechaModificacion,
-      fechaRegistro: this.materiaPrima.fechaRegistro
+      fechaRegistro: this.materiaPrima.fechaRegistro,
     };
 
     console.log(materiaPrima);
@@ -255,7 +248,7 @@ export class MateriaPrimaFormComponent implements OnInit{
           summary: 'Materia prima actualizado',
           detail: `La materia prima ${materiaPrima.nombre} ha sido actualizada correctamente`,
         });
-        this.router.navigate(['admin','inventario','materiasprimas']);
+        this.router.navigate(['admin', 'inventario', 'materiasprimas']);
       },
       (err) => {
         console.log(err);
@@ -271,5 +264,4 @@ export class MateriaPrimaFormComponent implements OnInit{
   cancelar(): void {
     this.router.navigate(['admin', 'inventario', 'materiasprimas']);
   }
-
 }
