@@ -14,13 +14,7 @@
   <ng-template pTemplate="body">
     <form [formGroup]="productoForm" (ngSubmit)="onSubmit()">
       <div class="formgrid grid">
-        <!-- <div class="field grid"> -->
         <div class="field col-12 md:col-4 mb-5">
-          <!-- <span class="p-float-label"> -->
-          <!-- <input pInputText id="id" formControlName="idCliente" [disabled]="true" class="w-full" /> -->
-          <!-- <label htmlFor="id">Id</label> -->
-          <!-- </span> -->
-
           <input
             id="disabled-input"
             type="text"
@@ -72,38 +66,36 @@
             <label htmlFor="descripcion">Descripcion</label>
           </span>
         </div>
-        <!-- <div class="field grid"> -->
         <div class="field col-12 md:col-4 mb-5">
           <span class="p-float-label">
-            <input
-              pInputNumber
-              id="precio"
+            <p-inputNumber
+              inputId="currency-us"
+              mode="currency"
+              class="input-numbers"
+              currency="MXN"
+              locale="es-MX"
+              [minFractionDigits]="4"
+              styleClass="w-full"
               formControlName="precio"
-              class="w-full"
-              mode="decimal"
-              prefix="$ "
-              [required]="true"
-              [min]="1"
-            />
+            ></p-inputNumber>
             <label htmlFor="precio">Precio</label>
           </span>
         </div>
         <div class="field col-12 md:col-4 mb-5">
           <span class="p-float-label">
-            <input
-              pInputNumber
-              id="precio"
+            <p-inputNumber
+              inputId="currency-us"
+              mode="currency"
+              currency="MXN"
+              locale="es-MX"
+              [minFractionDigits]="4"
+              styleClass="w-full"
               formControlName="merma"
-              class="w-full"
-              mode="decimal"
-              prefix="$ "
-              [required]="true"
-              [min]="1"
-            />
+            ></p-inputNumber>
             <label htmlFor="merma">Merma</label>
           </span>
         </div>
-        
+
         <div class="field col-12 md:col-4 mb-5">
           <span class="p-float-label">
             <p-dropdown
