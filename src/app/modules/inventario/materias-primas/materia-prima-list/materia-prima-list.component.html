@@ -125,9 +125,14 @@
         <td>{{ materiaPrima.nombre }}</td>
         <td>{{ materiaPrima.descripcion }}</td>
         <td>{{ materiaPrima.stock }}</td>
-        <td>{{ materiaPrima.precio }}</td>
-        <td>{{ materiaPrima.proveedor.razonSocial }}</td>
-        <td>{{ materiaPrima.idStatus }}</td>
+        <td>{{ materiaPrima.precio | currency : "MXN" }}</td>
+        <td>{{ materiaPrima.razonSocial }}</td>
+        <td>
+          <p-tag
+            [value]="materiaPrima.estatus"
+            [severity]="getSeverity(materiaPrima.estatus)"
+          ></p-tag>
+        </td>
       </tr>
     </ng-template>
   </p-table>

@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormControl,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Proveedor } from '@models/proveedores';
 import { UnidadMedida } from '@models/unidades-medida';
@@ -32,97 +37,93 @@ export class MateriaPrimaFormComponent implements OnInit {
     codigo: '',
     nombre: '',
     descripcion: '',
-    perecedero: 0,
-    stock: 0,
-    cant_minima: 0,
-    cant_maxima: 0,
-    unidad_medida: this.unidad_medida,
-    precio: 0,
+    cantMaxima: 0,
+    cantMinima: 0,
     foto: '',
-    proveedor: this.proveedor,
+    stock: 0,
+    perecedero: 0,
+    precio: 0,
+    idUnidadMedida: 0,
+    idProveedor: 0,
     idStatus: 0,
-    fechaRegistro: new Date(),
-    fechaModificacion: new Date(),
   };
 
   constructor(
-    private route: ActivatedRoute,
-    private statusSvc: EstatusService,
     private fb: FormBuilder,
+    private activatedRoute: ActivatedRoute,
+    private materiasPrimasSvc: MateriasPrimasService,
+    private proveedoresSvc: ProveedoresService,
+    private estatusSvc: EstatusService,
+    private unidadMedidaSvc: UnidadMedidaService,
     private messageSvc: MessageService,
-    private router: Router,
-    private proveedorSvc: ProveedoresService,
-    private materiaPrimaSvc: MateriasPrimasService,
-    private unidadMedidaSvc: UnidadMedidaService
+    private router: Router
   ) {
-    this.materiaPrimaForm = this.fb.group({
-      codigo: [''],
-      nombre: [''],
-      descripcion: [''],
-      perecedero: [''],
-      stock: [''],
-      cant_minima: [''],
-      cant_maxima: [''],
-      unidad_medida: new FormControl<UnidadMedida | null>(null),
-      precio: [''],
-      foto: [''],
-      proveedor: new FormControl<Proveedor | null>(null),
-      idStatus: new FormControl<Estatus | null>(null),
-      fechaRegistro: new Date(),
-      fechaModificacion: new Date(),
-    });
-    this.getEstatus();
-    this.getProveedores();
+    this.createForm();
     this.getUnidadesMedida();
+    this.getProveedores();
+    this.getEstatus();
   }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id !== null) {
-      this.title = `Editar materia prima ${id}`;
+    this.getParams();
+  }
+
+  getParams() {
+    const id = this.activatedRoute.snapshot.paramMap.get('id');
+    if (id) {
+      this.title = 'Editar materia prima #' + id;
       this.tipoForm = 'E';
-      this.materiaPrimaSvc.getMateriaPrima(+id).subscribe((data) => {
-        this.materiaPrima = data;
-        this.materiaPrimaForm.patchValue({
-          codigo: this.materiaPrima.codigo,
-          nombre: this.materiaPrima.nombre,
-          descripcion: this.materiaPrima.descripcion,
-          perecedero: this.materiaPrima.perecedero,
-          stock: this.materiaPrima.stock,
-          cant_minima: this.materiaPrima.cant_minima,
-          cant_maxima: this.materiaPrima.cant_maxima,
-          unidad_medida: this.materiaPrima.unidad_medida.idUnidadMedida,
-          precio: this.materiaPrima.precio,
-          foto: this.materiaPrima.foto,
-          proveedor: this.materiaPrima.proveedor.idProveedor,
-          idStatus: this.materiaPrima.idStatus,
-        });
-      });
+      this.getMateriaPrima(id);
     } else {
-      this.title = 'Nueva materia prima';
+      this.title = 'Registrar materia prima';
       this.tipoForm = 'N';
     }
   }
 
-  getUnidadesMedida(): void {
-    this.unidadMedidaSvc.getUnidadesMedida().subscribe((data) => {
-      this.unidades_medida = data;
+  getMateriaPrima(id: string) {
+    this.materiasPrimasSvc.getMateriaPrima(+id).subscribe((res) => {
+      this.materiaPrima = res;
+      // console.log(this.materiaPrima);
+      this.materiaPrimaForm.patchValue(this.materiaPrima);
     });
   }
 
-  getProveedores(): void {
-    this.proveedorSvc.getProveedores().subscribe((data) => {
-      this.proveedores = data;
+  getUnidadesMedida() {
+    this.unidadMedidaSvc.getUnidadesMedida().subscribe((res) => {
+      this.unidades_medida = res;
     });
   }
 
-  getEstatus(): void {
-    this.statusSvc.getEstatus().subscribe((data) => {
-      this.estatus = data;
+  getProveedores() {
+    this.proveedoresSvc.getProveedores().subscribe((res) => {
+      this.proveedores = res;
     });
   }
 
-  onSubmit(): void {
+  getEstatus() {
+    this.estatusSvc.getEstatus().subscribe((res) => {
+      this.estatus = res;
+    });
+  }
+
+  createForm() {
+    this.materiaPrimaForm = this.fb.group({
+      codigo: ['', Validators.required],
+      nombre: ['', Validators.required],
+      descripcion: ['', Validators.required],
+      cantMinima: ['', Validators.required], //cantMinima:
+      cantMaxima: ['', Validators.required], //cantMaxima:
+      foto: [''],
+      perecedero: ['', Validators.required],
+      precio: ['', Validators.required],
+      stock: ['', Validators.required],
+      idUnidadMedida: new FormControl<UnidadMedida | null>(null),
+      idProveedor: new FormControl<Proveedor | null>(null),
+      idStatus: new FormControl<Estatus | null>(null),
+    });
+  }
+
+  onSubmit() {
     switch (this.tipoForm) {
       case 'N':
         this.agregar();
@@ -149,119 +150,74 @@ export class MateriaPrimaFormComponent implements OnInit {
     });
   }
 
-  agregar(): void {
-    let {
-      codigo,
-      nombre,
-      descripcion,
-      perecedero,
-      stock,
-      cant_minima,
-      cant_maxima,
-      unidad_medida,
-      precio,
-      foto,
-      proveedor,
-      idStatus,
-    } = this.materiaPrimaForm.value;
-
-    let fechaRegistro = new Date();
-    let fechaModificacion = new Date();
-
-    const materiaPrima: MateriaPrima = {
-      codigo,
-      nombre,
-      descripcion,
-      perecedero,
-      stock,
-      cant_minima,
-      cant_maxima,
-      unidad_medida: unidad_medida.idUnidadMedida,
-      precio,
-      foto,
-      proveedor: proveedor.idProveedor,
-      idStatus: idStatus ? idStatus : 1,
-      fechaModificacion: fechaModificacion,
-      fechaRegistro: fechaRegistro,
-    };
-    console.log(materiaPrima);
-    this.materiaPrimaSvc.createMateriaPrima(materiaPrima).subscribe(
-      (data) => {
-        this.messageSvc.add({
-          severity: 'success',
-          summary: 'Materia prima agregrada',
-          detail: `La materia prima ${data.nombre} ha sido agregada correctamente`,
-        });
-        this.router.navigate(['admin', 'inventario', 'materiaprimas']);
-      },
-      (err) => {
-        this.messageSvc.add({
-          severity: 'error',
-          summary: 'Error al agregar materia prima',
-          detail: err.error.message,
-        });
-      }
-    );
+  agregar() {
+    this.materiasPrimasSvc
+      .createMateriaPrima(this.materiaPrimaForm.value)
+      .subscribe(
+        (res) => {
+          this.messageSvc.add({
+            severity: 'success',
+            summary: '¡Correcto!',
+            detail: 'Materia prima agregada correctamente',
+          });
+          this.router.navigate(['admin', 'inventario', 'materias-primas']);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
 
-  editar(): void {
+  editar() {
     let {
       codigo,
       nombre,
       descripcion,
-      perecedero,
-      stock,
-      cant_minima,
-      cant_maxima,
-      unidad_medida,
-      precio,
+      cantMinima,
+      cantMaxima,
       foto,
-      proveedor,
+      perecedero,
+      precio,
+      stock,
+      idUnidadMedida,
+      idProveedor,
       idStatus,
     } = this.materiaPrimaForm.value;
 
-    let fechaModificacion = new Date();
-
-    const materiaPrima: MateriaPrima = {
+    this.materiaPrima = {
+      id: this.materiaPrima.id,
       codigo,
       nombre,
       descripcion,
-      perecedero,
-      stock,
-      cant_minima,
-      cant_maxima,
-      unidad_medida: unidad_medida.idUnidadMedida,
-      precio,
+      cantMinima,
+      cantMaxima,
       foto,
-      proveedor: proveedor.idProveedor,
-      idStatus: idStatus ? idStatus : 1,
-      fechaModificacion: fechaModificacion,
-      fechaRegistro: this.materiaPrima.fechaRegistro,
+      perecedero,
+      precio,
+      stock,
+      idStatus: idStatus ? idStatus : this.materiaPrima.idStatus,
+      idUnidadMedida: idUnidadMedida
+        ? idUnidadMedida
+        : this.materiaPrima.idUnidadMedida,
+      idProveedor: idProveedor ? idProveedor : this.materiaPrima.idProveedor,
     };
 
-    console.log(materiaPrima);
-
-    this.materiaPrimaSvc.updateMateriaPrima(materiaPrima).subscribe(
-      (data) => {
+    this.materiasPrimasSvc.updateMateriaPrima(this.materiaPrima).subscribe(
+      (res) => {
         this.messageSvc.add({
           severity: 'success',
-          summary: 'Materia prima actualizado',
-          detail: `La materia prima ${materiaPrima.nombre} ha sido actualizada correctamente`,
+          summary: '¡Correcto!',
+          detail: 'Materia prima editada correctamente',
         });
-        this.router.navigate(['admin', 'inventario', 'materiasprimas']);
+        this.router.navigate(['admin', 'inventario', 'materias-primas']);
       },
       (err) => {
         console.log(err);
-        this.messageSvc.add({
-          severity: 'error',
-          summary: 'Error',
-          detail: `La materia prima ${materiaPrima.nombre} no se pudo actualizar`,
-        });
       }
     );
   }
 
-  cancelar(): void {
-    this.router.navigate(['admin', 'inventario', 'materiasprimas']);
+  cancelar() {
+    this.router.navigate(['admin', 'inventario', 'materias-primas']);
   }
 }

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Producto } from '@models/productos';
 import { Estatus } from '@models/estatus';
+import { EstatusService } from '@services/estatus.service';
 import { ProductosService } from '@services/productos.service';
 import { MessageService } from 'primeng/api';
 
@@ -12,7 +13,7 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./producto-form.component.css'],
   providers: [MessageService],
 })
-export class ProductoFormComponent implements OnInit{
+export class ProductoFormComponent implements OnInit {
   productoForm!: FormGroup;
   title = '';
   tipoForm: string = '';
@@ -26,32 +27,34 @@ export class ProductoFormComponent implements OnInit{
     merma: 0,
     idStatus: 0,
     fechaRegistro: new Date(),
-    fechaModificacion: new Date()
+    fechaModificacion: new Date(),
   };
   estatus: Estatus[] = [];
-  
+
   constructor(
-    private productoSvc: ProductosService,
-    private router: Router,
     private route: ActivatedRoute,
+    private statusSvc: EstatusService,
     private fb: FormBuilder,
-    private messageSvc: MessageService
+    private messageSvc: MessageService,
+    private productoSvc: ProductosService,
+    private router: Router
   ) {
-    this.productoForm =  this.fb.group({
+    this.productoForm = this.fb.group({
       codigo: [''],
       nombre: [''],
       descripcion: [''],
       precio: [''],
       foto: [''],
       merma: [''],
-      idStatus: [''],
+      idStatus: new FormControl<Estatus | null>(null),
     });
+    this.getEstatus();
   }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
 
-    if(id) {
+    if (id) {
       this.title = `Editar producto ${id}`;
       this.productoSvc.getProducto(+id).subscribe((producto) => {
         console.log(producto);
@@ -66,13 +69,17 @@ export class ProductoFormComponent implements OnInit{
           idStatus: this.producto.idStatus,
         });
       });
-
-      this.productoForm.get('idStatus')?.disable();
       this.tipoForm = 'edit';
     } else {
       this.title = 'Agregar producto';
       this.tipoForm = 'add';
     }
+  }
+
+  getEstatus(): void {
+    this.statusSvc.getEstatus().subscribe((data) => {
+      this.estatus = data;
+    });
   }
 
   onSelectFile(event: any) {
@@ -91,8 +98,7 @@ export class ProductoFormComponent implements OnInit{
   }
 
   onSubmit() {
-    switch (this.tipoForm)
-    {
+    switch (this.tipoForm) {
       case 'add':
         this.agregar();
         break;
@@ -109,15 +115,8 @@ export class ProductoFormComponent implements OnInit{
   }
 
   agregar() {
-    let {
-      codigo,
-      nombre,
-      descripcion,
-      precio,
-      foto,
-      merma,
-      idStatus
-    } = this.productoForm.value;
+    let { codigo, nombre, descripcion, precio, foto, merma, idStatus } =
+      this.productoForm.value;
 
     let fechaRegistro = new Date();
     let fechaModificacion = new Date();
@@ -133,7 +132,7 @@ export class ProductoFormComponent implements OnInit{
       merma,
       idStatus,
       fechaRegistro,
-      fechaModificacion
+      fechaModificacion,
     };
     console.log(producto);
 
@@ -158,15 +157,8 @@ export class ProductoFormComponent implements OnInit{
   }
 
   editar() {
-    let {
-      codigo,
-      nombre,
-      descripcion,
-      precio,
-      foto,
-      merma,
-      idStatus
-    } = this.productoForm.value;
+    let { codigo, nombre, descripcion, precio, foto, merma, idStatus } =
+      this.productoForm.value;
 
     let fechaModificacion = new Date();
 
@@ -180,7 +172,7 @@ export class ProductoFormComponent implements OnInit{
       merma,
       idStatus: this.producto.idStatus,
       fechaRegistro: this.producto.fechaRegistro,
-      fechaModificacion
+      fechaModificacion,
     };
 
     console.log(producto);
@@ -197,7 +189,7 @@ export class ProductoFormComponent implements OnInit{
       (err) => {
         console.log(err);
         this.messageSvc.add({
-          severity:'error',
+          severity: 'error',
           summary: 'Error al editar producto',
           detail: '',
         });

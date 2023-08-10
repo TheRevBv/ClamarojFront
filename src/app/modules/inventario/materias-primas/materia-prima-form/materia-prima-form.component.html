@@ -68,76 +68,77 @@
         </div>
         <div class="field col-12 md:col-4 mb-5">
           <span class="p-float-label">
-            <input
-              pInputNumber
+            <p-inputNumber
               id="perecedero"
               formControlName="perecedero"
-              class="w-full"
-              mode="decimal"
-              prefix="$ "
+              class="w-full input-numbers"
+              inputId="integeronly"
               [required]="true"
               [min]="1"
-            />
+            ></p-inputNumber>
             <label htmlFor="perecedero">Perecedero</label>
           </span>
         </div>
         <div class="field col-12 md:col-4 mb-5">
           <span class="p-float-label">
-            <input
-              pInputNumber
+            <p-inputNumber
               id="stock"
               formControlName="stock"
-              class="w-full"
-              mode="decimal"
-              prefix="$ "
+              class="w-full input-numbers"
+              inputId="integeronly"
               [required]="true"
               [min]="1"
-            />
+            ></p-inputNumber>
             <label htmlFor="stock">Stock</label>
           </span>
         </div>
         <div class="field col-12 md:col-4 mb-5">
           <span class="p-float-label">
-            <input
-              pInputNumber
-              id="cant_minima"
-              formControlName="cant_minima"
-              class="w-full"
+            <p-inputNumber
+              id="cantMinima"
+              formControlName="cantMinima"
+              inputId="minmaxfraction"
+              class="w-full input-numbers"
               mode="decimal"
-              prefix="$ "
+              [minFractionDigits]="4"
+              [maxFractionDigits]="4"
               [required]="true"
               [min]="1"
-            />
-            <label htmlFor="cant_minima">Cantidad Mínima</label>
+            ></p-inputNumber>
+            <label htmlFor="cantMinima">Cantidad Mínima</label>
           </span>
         </div>
         <div class="field col-12 md:col-4 mb-5">
           <span class="p-float-label">
-            <input
-              pInputNumber
-              id="cant_maxima"
-              formControlName="cant_maxima"
-              class="w-full"
+            <p-inputNumber
+              id="cantMaxima"
+              formControlName="cantMaxima"
+              class="w-full input-numbers"
               mode="decimal"
-              prefix="$ "
+              inputId="minmaxfraction"
+              [minFractionDigits]="4"
+              [maxFractionDigits]="4"
               [required]="true"
               [min]="1"
-            />
-            <label htmlFor="cant_maxima">Cantidad Máxima</label>
+            ></p-inputNumber>
+            <label htmlFor="cantMaxima">Cantidad Máxima</label>
           </span>
         </div>
         <div class="field col-12 md:col-4 mb-5">
           <span class="p-float-label">
-            <input
-              pInputNumber
-              id="precio"
-              formControlName="precio"
-              class="w-full"
-              mode="decimal"
-              prefix="$ "
+            <p-inputNumber
+              id="cantMinima"
+              formControlName="cantMinima"
+              class="w-full input-numbers"
+              mode="currency"
+              inputId="currencyonly"
+              currency="MXN"
+              locale="es-MX"
+              [minFractionDigits]="2"
+              [maxFractionDigits]="2"
               [required]="true"
               [min]="1"
-            />
+            ></p-inputNumber>
             <label htmlFor="precio">Precio</label>
           </span>
         </div>
@@ -162,11 +163,11 @@
           <span class="p-float-label">
             <p-dropdown
               [options]="unidades_medida"
-              formControlName="unidad_medida"
+              formControlName="idUnidadMedida"
               [style]="{ width: '100%' }"
               [showClear]="true"
               optionValue="idUnidadMedida"
-              optionLabel="abreviatura"
+              optionLabel="descripcion"
               [filter]="true"
               [required]="true"
               [placeholder]="'Seleccione una unidad de medida'"
@@ -179,7 +180,7 @@
           <span class="p-float-label">
             <p-dropdown
               [options]="proveedores"
-              formControlName="proveedor"
+              formControlName="idProveedor"
               [style]="{ width: '100%' }"
               [showClear]="true"
               optionValue="idProveedor"

@@ -4,8 +4,12 @@ import { NgModule } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CalendarModule } from 'primeng/calendar';
+import { ChartModule } from 'primeng/chart';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { DataViewModule } from 'primeng/dataview';
+import { DialogModule } from 'primeng/dialog';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ImageModule } from 'primeng/image';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -18,6 +22,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { PaginatorModule } from 'primeng/paginator';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { PasswordModule } from 'primeng/password';
+import { RippleModule } from 'primeng/ripple';
 import { SidebarModule } from 'primeng/sidebar';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { TableModule } from 'primeng/table';
@@ -31,8 +36,12 @@ import { ToastModule } from 'primeng/toast';
     ButtonModule,
     CardModule,
     CalendarModule,
+    ChartModule,
     CheckboxModule,
     ConfirmDialogModule,
+    DataViewModule,
+    DialogModule,
+    DynamicDialogModule,
     ImageModule,
     InputTextModule,
     InputNumberModule,
@@ -45,6 +54,7 @@ import { ToastModule } from 'primeng/toast';
     PaginatorModule,
     PanelMenuModule,
     PasswordModule,
+    RippleModule,
     SidebarModule,
     ScrollTopModule,
     TableModule,

@@ -91,4 +91,17 @@ export class MateriaPrimaListComponent implements OnInit {
       },
     });
   }
+
+  getSeverity(status: string): string {
+    switch (status.toLowerCase()) {
+      case 'inactivo':
+        return 'danger';
+      case 'activo':
+        return 'success';
+      case 'pendiente':
+        return 'warning';
+      default:
+        return 'info';
+    }
+  }
 }

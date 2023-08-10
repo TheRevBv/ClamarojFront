@@ -75,7 +75,10 @@
               currency="MXN"
               locale="es-MX"
               [minFractionDigits]="4"
+              [maxFractionDigits]="4"
               styleClass="w-full"
+              [required]="true"
+              class="w-full input-numbers"
               formControlName="precio"
             ></p-inputNumber>
             <label htmlFor="precio">Precio</label>
@@ -88,6 +91,9 @@
               mode="currency"
               currency="MXN"
               locale="es-MX"
+              [required]="true"
+              class="w-full input-numbers"
+              [maxFractionDigits]="4"
               [minFractionDigits]="4"
               styleClass="w-full"
               formControlName="merma"

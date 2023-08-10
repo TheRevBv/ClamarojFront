@@ -10,6 +10,6 @@ body {
   width: 100% !important;
 }
 
-.input-numbers #currency-us {
+.input-numbers .p-inputnumber.p-component {
   width: 100% !important;
 }
