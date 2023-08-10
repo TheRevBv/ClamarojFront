@@ -1,1 +1,90 @@
-<p>recetas-list works!</p>
+<p-card>
+  <ng-template pTemplate="header">
+    <div class="flex flex-row justify-content-between mx-5">
+      <div class="flex flex-row mt-3">
+        <div class="flex flex-column justify-content-center align-items-center">
+          <i class="fa fa-book fa-fw text-2xl"></i>
+        </div>
+        <div class="flex flex-column justify-content-center">
+          <h1 class="text-xl font-bold">Recetas</h1>
+        </div>
+      </div>
+      <div class="flex flex-row mt-3 gap-2">
+        <div class="flex flex-column justify-content-center align-items-center">
+          <p-button
+            label="Nuevo"
+            icon="pi pi-plus"
+            styleClass="p-button-rounded p-button-success p-mr-2"
+            [routerLink]="['agregar']"
+          ></p-button>
+        </div>
+        <div class="flex flex-column justify-content-center align-items-center">
+          <p-button
+            label="Editar"
+            icon="pi pi-pencil"
+            styleClass="p-button-rounded p-button-warning"
+            [routerLink]="['editar', selectedReceta?.idReceta]"
+            [disabled]="!selectedReceta"
+          ></p-button>
+        </div>
+        <div class="flex flex-column justify-content-center align-items-center">
+          <p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>
+          <p-button
+            label="Eliminar"
+            icon="pi pi-trash"
+            styleClass="p-button-rounded p-button-danger"
+            (click)="deleteReceta()"
+            [disabled]="!selectedReceta"
+          ></p-button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <p-toast position="top-left"></p-toast>
+  <p-table
+    [value]="recetas"
+    (onLazyLoad)="loadRecetas($event)"
+    (onRowSelect)="onRowSelect($event)"
+    dataKey="idReceta"
+    [loading]="loading"
+    loadingIcon="pi pi-spinner"
+    [rows]="10"
+    [rowsPerPageOptions]="[10, 25, 50]"
+    [paginator]="true"
+    [globalFilterFields]="['codigo', 'cantidad', 'idProducto']"
+    [(selection)]="selectedReceta"
+    [totalRecords]="totalRecords"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [autoLayout]="true"
+    [lazy]="true"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 4rem"></th>
+        <th pSortableColumn="id">
+          ID <p-sortIcon field="idReceta"></p-sortIcon>
+        </th>
+        <th pSortableColumn="nombre">
+          Codigo <p-sortIcon field="codigo"></p-sortIcon>
+        </th>
+        <th pSortableColumn="cantidad">
+          Cantidad <p-sortIcon field="cantidad"></p-sortIcon>
+        </th>
+        <th pSortableColumn="idProducto">
+          Producto <p-sortIcon field="idProducto"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-receta>
+      <tr>
+        <td>
+          <p-tableRadioButton [value]="receta"></p-tableRadioButton>
+        </td>
+        <td>{{ receta.idReceta }}</td>
+        <td>{{ receta.codigo }}</td>
+        <td>{{ receta.cantidad }}</td>
+        <td>{{ receta.idProducto }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

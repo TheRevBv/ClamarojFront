@@ -1,1 +1,112 @@
-<p>recetas-form works!</p>
+<!-- <div class="card flex justify-content-center">
+  <p-toast position="top-left"></p-toast>
+  <p-button (click)="show()" icon="pi pi-info-circle" label="Show"></p-button>
+</div> -->
+<!-- <p>usuarios-form works!</p> -->
+
+<p-card>
+  <ng-template pTemplate="header">
+    <div class="flex flex-row justify-content-between mx-5">
+      <div class="flex flex-row gap-2">
+        <div class="flex flex-column justify-content-center align-items-center">
+          <i class="fa fa-book fa-2x"></i>
+        </div>
+        <div class="flex flex-column justify-content-center">
+          <h1 class="text-xl font-bold">{{ title }}</h1>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="body">
+    <form [formGroup]="recetaForm" (ngSubmit)="onSubmit()">
+      <div class="formgrid grid">
+        <div class="field col-12 md:col-4 mb-5">
+          <input
+            id="disabled-input"
+            type="text"
+            pInputText
+            [disabled]="true"
+            class="w-full"
+            [value]="receta.idReceta"
+          />
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <input
+              pInputText
+              id="codigo"
+              formControlName="codigo"
+              class="w-full"
+              [required]="true"
+              [minlength]="3"
+              [maxlength]="10"
+            />
+            <label htmlFor="codigo">Codigo</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <p-inputNumber
+              id="cantidad"
+              formControlName="cantidad"
+              inputId="minmaxfraction"
+              class="w-full input-numbers"
+              mode="decimal"
+              [minFractionDigits]="2"
+              [maxFractionDigits]="2"
+              [required]="true"
+              [min]="1"
+            ></p-inputNumber>
+            <label htmlFor="cantidad">Cantidad a Producir</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <p-dropdown
+              [options]="productos"
+              formControlName="idProducto"
+              [style]="{ width: '100%' }"
+              [showClear]="true"
+              optionValue="idProducto"
+              optionLabel="nombre"
+              [filter]="true"
+              [required]="true"
+              [placeholder]="'Seleccione un producto'"
+            ></p-dropdown>
+            <label htmlFor="producto">Producto</label>
+          </span>
+        </div>
+        <!-- Ingredientes -->
+        <div class="field col-12 md:col-4 mb-5">
+          <p-button
+            (click)="show()"
+            icon="pi pi-plus-circle"
+            styleClass="p-button-rounded p-button-info p-button-outlined w-full"
+            label="Agregar Ingrediente"
+          ></p-button>
+        </div>
+      </div>
+      <div class="flex flex-row justify-content-end">
+        <div class="p-col-12 p-md-3 p-lg-3 mr-3">
+          <button
+            pButton
+            pRipple
+            type="submit"
+            label="Guardar"
+            class="p-button-success p-button-rounded p-button-outlined"
+          ></button>
+        </div>
+        <div class="p-col-12 p-md-3 p-lg-3">
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Cancelar"
+            (click)="cancelar()"
+            class="p-button-danger p-button-rounded p-button-outlined"
+          ></button>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+</p-card>

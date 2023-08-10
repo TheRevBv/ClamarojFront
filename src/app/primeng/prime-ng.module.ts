@@ -5,6 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CalendarModule } from 'primeng/calendar';
 import { ChartModule } from 'primeng/chart';
+import { ChipsModule } from 'primeng/chips';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DataViewModule } from 'primeng/dataview';
@@ -37,6 +38,7 @@ import { ToastModule } from 'primeng/toast';
     CardModule,
     CalendarModule,
     ChartModule,
+    ChipsModule,
     CheckboxModule,
     ConfirmDialogModule,
     DataViewModule,
