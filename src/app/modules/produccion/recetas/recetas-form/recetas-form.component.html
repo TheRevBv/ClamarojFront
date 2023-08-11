@@ -1,9 +1,9 @@
 <!-- <div class="card flex justify-content-center">
-  <p-toast position="top-left"></p-toast>
+
   <p-button (click)="show()" icon="pi pi-info-circle" label="Show"></p-button>
 </div> -->
 <!-- <p>usuarios-form works!</p> -->
-
+<p-toast position="top-left"></p-toast>
 <p-card>
   <ng-template pTemplate="header">
     <div class="flex flex-row justify-content-between mx-5">
@@ -62,6 +62,39 @@
         </div>
         <div class="field col-12 md:col-4 mb-5">
           <span class="p-float-label">
+            <p-inputNumber
+              id="costo"
+              formControlName="costo"
+              inputId="minmaxfraction"
+              class="w-full input-numbers"
+              mode="decimal"
+              [minFractionDigits]="2"
+              [maxFractionDigits]="2"
+              [required]="true"
+              [min]="1"
+            ></p-inputNumber>
+            <label htmlFor="costo">Costo</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <p-dropdown
+              [options]="estatus"
+              formControlName="idStatus"
+              [style]="{ width: '100%' }"
+              [showClear]="true"
+              optionValue="idEstatus"
+              optionLabel="nombre"
+              [filter]="true"
+              [required]="true"
+              [placeholder]="'Seleccione un estatus'"
+            >
+            </p-dropdown>
+            <label for="float-label">Estatus</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
             <p-dropdown
               [options]="productos"
               formControlName="idProducto"
@@ -75,6 +108,22 @@
             ></p-dropdown>
             <label htmlFor="producto">Producto</label>
           </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5" *ngIf="ingredientes">
+          <div>Listado de Ingredientes</div>
+          <p-listbox
+            [options]="ingredientes"
+            optionLabel="nombre"
+            [disabled]="true"
+            [listStyle]="{ 'max-height': '250px' }"
+            [style]="{ width: '15rem' }"
+          >
+            <ng-template let-ingrediente pTemplate="item">
+              <div class="flex align-items-center gap-2">
+                <div>{{ ingrediente.nombre }} - {{ ingrediente.cantidad }}</div>
+              </div>
+            </ng-template>
+          </p-listbox>
         </div>
         <!-- Ingredientes -->
         <div class="field col-12 md:col-4 mb-5">

@@ -16,6 +16,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputMaskModule } from 'primeng/inputmask';
 import { FileUploadModule } from 'primeng/fileupload';
+import { ListboxModule } from 'primeng/listbox';
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
 import { MessagesModule } from 'primeng/messages';
@@ -49,6 +50,7 @@ import { ToastModule } from 'primeng/toast';
     InputNumberModule,
     InputMaskModule,
     FileUploadModule,
+    ListboxModule,
     MenuModule,
     MenubarModule,
     MessagesModule,

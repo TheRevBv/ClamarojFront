@@ -6,6 +6,12 @@ import { Product } from '@models/product';
 import { ProductService } from '@services/product.service';
 import { Ingrediente } from '@models/ingrediente';
 import { FormGroup } from '@angular/forms';
+import { MateriaPrima } from '@models/materiasprimas';
+import { MateriasPrimasService } from '@services/materiasprimas.service';
+import { Estatus } from '@models/estatus';
+import { EstatusService } from '@services/estatus.service';
+import { IngredientesService } from '@services/ingredientes.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-prod-list',
@@ -13,41 +19,48 @@ import { FormGroup } from '@angular/forms';
     <div class="card">
       <p-table
         #dt
-        [value]="products"
+        [value]="materiasPrimas"
         responsiveLayout="scroll"
         [paginator]="true"
         [rows]="5"
         [selectionPageOnly]="true"
-        [globalFilterFields]="[
-          'name',
-          'country.name',
-          'representative.name',
-          'status'
-        ]"
+        [globalFilterFields]="['nombre', 'estatus']"
         [responsive]="true"
-        [(selection)]="selectedProducts"
+        [(selection)]="selectedMateriaPrima"
         [rowHover]="true"
       >
         <ng-template pTemplate="caption">
           <div class="flex align-items-center justify-content-between">
-            <h5 class="m-0">Administrador de ingredientes</h5>
-            <span class="p-input-icon-left">
-              <i class="pi pi-search"></i>
-              <input
-                pInputText
-                type="text"
-                (input)="dt.filterGlobal(getValue($event), 'contains')"
-                placeholder="Buscar..."
-              />
-            </span>
-            <button
-              type="button"
-              pButton
-              label="Guardar"
-              (click)="guardar(selectedProducts)"
-              class="p-button-success p-button-rounded p-mr-2"
-              icon="pi pi-check"
-            ></button>
+            <div class="flex align-items-center justify-content-between gap-2">
+              <h5 class="m-0">Administrador de ingredientes</h5>
+              <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input
+                  pInputText
+                  type="text"
+                  (input)="dt.filterGlobal(getValue($event), 'contains')"
+                  placeholder="Buscar..."
+                />
+              </span>
+            </div>
+            <div class="flex align-items-center justify-content-between gap-2">
+              <button
+                type="button"
+                pButton
+                label="Guardar"
+                (click)="guardar(selectedMateriaPrima)"
+                class="p-button-success p-button-rounded p-mr-2"
+                icon="pi pi-check"
+              ></button>
+              <button
+                type="button"
+                pButton
+                label="Eliminar"
+                (click)="eliminar(selectedMateriaPrima)"
+                class="p-button-danger p-button-rounded"
+                icon="pi pi-times"
+              ></button>
+            </div>
           </div>
         </ng-template>
         <ng-template pTemplate="header">
@@ -55,61 +68,57 @@ import { FormGroup } from '@angular/forms';
             <th style="width: 4rem">
               <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
             </th>
-            <th pSortableColumn="name">
+            <th pSortableColumn="nombre">
               Materia Prima <p-sortIcon field="vin"></p-sortIcon>
             </th>
-            <th pSortableColumn="year">Image</th>
-            <th pSortableColumn="price">
-              Brand <p-sortIcon field="price"></p-sortIcon>
+            <th pSortableColumn="year">Imagen</th>
+            <th pSortableColumn="cantidad">
+              Cantidad Necesaria <p-sortIcon field="cantidad"></p-sortIcon>
             </th>
-            <th pSortableColumn="inventoryStatus">
-              Status <p-sortIcon field="inventoryStatus"></p-sortIcon>
+            <th pSortableColumn="estatus">
+              Estatus <p-sortIcon field="estatus"></p-sortIcon>
             </th>
             <!-- <th style="width: 4em"></th> -->
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-product let-editing="editing">
+        <ng-template pTemplate="body" let-materia let-editing="editing">
           <tr>
             <td>
-              <p-tableCheckbox [value]="product"></p-tableCheckbox>
+              <p-tableCheckbox [value]="materia"></p-tableCheckbox>
             </td>
-            <td>{{ product.name }}</td>
+            <td>{{ materia.nombre }}</td>
             <td>
               <img
-                src="https://primefaces.org/cdn/primeng/images/demo/product/{{
-                  product.image
-                }}"
-                [alt]="product.image"
+                [src]="materia.foto"
+                [alt]="materia.nombre"
                 class="w-4rem h-4rem shadow-2"
               />
             </td>
-            <td [pEditableColumn]="product.price" pEditableColumnField="price">
+            <td
+              [pEditableColumn]="materia.cantidad"
+              pEditableColumnField="cantidad"
+            >
               <p-cellEditor>
                 <ng-template pTemplate="input">
-                  <input pInputText type="text" [(ngModel)]="product.price" />
+                  <p-inputNumber
+                    [(ngModel)]="materia.cantidad"
+                    [min]="0"
+                    [minFractionDigits]="4"
+                    [maxFractionDigits]="4"
+                  >
+                  </p-inputNumber>
                 </ng-template>
                 <ng-template pTemplate="output">
-                  {{ product.price | currency : 'MXN' : 'symbol' : '1.2-2' }}
+                  {{ materia.cantidad | number : '1.4-4' }}
                 </ng-template>
               </p-cellEditor>
             </td>
-            <!-- <td> works
-              <p-inputNumber [ngModel]="product.price"></p-inputNumber>
-            </td> -->
             <td>
               <p-tag
-                [value]="product.inventoryStatus"
-                [severity]="getSeverity(product.inventoryStatus)"
+                [value]="materia.estatus"
+                [severity]="getSeverity(materia.estatus.toLowerCase())"
               ></p-tag>
             </td>
-            <!-- <td>
-              <button
-                type="button"
-                pButton
-                icon="pi pi-plus"
-                (click)="selectProduct(product)"
-              ></button>
-            </td> -->
           </tr>
         </ng-template>
       </p-table>
@@ -118,11 +127,19 @@ import { FormGroup } from '@angular/forms';
 })
 export class ProdListComponent implements OnInit {
   products: Product[] = [];
+  materiasPrimas: MateriaPrima[] = [];
+  estatus: Estatus[] = [];
   listadoIngredientes: Ingrediente[] = [];
   selectedProducts: Product[] = [];
+  selectedMateriaPrima: any[] = [];
   ingredienteForm!: FormGroup;
+  idReceta: number = 0;
 
   constructor(
+    private route: ActivatedRoute,
+    private estatusSvc: EstatusService,
+    private ingredienteSvc: IngredientesService,
+    private materiasPrimasSvc: MateriasPrimasService,
     private productService: ProductService,
     public ref: DynamicDialogRef
   ) {}
@@ -131,19 +148,39 @@ export class ProdListComponent implements OnInit {
     this.productService
       .getProductsSmall()
       .then((products) => (this.products = products));
+    this.getMateriasPrimas();
+    this.getEstatus();
+    this.idReceta = this.route.snapshot.params['id'];
+    if (this.idReceta) {
+      console.log(this.idReceta);
+    } else {
+      console.log('No hay id');
+    }
   }
 
   selectProduct(product: Product) {
     // this.ref.close(product);
   }
 
+  getMateriasPrimas() {
+    this.materiasPrimasSvc.getMateriasPrimas().subscribe((res) => {
+      this.materiasPrimas = res;
+    });
+  }
+
+  getEstatus() {
+    this.estatusSvc.getEstatus().subscribe((res) => {
+      this.estatus = res;
+    });
+  }
+
   getSeverity(status: string) {
     switch (status) {
-      case 'INSTOCK':
+      case 'activo':
         return 'success';
-      case 'LOWSTOCK':
+      case 'inactivo':
         return 'warning';
-      case 'OUTOFSTOCK':
+      case 'cancelado':
         return 'danger';
       default:
         return 'success';
@@ -155,19 +192,47 @@ export class ProdListComponent implements OnInit {
   }
   //TODO: Guardar los ingredientes seleccionados
   //Se debe guardar el id de la materia prima y la cantidad
-  guardar(selectedProducts: Product[]) {
+  // guardar(selectedProducts: Product[]) {
+  guardar(selectedMateriaPrima: any[]) {
     //Se ´puede guardar en localstorage el listado de ingrediente, cada que guarde debe eliminar y guardar los nuevos
-    console.log(selectedProducts);
+    // console.log(selectedProducts);
     this.listadoIngredientes = [];
-    // selectedProducts.forEach((element) => {
-    //   let ingrediente: Ingrediente = {
-    //     idIngrediente: 0,
-    //     cantidad: 0,
-    //     costo: 0,
-    //     idProducto: element.id,
-    //   };
-    //   this.listadoIngredientes.push(ingrediente);
-    // });
+    selectedMateriaPrima.forEach((element) => {
+      let ingrediente: Ingrediente = {
+        idReceta: this.idReceta ? Number(this.idReceta) : 0,
+        cantidad: element.cantidad,
+        idMateriaPrima: element.id,
+      };
+      this.listadoIngredientes.push(ingrediente);
+    });
+    if (this.listadoIngredientes.length > 0) {
+      this.listadoIngredientes.forEach((element) => {
+        this.ingredienteSvc.addIngrediente(element).subscribe(
+          (res) => {
+            console.log(res);
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+      });
+    }
+    // console.log(this.listadoIngredientes);
     this.ref.close(this.listadoIngredientes);
+  }
+
+  eliminar(selectedMateriaPrima: any[]) {
+    selectedMateriaPrima.forEach((element) => {
+      this.ingredienteSvc
+        .deleteIngrediente(this.idReceta, element.id)
+        .subscribe(
+          (res) => {
+            this.ref.close(res);
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+    });
   }
 }

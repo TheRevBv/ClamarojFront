@@ -19,17 +19,19 @@ import { Product } from '@models/product'; //Interfaz de prueba
 import { Producto } from '@models/productos';
 import { ProdListComponent } from '@components/prod-list/prod-list.component';
 import { ProductosService } from '@services/productos.service';
+import { IngredientesService } from '@services/ingredientes.service';
 
 @Component({
   selector: 'app-recetas-form',
   templateUrl: './recetas-form.component.html',
   styleUrls: ['./recetas-form.component.css'],
-  providers: [MessageService, DialogService],
+  providers: [MessageService, DialogService, RecetasService, ProductosService],
 })
 export class RecetasFormComponent implements OnInit, OnDestroy {
   recetaForm!: FormGroup;
   title = '';
   tipoForm = '';
+  ingredientes: any = [];
   estatus: Estatus[] = [];
   productos: Producto[] = [];
   receta: Receta = {
@@ -38,6 +40,7 @@ export class RecetasFormComponent implements OnInit, OnDestroy {
     cantidad: 0,
     costo: 0,
     idProducto: 0,
+    idStatus: 0,
   };
   ref: DynamicDialogRef | undefined;
 
@@ -49,14 +52,16 @@ export class RecetasFormComponent implements OnInit, OnDestroy {
     private recetasSvc: RecetasService,
     private estatusSvc: EstatusService,
     private messageSvc: MessageService,
+    private ingredientesSvc: IngredientesService,
     private productosSvc: ProductosService
-  ) {}
-
-  ngOnInit(): void {
-    this.createForm();
-    this.getReceta();
+  ) {
     this.getEstatus();
     this.getProductos();
+    this.createForm();
+  }
+
+  ngOnInit(): void {
+    this.getParams();
   }
 
   ngOnDestroy(): void {
@@ -67,20 +72,29 @@ export class RecetasFormComponent implements OnInit, OnDestroy {
 
   show() {
     this.ref = this.dialogService.open(ProdListComponent, {
-      header: 'Seleccione un producto',
+      header: 'Seleccione una materia prima',
       width: '70%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
       maximizable: true,
     });
 
-    this.ref.onClose.subscribe((product: Product) => {
-      if (product) {
+    this.ref.onClose.subscribe((ingredientes: any[]) => {
+      if (ingredientes) {
+        this.messageSvc.add({
+          severity: 'success',
+          summary: 'Se han agregado ingredientes',
+          detail: `${ingredientes.length} ingredientes agregados`,
+        });
+      } else {
         this.messageSvc.add({
           severity: 'info',
-          summary: 'Producto seleccionado',
-          detail: product.name,
+          summary: 'No se han agregado ingredientes',
+          detail: ``,
         });
+      }
+      if (this.receta.idReceta) {
+        this.getIngredientesByReceta(this.receta.idReceta.toString());
       }
     });
 
@@ -98,7 +112,8 @@ export class RecetasFormComponent implements OnInit, OnDestroy {
       codigo: ['', Validators.required],
       cantidad: ['', Validators.required],
       costo: ['', Validators.required],
-      idProducto: ['', Validators.required],
+      idProducto: new FormControl<Producto | null>(null),
+      idStatus: new FormControl<Estatus | null>(null),
     });
   }
 
@@ -108,25 +123,35 @@ export class RecetasFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  getReceta(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
+  getParams() {
+    const id = this.route.snapshot.paramMap.get('id');
     if (id) {
-      this.recetasSvc.getReceta(+id).subscribe((receta) => {
-        this.receta = receta;
-        this.tipoForm = 'E';
-        this.title = `Receta: ${this.receta.codigo}`;
-        this.recetaForm.patchValue(this.receta);
-      });
+      this.title = 'Editar receta #' + id;
+      this.tipoForm = 'E';
+      this.getReceta(id);
+      this.getIngredientesByReceta(id);
     } else {
-      this.title = 'Nueva receta';
+      this.title = 'Registrar receta';
       this.tipoForm = 'N';
     }
+  }
+
+  getIngredientesByReceta(id: string): void {
+    this.ingredientesSvc.getIngredienteByReceta(+id).subscribe((res) => {
+      this.ingredientes = res;
+    });
+  }
+
+  getReceta(id: string): void {
+    this.recetasSvc.getReceta(+id).subscribe((res) => {
+      this.receta = res;
+      this.recetaForm.patchValue(this.receta);
+    });
   }
 
   getProductos(): void {
     this.productosSvc.getProductos().subscribe((productos) => {
       this.productos = productos;
-      console.log(this.productos);
     });
   }
 
@@ -137,13 +162,77 @@ export class RecetasFormComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     switch (this.tipoForm) {
       case 'N':
-        // this.agregar();
+        this.agregar();
         break;
       case 'E':
-        // this.editar();
+        this.editar();
         break;
       default:
         break;
     }
+  }
+
+  agregar(): void {
+    let { codigo, cantidad, costo, idProducto, idStatus } =
+      this.recetaForm.value;
+    this.receta = {
+      idReceta: 0,
+      codigo,
+      cantidad,
+      costo,
+      idProducto,
+      idStatus,
+    };
+    this.recetasSvc.addReceta(this.receta).subscribe(
+      (res) => {
+        this.messageSvc.add({
+          severity: 'success',
+          summary: 'Resultado',
+          detail: 'Receta agregada correctamente',
+        });
+        this.router.navigate(['admin', 'produccion', 'recetas']);
+      },
+      (err) => {
+        this.messageSvc.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Error al agregar la receta',
+        });
+      }
+    );
+    console.log(this.receta);
+  }
+
+  editar(): void {
+    let { codigo, cantidad, costo, idProducto, idStatus } =
+      this.recetaForm.value;
+
+    this.receta = {
+      idReceta: this.receta.idReceta,
+      codigo,
+      cantidad,
+      costo,
+      idProducto,
+      idStatus,
+    };
+
+    this.recetasSvc.updateReceta(this.receta).subscribe(
+      (res) => {
+        this.messageSvc.add({
+          severity: 'success',
+          summary: 'Resultado',
+          detail: 'Receta editada correctamente',
+        });
+        this.router.navigate(['admin', 'produccion', 'recetas']);
+      },
+      (err) => {
+        this.messageSvc.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Error al editar la receta',
+        });
+      }
+    );
+    console.log(this.receta);
   }
 }

@@ -42,16 +42,19 @@
   </ng-template>
   <p-toast position="top-left"></p-toast>
   <p-table
+    #recetasTable
     [value]="recetas"
     (onLazyLoad)="loadRecetas($event)"
     (onRowSelect)="onRowSelect($event)"
     dataKey="idReceta"
     [loading]="loading"
     loadingIcon="pi pi-spinner"
+    [responsive]="true"
+    responsiveLayout="scroll"
     [rows]="10"
     [rowsPerPageOptions]="[10, 25, 50]"
     [paginator]="true"
-    [globalFilterFields]="['codigo', 'cantidad', 'idProducto']"
+    [globalFilterFields]="['codigo', 'cantidad', 'producto']"
     [(selection)]="selectedReceta"
     [totalRecords]="totalRecords"
     [tableStyle]="{ 'min-width': '50rem' }"
@@ -64,14 +67,20 @@
         <th pSortableColumn="id">
           ID <p-sortIcon field="idReceta"></p-sortIcon>
         </th>
-        <th pSortableColumn="nombre">
+        <th pSortableColumn="codigo">
           Codigo <p-sortIcon field="codigo"></p-sortIcon>
+        </th>
+        <th pSortableColumn="costo">
+          Costo <p-sortIcon field="costo"></p-sortIcon>
         </th>
         <th pSortableColumn="cantidad">
           Cantidad <p-sortIcon field="cantidad"></p-sortIcon>
         </th>
-        <th pSortableColumn="idProducto">
-          Producto <p-sortIcon field="idProducto"></p-sortIcon>
+        <th pSortableColumn="producto">
+          Producto <p-sortIcon field="producto"></p-sortIcon>
+        </th>
+        <th pSortableColumn="estatus">
+          Estatus <p-sortIcon field="estatus"></p-sortIcon>
         </th>
       </tr>
     </ng-template>
@@ -82,8 +91,15 @@
         </td>
         <td>{{ receta.idReceta }}</td>
         <td>{{ receta.codigo }}</td>
+        <td>{{ receta.costo }}</td>
         <td>{{ receta.cantidad }}</td>
-        <td>{{ receta.idProducto }}</td>
+        <td>{{ receta.producto }}</td>
+        <td>
+          <p-tag
+            [value]="receta.estatus"
+            [severity]="getSeverity(receta.estatus.toLowerCase())"
+          ></p-tag>
+        </td>
       </tr>
     </ng-template>
   </p-table>

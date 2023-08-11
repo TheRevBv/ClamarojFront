@@ -1,5 +1,5 @@
 export interface Ingrediente {
   idReceta: number;
-  idMateriaPrima: number;
+  idMateriaPrima?: number | string;
   cantidad: number;
 }

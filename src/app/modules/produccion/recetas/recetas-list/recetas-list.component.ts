@@ -34,7 +34,9 @@ export class RecetasListComponent implements OnInit {
     private statusSvc: EstatusService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getEstatus();
+  }
 
   loadRecetas(event: TableLazyLoadEvent) {
     this.getRecetas(event);
@@ -43,9 +45,11 @@ export class RecetasListComponent implements OnInit {
   getRecetas(event: TableLazyLoadEvent) {
     this.recetasSvc.getRecetas({ lazyEvent: JSON.stringify(event) }).subscribe(
       (receta) => {
+        // console.log(receta);
         this.recetas = receta;
         this.totalRecords = receta.length;
         this.loading = false;
+        console.log(this.recetas);
       },
       (error) => {
         console.log(error);
@@ -59,6 +63,25 @@ export class RecetasListComponent implements OnInit {
       summary: 'Receta seleccionada',
       detail: `${event.data.codigo}`,
     });
+  }
+
+  getEstatus() {
+    this.statusSvc.getEstatus().subscribe((res) => {
+      this.estatus = res;
+    });
+  }
+
+  getSeverity(status: string) {
+    switch (status) {
+      case 'activo':
+        return 'success';
+      case 'inactivo':
+        return 'warning';
+      case 'cancelado':
+        return 'danger';
+      default:
+        return 'success';
+    }
   }
 
   deleteReceta() {

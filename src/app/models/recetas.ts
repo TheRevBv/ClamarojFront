@@ -1,7 +1,8 @@
 export interface Receta {
-  idReceta: number;
+  idReceta?: number;
   codigo: string;
   cantidad: number; // cantidad de producto
   costo: number;
   idProducto: number;
+  idStatus: number;
 }
