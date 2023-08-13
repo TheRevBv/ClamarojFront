@@ -30,19 +30,19 @@ export class MateriaPrimaListComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadMateriasPrimas();
+  }
 
-  loadMateriasPrimas(event: TableLazyLoadEvent) {
+  loadMateriasPrimas() {
     this.loading = true;
     setTimeout(() => {
-      this.materiasPrimasSvc
-        .getMateriasPrimas({ lazyEvent: JSON.stringify(event) })
-        .subscribe((res) => {
-          console.log(res);
-          this.materiasPrimas = res;
-          this.totalRecords = res.length;
-          this.loading = false;
-        });
+      this.materiasPrimasSvc.getMateriasPrimas().subscribe((res) => {
+        console.log(res);
+        this.materiasPrimas = res;
+        this.totalRecords = res.length;
+        this.loading = false;
+      });
     }, 1000);
   }
 

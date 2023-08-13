@@ -31,18 +31,18 @@ export class ClientesListComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadClientes();
+  }
 
-  loadClientes(event: TableLazyLoadEvent) {
+  loadClientes() {
     this.loading = true;
     setTimeout(() => {
-      this.clientesSvc
-        .getClientes({ lazyEvent: JSON.stringify(event) })
-        .subscribe((cliente) => {
-          this.clientes = cliente;
-          this.totalRecords = cliente.length;
-          this.loading = false;
-        });
+      this.clientesSvc.getClientes().subscribe((cliente) => {
+        this.clientes = cliente;
+        this.totalRecords = cliente.length;
+        this.loading = false;
+      });
     }, 1000);
   }
 

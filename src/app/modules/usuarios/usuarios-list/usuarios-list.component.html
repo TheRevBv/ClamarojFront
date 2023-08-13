@@ -42,18 +42,12 @@
   </ng-template>
   <p-toast position="top-left"></p-toast>
   <p-table
+    #dt
     [value]="usuarios"
-    [lazy]="true"
-    (onRowSelect)="onRowSelect($event)"
-    (onLazyLoad)="loadUsuarios($event)"
-    dataKey="id"
-    [tableStyle]="{ 'min-width': '50rem' }"
-    [(selection)]="selectedUsuario"
+    responsiveLayout="scroll"
     [paginator]="true"
     [rows]="10"
-    [totalRecords]="totalRecords"
-    [loading]="loading"
-    [rowsPerPageOptions]="[10, 25, 50]"
+    (onRowSelect)="onRowSelect($event)"
     [globalFilterFields]="[
       'id',
       'nombre',
@@ -61,6 +55,12 @@
       'correo',
       'fechaNacimiento'
     ]"
+    [responsive]="true"
+    [(selection)]="selectedUsuario"
+    [rowHover]="true"
+    [totalRecords]="totalRecords"
+    [loading]="loading"
+    [rowsPerPageOptions]="[10, 25, 50]"
   >
     <ng-template pTemplate="header">
       <tr>

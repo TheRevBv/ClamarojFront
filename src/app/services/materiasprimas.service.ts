@@ -37,7 +37,7 @@ export class MateriasPrimasService {
     return this.http.get<MateriaPrima>(`/api/MateriaPrimas/${idMateriaPrima}`);
   }
 
-  createMateriaPrima(data: MateriaPrima): Observable<any> {
+  createMateriaPrima(data: MateriaPrima): Observable<MateriaPrima> {
     return this.http.post<MateriaPrima>(`/api/MateriaPrimas`, data, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

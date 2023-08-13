@@ -34,22 +34,26 @@ export class UsuariosListComponent implements OnInit {
     private usuariosSvc: UsuariosService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getEstatus();
+    this.loadUsuarios();
+  }
 
-  loadUsuarios(event: TableLazyLoadEvent) {
+  loadUsuarios() {
     this.loading = true;
     setTimeout(() => {
-      this.usuariosSvc
-        .getUsuarios({ lazyEvent: JSON.stringify(event) })
-        .subscribe((usuario) => {
-          this.usuarios = usuario;
-          this.totalRecords = usuario.length;
-          this.loading = false;
-        });
-      this.statusSvc.getEstatus().subscribe((data) => {
-        this.estatus = data;
+      this.usuariosSvc.getUsuarios().subscribe((usuario) => {
+        this.usuarios = usuario;
+        this.totalRecords = usuario.length;
+        this.loading = false;
       });
     }, 1000);
+  }
+
+  getEstatus() {
+    this.statusSvc.getEstatus().subscribe((res) => {
+      this.estatus = res;
+    });
   }
 
   onRowSelect(event: any) {
@@ -77,7 +81,7 @@ export class UsuariosListComponent implements OnInit {
             });
             // this.router.navigate(['admin', 'usuarios']);
           });
-        this.loadUsuarios({ first: 0, rows: 10 });
+        this.loadUsuarios();
         this.router.navigate(['admin', 'usuarios']);
       },
       reject: (type: any) => {

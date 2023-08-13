@@ -32,18 +32,18 @@ export class ProveedoresListComponent implements OnInit {
     private router: Router
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadProveedores();
+  }
 
-  loadProveedores(event: TableLazyLoadEvent) {
+  loadProveedores() {
     this.loading = true;
     setTimeout(() => {
-      this.proveedoresSvc
-        .getProveedores({ lazyEvent: JSON.stringify(event) })
-        .subscribe((proveedor) => {
-          this.proveedores = proveedor;
-          this.totalRecords = proveedor.length;
-          this.loading = false;
-        });
+      this.proveedoresSvc.getProveedores().subscribe((proveedor) => {
+        this.proveedores = proveedor;
+        this.totalRecords = proveedor.length;
+        this.loading = false;
+      });
     }, 1000);
   }
 
@@ -51,7 +51,7 @@ export class ProveedoresListComponent implements OnInit {
     this.messageSvc.add({
       severity: 'info',
       summary: 'Proveedor seleccionado',
-      detail: `${event.data.nombre}`,
+      detail: `${event.data.razonSocial}`,
     });
   }
 

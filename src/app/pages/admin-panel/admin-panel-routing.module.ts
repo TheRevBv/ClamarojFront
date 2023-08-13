@@ -49,6 +49,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'pedidos',
+        loadChildren: () =>
+          import('@modules/pedidos/pedidos.module').then(
+            (m) => m.PedidosModule
+          ),
+      },
+      {
         path: 'ventas',
         loadChildren: () =>
           import('@modules/ventas/ventas.module').then((m) => m.VentasModule),

@@ -42,28 +42,25 @@
   </ng-template>
   <p-toast position="top-left"></p-toast>
   <p-table
+    #dt
     [value]="proveedores"
-    [lazy]="true"
-    (onRowSelect)="onRowSelect($event)"
-    (onLazyLoad)="loadProveedores($event)"
-    dataKey="idProveedor"
-    [tableStyle]="{ 'min-width': '50rem' }"
-    [(selection)]="selectedProveedor"
+    responsiveLayout="scroll"
     [paginator]="true"
     [rows]="10"
+    (onRowSelect)="onRowSelect($event)"
+    [globalFilterFields]="[
+      'id',
+      'nombre',
+      'apellido',
+      'correo',
+      'fechaNacimiento'
+    ]"
+    [responsive]="true"
+    [(selection)]="selectedProveedor"
+    [rowHover]="true"
     [totalRecords]="totalRecords"
     [loading]="loading"
     [rowsPerPageOptions]="[10, 25, 50]"
-    [paginatorPosition]="'bottom'"
-    [responsive]="true"
-    [reorderableColumns]="true"
-    [globalFilterFields]="[
-      'idProveedor',
-      'rfc',
-      'razonSocial',
-      'direccion',
-      'telefono'
-    ]"
   >
     <ng-template pTemplate="header">
       <tr>

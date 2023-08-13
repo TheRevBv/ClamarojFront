@@ -151,21 +151,50 @@ export class MateriaPrimaFormComponent implements OnInit {
   }
 
   agregar() {
-    this.materiasPrimasSvc
-      .createMateriaPrima(this.materiaPrimaForm.value)
-      .subscribe(
-        (res) => {
-          this.messageSvc.add({
-            severity: 'success',
-            summary: '¡Correcto!',
-            detail: 'Materia prima agregada correctamente',
-          });
-          this.router.navigate(['admin', 'inventario', 'materias-primas']);
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+    let {
+      codigo,
+      nombre,
+      descripcion,
+      cantMinima,
+      cantMaxima,
+      foto,
+      perecedero,
+      precio,
+      stock,
+      idUnidadMedida,
+      idProveedor,
+      idStatus,
+    } = this.materiaPrimaForm.value;
+
+    this.materiaPrima = {
+      id: 0,
+      codigo,
+      nombre,
+      descripcion,
+      cantMinima,
+      cantMaxima,
+      foto,
+      perecedero,
+      precio,
+      stock,
+      idStatus: idStatus,
+      idUnidadMedida: idUnidadMedida,
+      idProveedor: idProveedor,
+    };
+
+    this.materiasPrimasSvc.createMateriaPrima(this.materiaPrima).subscribe(
+      (res) => {
+        this.messageSvc.add({
+          severity: 'success',
+          summary: '¡Correcto!',
+          detail: 'Materia prima agregada correctamente',
+        });
+        this.router.navigate(['admin', 'inventario', 'materias-primas']);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
   }
 
   editar() {
