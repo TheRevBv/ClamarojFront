@@ -19,10 +19,9 @@ registerLocaleData(localeEs);
 registerLocaleData(localeFr);
 
 import { AppComponent } from './app.component';
-import { ProdListComponent } from './components/prod-list/prod-list.component';
 
 @NgModule({
-  declarations: [AppComponent, ProdListComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

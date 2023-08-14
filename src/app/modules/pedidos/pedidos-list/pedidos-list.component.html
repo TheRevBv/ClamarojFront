@@ -1,1 +1,119 @@
-<p>pedidos-list works!</p>
+<p-card>
+  <ng-template pTemplate="header">
+    <div class="flex flex-row justify-content-between mx-5">
+      <div class="flex flex-row mt-3">
+        <div class="flex flex-column justify-content-center align-items-center">
+          <i class="fa fa-th-large text-2xl"></i>
+        </div>
+        <div class="flex flex-column justify-content-center">
+          <h1 class="text-xl font-bold">Pedidos</h1>
+        </div>
+      </div>
+      <div class="flex flex-row mt-3 gap-2">
+        <div class="flex flex-column justify-content-center align-items-center">
+          <p-button
+            label="Nuevo"
+            icon="pi pi-plus"
+            styleClass="p-button-rounded p-button-success p-mr-2"
+            [routerLink]="['agregar']"
+          ></p-button>
+        </div>
+        <div class="flex flex-column justify-content-center align-items-center">
+          <p-button
+            label="Editar"
+            icon="pi pi-pencil"
+            styleClass="p-button-rounded p-button-warning"
+            [routerLink]="['editar', selectedPedido?.id]"
+            [disabled]="!selectedPedido"
+          ></p-button>
+        </div>
+        <div class="flex flex-column justify-content-center align-items-center">
+          <p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>
+          <p-button
+            label="Eliminar"
+            icon="pi pi-trash"
+            styleClass="p-button-rounded p-button-danger"
+            (click)="deletePedido()"
+            [disabled]="!selectedPedido"
+          ></p-button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <p-toast position="top-left"></p-toast>
+  <p-table
+    #dt
+    [value]="pedidos"
+    responsiveLayout="scroll"
+    [paginator]="true"
+    [rows]="10"
+    (onRowSelect)="onRowSelect($event)"
+    [globalFilterFields]="['idPedido', 'usuario', 'fecha', 'total', 'estatus']"
+    [responsive]="true"
+    [(selection)]="selectedPedido"
+    [rowHover]="true"
+    [totalRecords]="totalRecords"
+    [loading]="loading"
+    [rowsPerPageOptions]="[10, 25, 50]"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 1rem"></th>
+        <th pSortableColumn="idPedido">
+          <p-sortIcon field="idPedido"></p-sortIcon>
+        </th>
+        <th pSortableColumn="usuario">
+          Usuario <p-sortIcon field="usuario"></p-sortIcon>
+        </th>
+        <th pSortableColumn="fecha">
+          Fecha Pedido <p-sortIcon field="fecha"></p-sortIcon>
+        </th>
+        <th pSortableColumn="total">
+          Total <p-sortIcon field="total"></p-sortIcon>
+        </th>
+        <th pSortableColumn="estatus">
+          Estatus <p-sortIcon field="estatus"></p-sortIcon>
+        </th>
+      </tr>
+      <tr>
+        <th style="width: 1rem"></th>
+        <th>
+          <p-columnFilter
+            matchMode="contains"
+            type="text"
+            field="idPedido"
+          ></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="usuario"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="fecha"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="total"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="estatus"></p-columnFilter>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-pedido>
+      <tr>
+        <td>
+          <p-tableRadioButton [value]="pedido"></p-tableRadioButton>
+        </td>
+        <td>{{ pedido.id }}</td>
+        <td>{{ pedido.usuario }}</td>
+        <td>{{ pedido.fecha | date : "dd/MM/yyyy" }}</td>
+        <td>{{ pedido.total | currency : "MXN" }}</td>
+        <td>
+          <p-tag
+            [value]="pedido.estatus"
+            [severity]="getSeverity(pedido.estatus)"
+          ></p-tag>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

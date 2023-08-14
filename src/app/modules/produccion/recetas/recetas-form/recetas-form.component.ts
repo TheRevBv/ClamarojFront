@@ -17,7 +17,7 @@ import { Receta } from '@models/recetas';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { Product } from '@models/product'; //Interfaz de prueba
 import { Producto } from '@models/productos';
-import { ProdListComponent } from '@components/prod-list/prod-list.component';
+import { MatPrimListComponent } from '@components/mat-prim-list/mat-prim-list.component';
 import { ProductosService } from '@services/productos.service';
 import { IngredientesService } from '@services/ingredientes.service';
 
@@ -71,7 +71,7 @@ export class RecetasFormComponent implements OnInit, OnDestroy {
   }
 
   show() {
-    this.ref = this.dialogService.open(ProdListComponent, {
+    this.ref = this.dialogService.open(MatPrimListComponent, {
       header: 'Seleccione una materia prima',
       width: '70%',
       contentStyle: { overflow: 'auto' },

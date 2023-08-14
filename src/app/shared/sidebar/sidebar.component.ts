@@ -112,35 +112,24 @@ export class SidebarComponent implements OnInit {
         ],
       },
       {
-        label: 'Ventas',
+        label: 'Pedidos',
         icon: 'pi pi-fw pi-dollar',
         items: [
+          {
+            label: 'Pedidos',
+            icon: 'fa fa-th-large fa-fw',
+            routerLink: '/pedidos',
+          },
           {
             label: 'Ventas',
             icon: 'pi pi-fw pi-dollar',
             routerLink: '/ventas',
           },
-          // {
-          //   label: 'Cotizaciones',
-          //   icon: 'pi pi-fw pi-dollar',
-          //   routerLink: '/cotizaciones',
-          // },
-        ],
-      },
-      {
-        label: 'Compras',
-        icon: 'pi pi-fw pi-shopping-cart',
-        items: [
           {
             label: 'Compras',
             icon: 'pi pi-fw pi-shopping-cart',
             routerLink: '/compras',
           },
-          // {
-          //   label: 'Cotizaciones',
-          //   icon: 'pi pi-fw pi-dollar',
-          //   routerLink: '/cotizaciones',
-          // },
         ],
       },
       {

@@ -1,0 +1,107 @@
+<div class="card">
+  <p-table
+    #dt
+    [value]="productos"
+    responsiveLayout="scroll"
+    [paginator]="true"
+    [rows]="5"
+    [selectionPageOnly]="true"
+    [globalFilterFields]="['nombre', 'estatus']"
+    [responsive]="true"
+    [(selection)]="selectedProductos"
+    [rowHover]="true"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex align-items-center justify-content-between">
+        <div class="flex align-items-center justify-content-between gap-2">
+          <h5 class="m-0">Administrador de ingredientes</h5>
+          <span class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              (input)="dt.filterGlobal(getValue($event), 'contains')"
+              placeholder="Buscar..."
+            />
+          </span>
+        </div>
+        <!-- <div class="flex align-items-center justify-content-between gap-2">
+          <button
+            type="button"
+            pButton
+            label="Guardar"
+            (click)="guardar(selectedMateriaPrima)"
+            class="p-button-success p-button-rounded p-mr-2"
+            icon="pi pi-check"
+          ></button>
+          <button
+            type="button"
+            pButton
+            label="Eliminar"
+            (click)="eliminar(selectedMateriaPrima)"
+            class="p-button-danger p-button-rounded"
+            icon="pi pi-times"
+          ></button>
+        </div> -->
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 4rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pSortableColumn="nombre">
+          Materia Prima <p-sortIcon field="vin"></p-sortIcon>
+        </th>
+        <th pSortableColumn="year">Imagen</th>
+        <th pSortableColumn="cantidad">
+          Cantidad Necesaria <p-sortIcon field="cantidad"></p-sortIcon>
+        </th>
+        <th pSortableColumn="estatus">
+          Estatus <p-sortIcon field="estatus"></p-sortIcon>
+        </th>
+        <!-- <th style="width: 4em"></th> -->
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-materia let-editing="editing">
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="materia"></p-tableCheckbox>
+        </td>
+        <td>{{ materia.nombre }}</td>
+        <td>
+          <img
+            [src]="materia.foto"
+            [alt]="materia.nombre"
+            class="w-4rem h-4rem shadow-2"
+          />
+        </td>
+        <td
+          [pEditableColumn]="materia.cantidad"
+          pEditableColumnField="cantidad"
+        >
+          <p-cellEditor>
+            <ng-template pTemplate="input">
+              <p-inputNumber
+                [(ngModel)]="materia.cantidad"
+                [min]="0"
+                [minFractionDigits]="4"
+                [maxFractionDigits]="4"
+              >
+              </p-inputNumber>
+            </ng-template>
+            <ng-template pTemplate="output">
+              {{ materia.cantidad | number : "1.4-4" }}
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td>
+          <!-- <p-tag
+            [value]="materia.estatus"
+            [severity]="getSeverity(materia.estatus.toLowerCase())"
+          ></p-tag> -->
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
