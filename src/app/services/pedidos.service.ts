@@ -14,6 +14,23 @@ export class PedidosService {
     Authorization: 'Bearer ' + localStorage.getItem('access_token') || '',
   });
 
+  public tiposPedido = [
+    { id: 'c', nombre: 'Compra' },
+    { id: 'v', nombre: 'Venta' },
+  ];
+
+  public tiposPago = [
+    { id: 'e', nombre: 'Efectivo' },
+    { id: 'tc', nombre: 'Tarjeta de crédito' },
+    { id: 'td', nombre: 'Tarjeta de débito' },
+    { id: 'tb', nombre: 'Transferencia bancaria' },
+  ];
+
+  public tiposEnvio = [
+    { id: 'd', nombre: 'A domicilio' },
+    { id: 't', nombre: 'Recoger en tienda' },
+  ];
+
   constructor(private http: HttpClient, private cookie: CookieService) {}
 
   // Get all pedidos
@@ -59,6 +76,18 @@ export class PedidosService {
     return this.http.delete<Pedido>(`api/pedidos/${id}`, {
       headers: this.header,
     });
+  }
+
+  getTipoPedido(): any[] {
+    return this.tiposPedido;
+  }
+
+  getTipoPago(): any[] {
+    return this.tiposPago;
+  }
+
+  getTipoEnvio(): any[] {
+    return this.tiposEnvio;
   }
 
   // setCookie(name: string, value: string, days: number) {

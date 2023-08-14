@@ -42,15 +42,15 @@
   </ng-template>
   <p-toast position="top-left"></p-toast>
   <p-table
+    #dt
     [value]="productos"
-    [lazy]="true"
-    (onRowSelect)="onRowSelect($event)"
-    (onLazyLoad)="loadProductos($event)"
-    dataKey="idProducto"
-    [tableStyle]="{ 'min-width': '50rem' }"
-    [(selection)]="selectedProducto"
+    responsiveLayout="scroll"
     [paginator]="true"
     [rows]="10"
+    (onRowSelect)="onRowSelect($event)"
+    [responsive]="true"
+    [(selection)]="selectedProducto"
+    [rowHover]="true"
     [totalRecords]="totalRecords"
     [loading]="loading"
     [rowsPerPageOptions]="[10, 25, 50]"
@@ -59,7 +59,7 @@
       'nombre',
       'descripcion',
       'precio',
-      'idStatus'
+      'estatus'
     ]"
   >
     <ng-template pTemplate="header">
@@ -77,8 +77,8 @@
         <th pSortableColumn="precio">
           Precio <p-sortIcon field="precio"></p-sortIcon>
         </th>
-        <th pSortableColumn="idStatus">
-          Estatus <p-sortIcon field="idStatus"></p-sortIcon>
+        <th pSortableColumn="estatus">
+          Estatus <p-sortIcon field="estatus"></p-sortIcon>
         </th>
       </tr>
       <tr>
@@ -98,7 +98,7 @@
           <p-columnFilter type="text" field="precio"></p-columnFilter>
         </th>
         <th>
-          <p-columnFilter type="text" field="idStatus"></p-columnFilter>
+          <p-columnFilter type="text" field="estatus"></p-columnFilter>
         </th>
       </tr>
     </ng-template>
@@ -110,8 +110,13 @@
         <td>{{ producto.codigo }}</td>
         <td>{{ producto.nombre }}</td>
         <td>{{ producto.descripcion }}</td>
-        <td>{{ producto.precio }}</td>
-        <td>{{ producto.idStatus }}</td>
+        <td>{{ producto.precio | currency : "MXN" }}</td>
+        <td>
+          <p-tag
+            [value]="producto.estatus"
+            [severity]="getSeverity(producto.estatus.toLowerCase())"
+          ></p-tag>
+        </td>
       </tr>
     </ng-template>
   </p-table>

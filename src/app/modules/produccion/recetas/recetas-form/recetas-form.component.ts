@@ -7,16 +7,16 @@ import {
   Validators,
 } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 import { EstatusService } from '@services/estatus.service';
 import { RecetasService } from '@services/recetas.service';
 
 import { Estatus } from '@models/estatus';
 import { Receta } from '@models/recetas';
-
-import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { Product } from '@models/product'; //Interfaz de prueba
 import { Producto } from '@models/productos';
+
+// import { Product } from '@models/product'; //Interfaz de prueba
 import { MatPrimListComponent } from '@components/mat-prim-list/mat-prim-list.component';
 import { ProductosService } from '@services/productos.service';
 import { IngredientesService } from '@services/ingredientes.service';

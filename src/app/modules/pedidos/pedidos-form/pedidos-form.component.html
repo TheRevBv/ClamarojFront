@@ -1,1 +1,241 @@
-<p>pedidos-form works!</p>
+<!-- <p>usuarios-form works!</p> -->
+<p-toast position="top-left"></p-toast>
+<p-card>
+  <ng-template pTemplate="header">
+    <div class="flex flex-row justify-content-between mx-5">
+      <div class="flex flex-row">
+        <div class="flex flex-column justify-content-center align-items-center">
+          <i class="pi pi-users text-2xl"></i>
+        </div>
+        <div class="flex flex-column justify-content-center">
+          <h1 class="text-xl font-bold">{{ title }}</h1>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="body">
+    <form [formGroup]="pedidoForm" (ngSubmit)="onSubmit()">
+      <div class="formgrid grid">
+        <div class="field col-12 md:col-4 mb-5">
+          <input
+            id="disabled-input"
+            type="text"
+            pInputText
+            [disabled]="true"
+            class="w-full"
+            [value]="pedido.idPedido"
+          />
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <input
+              pInputText
+              id="domicilio"
+              formControlName="domicilio"
+              class="w-full"
+              [required]="true"
+              [minlength]="5"
+              [maxlength]="45"
+            />
+            <label htmlFor="domicilio">Domicilio</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <p-inputMask
+              mask="999-999-9999"
+              formControlName="telefono"
+              styleClass="w-full"
+              [minlength]="12"
+              [required]="true"
+              [maxlength]="12"
+            ></p-inputMask>
+            <label htmlFor="telefono">Telefono</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <p-calendar
+              formControlName="fechaEntrega"
+              dateFormat="dd/mm/yy"
+              styleClass="w-full"
+              [minDate]="minDate"
+              [showIcon]="true"
+              [maxDate]="maxDate"
+              [readonlyInput]="true"
+              [touchUI]="true"
+              [defaultDate]="maxDate"
+            ></p-calendar>
+            <label htmlFor="fechaEntrega">Fecha Entrega</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <input
+              pInputText
+              id="razonSocial"
+              formControlName="razonSocial"
+              class="w-full"
+              [required]="false"
+              [minlength]="3"
+              [maxlength]="45"
+            />
+            <label htmlFor="razonSocial">Razon Social</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <input
+              pInputText
+              id="rfc"
+              formControlName="rfc"
+              class="w-full uppercase"
+              [required]="false"
+              [minlength]="13"
+              [maxlength]="13"
+              [pattern]="patternRFC"
+            />
+            <label htmlFor="rfc">RFC</label>
+          </span>
+          <p class="text-xs text-gray-500">
+            El RFC debe ser al menos de 13 caracteres
+          </p>
+          <p class="text-xs text-gray-500">
+            El RFC debe contener 4 letras, 6 numeros y 3 letras o 3 numeros
+          </p>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <p-inputNumber
+              id="total"
+              formControlName="total"
+              class="w-full input-numbers"
+              mode="currency"
+              inputId="currencyonly"
+              currency="MXN"
+              locale="es-MX"
+              [minFractionDigits]="4"
+              [maxFractionDigits]="4"
+              [required]="true"
+            ></p-inputNumber>
+            <label htmlFor="total">Total</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <p-dropdown
+              [options]="usuarios"
+              formControlName="idUsuario"
+              [style]="{ width: '100%' }"
+              [showClear]="true"
+              optionValue="id"
+              optionLabel="correo"
+              [filter]="true"
+              [required]="true"
+              [placeholder]="'Seleccione un usuario'"
+            >
+            </p-dropdown>
+            <label for="float-label">Usuario</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <p-dropdown
+              [options]="estatus"
+              formControlName="idStatus"
+              [style]="{ width: '100%' }"
+              [showClear]="true"
+              optionValue="idEstatus"
+              optionLabel="nombre"
+              [filter]="true"
+              [required]="true"
+              [placeholder]="'Seleccione un estatus'"
+            >
+            </p-dropdown>
+            <label for="float-label">Estatus</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <p-dropdown
+              [options]="tiposEnvio"
+              formControlName="tipoEnvio"
+              [style]="{ width: '100%' }"
+              [showClear]="true"
+              optionValue="id"
+              optionLabel="nombre"
+              [filter]="true"
+              [required]="true"
+              [placeholder]="'Seleccione un tipo de envío'"
+            >
+            </p-dropdown>
+            <label for="float-label">Tipo de envío</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <p-dropdown
+              [options]="tiposPago"
+              formControlName="tipoPago"
+              [style]="{ width: '100%' }"
+              [showClear]="true"
+              optionValue="id"
+              optionLabel="nombre"
+              [filter]="true"
+              [required]="true"
+              [placeholder]="'Seleccione un tipo de pago'"
+            >
+            </p-dropdown>
+            <label for="float-label">Tipo de pago</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <span class="p-float-label">
+            <p-dropdown
+              [options]="tiposPedido"
+              formControlName="tipoPedido"
+              [style]="{ width: '100%' }"
+              [showClear]="true"
+              optionValue="id"
+              optionLabel="nombre"
+              [filter]="true"
+              [required]="true"
+              [placeholder]="'Seleccione el tipo de pedido'"
+            >
+            </p-dropdown>
+            <label for="float-label">Tipo de pedido</label>
+          </span>
+        </div>
+        <div class="field col-12 md:col-4 mb-5">
+          <p-button
+            (click)="show()"
+            icon="pi pi-plus-circle"
+            styleClass="p-button-rounded p-button-info p-button-outlined w-full"
+            label="Agregar Productos"
+          ></p-button>
+        </div>
+      </div>
+      <div class="flex flex-row justify-content-end">
+        <div class="p-col-12 p-md-3 p-lg-3 mr-3">
+          <button
+            pButton
+            pRipple
+            type="submit"
+            label="Guardar"
+            class="p-button-success p-button-rounded p-button-outlined"
+          ></button>
+        </div>
+        <div class="p-col-12 p-md-3 p-lg-3">
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Cancelar"
+            (click)="cancelar()"
+            class="p-button-danger p-button-rounded p-button-outlined"
+          ></button>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+</p-card>

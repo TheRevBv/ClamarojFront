@@ -1,12 +1,12 @@
 <div class="card">
   <p-table
     #dt
-    [value]="productos"
+    [value]="productosConCantidad"
     responsiveLayout="scroll"
     [paginator]="true"
     [rows]="5"
     [selectionPageOnly]="true"
-    [globalFilterFields]="['nombre', 'estatus']"
+    [globalFilterFields]="['nombre', 'codigo', 'estatus']"
     [responsive]="true"
     [(selection)]="selectedProductos"
     [rowHover]="true"
@@ -14,7 +14,7 @@
     <ng-template pTemplate="caption">
       <div class="flex align-items-center justify-content-between">
         <div class="flex align-items-center justify-content-between gap-2">
-          <h5 class="m-0">Administrador de ingredientes</h5>
+          <h5 class="m-0">Administrador de productos</h5>
           <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
             <input
@@ -25,15 +25,17 @@
             />
           </span>
         </div>
-        <!-- <div class="flex align-items-center justify-content-between gap-2">
+        <div class="flex align-items-center justify-content-between gap-2">
           <button
             type="button"
             pButton
             label="Guardar"
-            (click)="guardar(selectedMateriaPrima)"
+            (click)="guardar()"
             class="p-button-success p-button-rounded p-mr-2"
             icon="pi pi-check"
           ></button>
+        </div>
+        <!--
           <button
             type="button"
             pButton
@@ -51,11 +53,12 @@
           <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
         </th>
         <th pSortableColumn="nombre">
-          Materia Prima <p-sortIcon field="vin"></p-sortIcon>
+          Producto <p-sortIcon field="vin"></p-sortIcon>
         </th>
+        <th pSortableColumn="codigo">Codigo</th>
         <th pSortableColumn="year">Imagen</th>
         <th pSortableColumn="cantidad">
-          Cantidad Necesaria <p-sortIcon field="cantidad"></p-sortIcon>
+          Cantidad <p-sortIcon field="cantidad"></p-sortIcon>
         </th>
         <th pSortableColumn="estatus">
           Estatus <p-sortIcon field="estatus"></p-sortIcon>
@@ -63,27 +66,28 @@
         <!-- <th style="width: 4em"></th> -->
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-materia let-editing="editing">
+    <ng-template pTemplate="body" let-producto let-editing="editing">
       <tr>
         <td>
-          <p-tableCheckbox [value]="materia"></p-tableCheckbox>
+          <p-tableCheckbox [value]="producto"></p-tableCheckbox>
         </td>
-        <td>{{ materia.nombre }}</td>
+        <td>{{ producto.nombre }}</td>
+        <td>{{ producto.codigo }}</td>
         <td>
           <img
-            [src]="materia.foto"
-            [alt]="materia.nombre"
+            [src]="producto.foto"
+            [alt]="producto.nombre"
             class="w-4rem h-4rem shadow-2"
           />
         </td>
         <td
-          [pEditableColumn]="materia.cantidad"
+          [pEditableColumn]="producto.cantidad"
           pEditableColumnField="cantidad"
         >
           <p-cellEditor>
             <ng-template pTemplate="input">
               <p-inputNumber
-                [(ngModel)]="materia.cantidad"
+                [(ngModel)]="producto.cantidad"
                 [min]="0"
                 [minFractionDigits]="4"
                 [maxFractionDigits]="4"
@@ -91,15 +95,15 @@
               </p-inputNumber>
             </ng-template>
             <ng-template pTemplate="output">
-              {{ materia.cantidad | number : "1.4-4" }}
+              {{ producto.cantidad | number : "1.4-4" }}
             </ng-template>
           </p-cellEditor>
         </td>
         <td>
-          <!-- <p-tag
-            [value]="materia.estatus"
-            [severity]="getSeverity(materia.estatus.toLowerCase())"
-          ></p-tag> -->
+          <p-tag
+            [value]="producto.estatus"
+            [severity]="getSeverity(producto.estatus.toLowerCase())"
+          ></p-tag>
         </td>
       </tr>
     </ng-template>
