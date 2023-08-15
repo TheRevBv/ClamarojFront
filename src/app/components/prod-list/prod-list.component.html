@@ -1,20 +1,21 @@
 <div class="card">
   <p-table
     #dt
-    [value]="productosConCantidad"
+    [value]="data"
     responsiveLayout="scroll"
     [paginator]="true"
     [rows]="5"
+    [loading]="loading"
     [selectionPageOnly]="true"
     [globalFilterFields]="['nombre', 'codigo', 'estatus']"
     [responsive]="true"
-    [(selection)]="selectedProductos"
+    [(selection)]="selectedData"
     [rowHover]="true"
   >
     <ng-template pTemplate="caption">
       <div class="flex align-items-center justify-content-between">
         <div class="flex align-items-center justify-content-between gap-2">
-          <h5 class="m-0">Administrador de productos</h5>
+          <h5 class="m-0">Administrador de articulos</h5>
           <span class="p-input-icon-left">
             <i class="pi pi-search"></i>
             <input
@@ -26,6 +27,12 @@
           </span>
         </div>
         <div class="flex align-items-center justify-content-between gap-2">
+          <p-dropdown
+            [options]="dropdownSettings"
+            optionLabel="label"
+            optionValue="id"
+            (onChange)="onDropdownChange($event)"
+          ></p-dropdown>
           <button
             type="button"
             pButton
@@ -53,12 +60,18 @@
           <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
         </th>
         <th pSortableColumn="nombre">
-          Producto <p-sortIcon field="vin"></p-sortIcon>
+          Articulo <p-sortIcon field="vin"></p-sortIcon>
         </th>
         <th pSortableColumn="codigo">Codigo</th>
         <th pSortableColumn="year">Imagen</th>
         <th pSortableColumn="cantidad">
           Cantidad <p-sortIcon field="cantidad"></p-sortIcon>
+        </th>
+        <th pSortableColumn="precio">
+          Precio <p-sortIcon field="precio"></p-sortIcon>
+        </th>
+        <th pSortableColumn="subtotal">
+          SubTotal <p-sortIcon field="subtotal"></p-sortIcon>
         </th>
         <th pSortableColumn="estatus">
           Estatus <p-sortIcon field="estatus"></p-sortIcon>
@@ -66,43 +79,48 @@
         <!-- <th style="width: 4em"></th> -->
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-producto let-editing="editing">
+    <ng-template pTemplate="body" let-articulo let-editing="editing">
       <tr>
         <td>
-          <p-tableCheckbox [value]="producto"></p-tableCheckbox>
+          <p-tableCheckbox [value]="articulo"></p-tableCheckbox>
         </td>
-        <td>{{ producto.nombre }}</td>
-        <td>{{ producto.codigo }}</td>
+        <td>{{ articulo.nombre }}</td>
+        <td>{{ articulo.codigo }}</td>
         <td>
           <img
-            [src]="producto.foto"
-            [alt]="producto.nombre"
+            [src]="articulo.foto"
+            [alt]="articulo.nombre"
             class="w-4rem h-4rem shadow-2"
           />
         </td>
         <td
-          [pEditableColumn]="producto.cantidad"
+          [pEditableColumn]="articulo.cantidad"
           pEditableColumnField="cantidad"
         >
           <p-cellEditor>
             <ng-template pTemplate="input">
               <p-inputNumber
-                [(ngModel)]="producto.cantidad"
+                [(ngModel)]="articulo.cantidad"
                 [min]="0"
                 [minFractionDigits]="4"
                 [maxFractionDigits]="4"
+                (ngModelChange)="onInputChange(articulo)"
               >
               </p-inputNumber>
             </ng-template>
             <ng-template pTemplate="output">
-              {{ producto.cantidad | number : "1.4-4" }}
+              {{ articulo.cantidad | number : "1.4-4" }}
             </ng-template>
           </p-cellEditor>
         </td>
+        <td>{{ articulo.precio | currency : "MXN" }}</td>
+        <td>
+          {{ articulo.subtotal | currency : "MXN" }}
+        </td>
         <td>
           <p-tag
-            [value]="producto.estatus"
-            [severity]="getSeverity(producto.estatus.toLowerCase())"
+            [value]="articulo.estatus"
+            [severity]="getSeverity(articulo.estatus.toLowerCase())"
           ></p-tag>
         </td>
       </tr>

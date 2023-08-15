@@ -103,24 +103,24 @@ export class PedidosFormComponent implements OnInit, OnDestroy {
 
   show() {
     this.ref = this.dialogService.open(ProdListComponent, {
-      header: 'Seleccione sus productos',
+      header: 'Seleccione sus artículos',
       width: '70%',
       contentStyle: { overflow: 'auto' },
       baseZIndex: 10000,
       maximizable: true,
     });
 
-    this.ref.onClose.subscribe((productos: any[]) => {
-      if (productos) {
+    this.ref.onClose.subscribe((articulos: any[]) => {
+      if (articulos) {
         this.messageSvc.add({
           severity: 'success',
-          summary: 'Se han agregado productos',
-          detail: `${productos.length} productos agregados`,
+          summary: 'Se han agregado articulos',
+          detail: `${articulos.length} articulos agregados`,
         });
       } else {
         this.messageSvc.add({
           severity: 'info',
-          summary: 'No se han agregado productos',
+          summary: 'No se han agregado articulos',
           detail: ``,
         });
       }
@@ -129,13 +129,13 @@ export class PedidosFormComponent implements OnInit, OnDestroy {
       // }
     });
 
-    this.ref.onMaximize.subscribe((value) => {
-      this.messageSvc.add({
-        severity: 'info',
-        summary: 'Maximized',
-        detail: `maximized: ${value.maximized}`,
-      });
-    });
+    // this.ref.onMaximize.subscribe((value) => {
+    //   this.messageSvc.add({
+    //     severity: 'info',
+    //     summary: 'Maximized',
+    //     detail: `maximized: ${value.maximized}`,
+    //   });
+    // });
   }
 
   ngOnInit(): void {
