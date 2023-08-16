@@ -1,0 +1,42 @@
+<div class="" *ngIf="userLog">
+    <div class="tr-user">
+        <div class="user-image">
+            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="Image" class="img-fluid">
+        </div>
+        <div class="user-option">
+            <div class="tr-dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{cliente.nombre}}
+                    <span class="caret"></span></a>
+                <ul class="tr-dropdown-menu">
+                    <li><a (click)="logouth()" class="text-primary">Salir</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <ul class="tr-list cart-content">
+        <li class="tr-dropdown"><a>Mi Carrito <i class="fas fa-cart"></i><span
+                    class="cart-number">5</span></a>
+            <div class="tr-dropdown-menu">
+                <ul class="tr-list" *ngFor="let data of carrito">
+                    <li class="remove-item">
+                        <span class="remove-icon"><i class="fa fa-times" aria-hidden="true"></i></span>
+                        <div class="tr-product">
+                            <a>
+                                <span class="product-image">
+                                    <img ngSrc="{{data.image}}" alt="Image" class="img-fluid" fill>
+                                </span>
+                                <span class="product-title">{{data.articulo}}</span>
+                                <span class="price">${{data.precio}}</span>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+                <div class="buttons">
+                    <a class="btn btn-primary cart-button" [routerLink]="['/home/shopping-cart']" >Ver Carrito</a>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

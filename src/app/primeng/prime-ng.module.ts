@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 
 //PrimeNg
+import { AccordionModule } from 'primeng/accordion';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CalendarModule } from 'primeng/calendar';
@@ -21,11 +22,15 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ScrollTopModule } from 'primeng/scrolltop';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
+import { DataViewModule } from 'primeng/dataview';
+
+// import { Divi }
 // import { ScrollPanelModule } from 'primeng/scrollpanel';
 // import { MenuItem } from 'primeng/api';
 
 @NgModule({
   exports: [
+    AccordionModule,
     ButtonModule,
     CardModule,
     CalendarModule,
@@ -46,6 +51,7 @@ import { ToastModule } from 'primeng/toast';
     ScrollTopModule,
     TableModule,
     ToastModule,
+    DataViewModule,
     // ScrollPanelModule,
   ],
 })

@@ -1,0 +1,57 @@
+<div class="topbar-middle">
+    <div class="container clearfix">
+        <a class="tr-logo logo" routerLink="/">
+            <img class="img-fluid" src="assets/logos/logo-2.png" alt="Logotipo"
+                style="width: 200px;padding: 20px;margin-top: -45px;">
+        </a>
+
+        <form class="search-form" action="#" id="search" method="get">
+            <input class="form-control" name="search" type="text" placeholder="Buscar algun producto">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+
+        <div class="right-content">
+            <!-- <app-carrito></app-carrito> -->
+        </div>
+    </div>
+</div>
+<div class="tr-menu">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <div class="menu-content">
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                    data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" [routerLink]="['/inicio/inicio']">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" [routerLink]="['/inicio/about']">Nosotros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" [routerLink]="['/inicio/contact']">Contacto</a>
+                        </li>
+                        <li class="nav-item tr-dropdown">
+                            <a class="nav-link" [routerLink]="['/inicio/products']">Productos</a>
+                            <ul class="tr-dropdown-menu right">
+                                <li><a [routerLink]="['/inicio/products']">Shop List</a></li>
+                                <li><a [routerLink]="['/inicio/products']">Shop List</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item tr-dropdown">
+                            <a class="nav-link" [routerLink]="['/inicio/singin']">INICIAR SESIÓN </a>
+                            <ul class="tr-dropdown-menu right">
+                                <li><a [routerLink]="['/inicio/singin']">LOGIN</a></li>
+                                <li><a [routerLink]="['/inicio/singup']">REGISTRO</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>

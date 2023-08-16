@@ -1,0 +1,107 @@
+<div class="tr-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-info">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active">DETALLES DEL PRODUCTO</li>
+            </ol>
+            <div class="page-title">
+                <h1>DETALLES DEL PRODUCTO</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main-wrapper product-details">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tr-section product-details">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12 p-5">
+                            <div class="product-details-slider">
+                                <div class="tr-product">
+                                    <img src="{{articulo.imagen}}" alt="Image" class="img-fluid">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 p-5 ">
+                            <span class="product-title mb-3">{{articulo.categoria}}</span>
+                            <h3 class="mt-3">{{articulo.nombre}}</h3>
+
+                            <div class="rating-star">
+                                <ul class="tr-list rating">
+                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                    <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                    <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                </ul>
+                            </div>
+                            <hr>
+                            <h6 class="mt-3">Tamaño <small>Por favor, seleccione uno</small></h6>
+
+                            <div class="btn-group btn-group-toggle " data-toggle="buttons">
+                                <label class="btn btn-default text-center">
+                                    <input type="radio" name="color_option" id="color_option_b1" autocomplete="off">
+                                    <span class="text-xl">S</span>
+                                    <br>
+                                    Small
+                                </label>
+                                <label class="btn btn-default text-center">
+                                    <input type="radio" name="color_option" id="color_option_b2" autocomplete="off">
+                                    <span class="text-xl">M</span>
+                                    <br>
+                                    Medium
+                                </label>
+                                <label class="btn btn-default text-center">
+                                    <input type="radio" name="color_option" id="color_option_b3" autocomplete="off">
+                                    <span class="text-xl">L</span>
+                                    <br>
+                                    Large
+                                </label>
+                            </div>
+
+                            <div class="py-2 px-3 mt-4">
+                                <h2 class="mb-0">$ {{articulo.precio}}</h2>
+                                <h4 class="mt-0">
+                                    <small>Ex Tax: ${{articulo.precio}} </small>
+                                </h4>
+                            </div>
+                            <div class="mt-4 row">
+                                <div class="col">
+                                    <button class="btn btn-primary btn-lg btn-flat" (click)="addCarrito()">
+                                        <i class="fas fa-cart-plus fa-lg mr-2"></i>
+                                        Añadir al Carrito
+                                    </button>
+                                </div>
+                                <div class="col">
+                                    <div class="btn btn-secondary btb btn-lg btn-flat">
+                                        <i class="fas fa-heart fa-lg mr-2"></i>
+                                        Añadir mi lista
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-md-12 col-sm-12">
+                <div class="section-title text-center">
+                    <h1><span>Producto relacionado</span></h1>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-lg-4" *ngFor="let data of list">
+                        <div class="tr-product">
+                            <a (click)="showArticulo(data.id)">
+                                <span class="product-image">
+                                    <img src="{{data.imagen}}" alt="Image" class="img-fluid">
+                                </span> <span class="product-title">{{data.nombre}}</span>
+                                <span class="color">{{data.descripcion}}</span>
+                                <span class="price">${{data.precio}}</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>

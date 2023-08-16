@@ -1,0 +1,87 @@
+<div class="tr-breadcrumb">
+    <div class="container">
+        <div class="breadcrumb-info">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a>Inicio</a></li>
+                <li class="breadcrumb-item active">Productos</li>
+            </ol>
+            <div class="page-title">
+                <h1>COMPRAS PARA HOMBRES</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="main-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-lg-3">
+                <div class="tr-section choices-option">
+                    <ul class="tr-list">
+
+                        <li class="brands">
+                            <span>Buscar</span>
+                            <form class="search-form" action="#" method="get">
+                                <input class="form-control" name="sellType" type="text" placeholder="Buscar...">
+                                <button type="submit"><i class="fa fa-search"></i></button>
+                            </form>
+                        </li>
+                        <li class="tr-size">
+                            <span>Tallas</span>
+                            <ul class="tr-list">
+                                <li><a>CH</a></li>
+                                <li><a>MD</a></li>
+                                <li><a>GD</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span>Rango de Precio</span>
+                            <form method="get" action="#">
+                                <div id="price_slider"></div>
+                                <div class="price_slider_amount">
+                                    <input type="text" class="form-control" style="border: 1px;">
+                                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                                </div>
+                            </form>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8 col-lg-9">
+                <div class="product-list">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-4" *ngFor="let data of list">
+                            <div class="card product-box">
+                                <div class="card-body">
+                                    <div class="bg-light">
+                                        <img src="{{data.imagen}}" style="width: 250px; height: 250px;"
+                                            alt="producto-foto" class="img-fluid">
+                                    </div>
+                                    <div class="product-info">
+                                        <div class="row align-items-center">
+                                            <div class="col">
+                                                <h5 class="font-16 mt-0 sp-line-1"><a routerLink="./show/{{data.id}}"
+                                                        class="text-dark">{{data.nombre}}</a> </h5>
+                                                <div class="text-warning mb-2 font-13">
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                                <h5 class="m-0"> <span class="text-muted">${{data.precio}}</span></h5>
+                                            </div>
+                                        </div> <!-- end row -->
+                                    </div> <!-- end product info-->
+                                </div>
+                            </div> <!-- end card-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<app-footer></app-footer>-->
