@@ -1,3 +1,5 @@
+import { DetallePedido } from './detallepedidos';
+
 export interface Pedido {
   idPedido: number;
   idUsuario: number;
@@ -12,4 +14,5 @@ export interface Pedido {
   tipoEnvio: string;
   tipoPedido: string;
   total: number;
+  detallesPedidos: DetallePedido[];
 }

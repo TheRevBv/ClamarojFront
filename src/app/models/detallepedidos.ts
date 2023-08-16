@@ -1,5 +1,6 @@
 export interface DetallePedido {
   idDetallePedido: number;
+  fecha: Date;
   idPedido: number;
   idProducto: number;
   cantidad: number;

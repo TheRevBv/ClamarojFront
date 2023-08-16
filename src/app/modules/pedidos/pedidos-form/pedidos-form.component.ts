@@ -18,6 +18,7 @@ import { Estatus } from '@models/estatus';
 import { Pedido } from '@models/pedidos';
 import { Usuario } from '@models/usuarios';
 import { debounceTime } from 'rxjs';
+import { DetallePedido } from '@models/detallepedidos';
 
 @Component({
   selector: 'app-pedidos-form',
@@ -35,6 +36,8 @@ export class PedidosFormComponent implements OnInit, OnDestroy {
   tiposEnvio: any[] = [];
   estatus: Estatus[] = [];
   usuarios: Usuario[] = [];
+  detallesPedido: DetallePedido[] = [];
+  total: number = 0;
   pedido: Pedido = {
     idPedido: 0,
     idUsuario: 0,
@@ -49,6 +52,7 @@ export class PedidosFormComponent implements OnInit, OnDestroy {
     tipoEnvio: '',
     tipoPedido: '',
     total: 0,
+    detallesPedidos: [],
   };
   // El rfc debe tener 13 caracteres
   // Los primeros 4 caracteres deben ser letras mayúsculas
@@ -68,6 +72,32 @@ export class PedidosFormComponent implements OnInit, OnDestroy {
     private pedidosSvc: PedidosService,
     private usuariosSvc: UsuariosService
   ) {}
+
+  ngOnInit(): void {
+    this.createForm();
+    this.pedidoForm.controls['rfc'].valueChanges
+      .pipe(
+        debounceTime(300) // Ajusta el tiempo de espera según tus necesidades
+      )
+      .subscribe((newRfcValue) => {
+        this.pedidoForm.controls['rfc'].setValue(newRfcValue.toUpperCase(), {
+          emitEvent: false,
+        });
+      });
+    this.getTipoPedido();
+    this.getTipoPago();
+    this.getTipoEnvio();
+    this.getEstatus();
+    this.getUsuarios();
+    const id = this.route.snapshot.paramMap.get('id')!;
+    this.getPedido(id);
+  }
+
+  ngOnDestroy(): void {
+    if (this.ref) {
+      this.ref.close();
+    }
+  }
 
   createForm() {
     let fechaActual = new Date();
@@ -117,6 +147,25 @@ export class PedidosFormComponent implements OnInit, OnDestroy {
           summary: 'Se han agregado articulos',
           detail: `${articulos.length} articulos agregados`,
         });
+        let detallesPedido: DetallePedido;
+        let fechaActual = new Date();
+        articulos.forEach((articulo) => {
+          detallesPedido = {
+            idDetallePedido: 0,
+            idPedido: 0,
+            fecha: new Date(
+              fechaActual.getFullYear(),
+              fechaActual.getMonth(),
+              fechaActual.getDate()
+            ),
+            idProducto: articulo.idArticulo,
+            cantidad: articulo.cantidad,
+            precioUnitario: articulo.precio,
+            subtotal: articulo.subtotal,
+          };
+          this.total += articulo.subtotal;
+          this.detallesPedido.push(detallesPedido);
+        });
       } else {
         this.messageSvc.add({
           severity: 'info',
@@ -136,32 +185,6 @@ export class PedidosFormComponent implements OnInit, OnDestroy {
     //     detail: `maximized: ${value.maximized}`,
     //   });
     // });
-  }
-
-  ngOnInit(): void {
-    this.createForm();
-    this.pedidoForm.controls['rfc'].valueChanges
-      .pipe(
-        debounceTime(300) // Ajusta el tiempo de espera según tus necesidades
-      )
-      .subscribe((newRfcValue) => {
-        this.pedidoForm.controls['rfc'].setValue(newRfcValue.toUpperCase(), {
-          emitEvent: false,
-        });
-      });
-    this.getTipoPedido();
-    this.getTipoPago();
-    this.getTipoEnvio();
-    this.getEstatus();
-    this.getUsuarios();
-    const id = this.route.snapshot.paramMap.get('id')!;
-    this.getPedido(id);
-  }
-
-  ngOnDestroy(): void {
-    if (this.ref) {
-      this.ref.close();
-    }
   }
 
   getTipoPedido() {
@@ -216,13 +239,20 @@ export class PedidosFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.pedidoForm.value);
+    console.log(this.pedidoForm);
+    if (this.pedidoForm.invalid && this.detallesPedido.length === 0) {
+      this.messageSvc.add({
+        severity: 'error',
+        summary: '¡Error!',
+        detail: `Formulario inválido \n Considere que debe agregar al menos un artículo`,
+      });
+    }
     switch (this.tipoForm) {
       case 'N':
-        // agregar();
+        this.agregar();
         break;
       case 'E':
-        // editar();
+        this.editar();
         break;
       default:
         break;
@@ -245,7 +275,6 @@ export class PedidosFormComponent implements OnInit, OnDestroy {
       tipoPago,
       tipoEnvio,
       tipoPedido,
-      total,
     } = this.pedidoForm.value;
 
     let fechaActual = new Date();
@@ -261,13 +290,21 @@ export class PedidosFormComponent implements OnInit, OnDestroy {
       ),
       fechaEntrega: fechaEntrega,
       domicilio: domicilio,
-      telefono: telefono,
+      telefono: telefono
+        .toString()
+        .replace('(', '')
+        .replace(')', '')
+        .replace('-', '')
+        .replace('-', '')
+        .replace(' ', '')
+        .trim(),
       razonSocial: razonSocial,
       rfc: rfc,
       tipoPago: tipoPago,
       tipoEnvio: tipoEnvio,
       tipoPedido: tipoPedido,
-      total: total,
+      total: this.total,
+      detallesPedidos: this.detallesPedido,
     };
 
     this.pedidosSvc.addPedido(this.pedido).subscribe(
@@ -301,7 +338,6 @@ export class PedidosFormComponent implements OnInit, OnDestroy {
       tipoPago,
       tipoEnvio,
       tipoPedido,
-      total,
     } = this.pedidoForm.value;
 
     this.pedido = {
@@ -311,13 +347,20 @@ export class PedidosFormComponent implements OnInit, OnDestroy {
       fecha: this.pedido.fecha,
       fechaEntrega: fechaEntrega,
       domicilio: domicilio,
-      telefono: telefono,
+      telefono: telefono
+        .toString()
+        .replace('(', '')
+        .replace(')', '')
+        .replace('-', '')
+        .replace(' ', '')
+        .trim(),
       razonSocial: razonSocial,
       rfc: rfc,
       tipoPago: tipoPago,
       tipoEnvio: tipoEnvio,
       tipoPedido: tipoPedido,
-      total: total,
+      total: this.total,
+      detallesPedidos: this.detallesPedido,
     };
 
     this.pedidosSvc.updatePedido(this.pedido).subscribe(

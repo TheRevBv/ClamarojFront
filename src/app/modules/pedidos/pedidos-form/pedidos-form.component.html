@@ -43,12 +43,12 @@
         <div class="field col-12 md:col-4 mb-5">
           <span class="p-float-label">
             <p-inputMask
-              mask="999-999-9999"
+              mask="(999)-999-9999"
               formControlName="telefono"
               styleClass="w-full"
-              [minlength]="12"
+              [minlength]="14"
               [required]="true"
-              [maxlength]="12"
+              [maxlength]="14"
             ></p-inputMask>
             <label htmlFor="telefono">Telefono</label>
           </span>
@@ -211,7 +211,7 @@
             (click)="show()"
             icon="pi pi-plus-circle"
             styleClass="p-button-rounded p-button-info p-button-outlined w-full"
-            label="Agregar Productos"
+            label="Agregar Articulos"
           ></p-button>
         </div>
       </div>
