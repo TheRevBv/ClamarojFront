@@ -36,7 +36,9 @@ export class PedidosListComponent implements OnInit {
     private pedidosSvc: PedidosService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadPedidos();
+  }
 
   loadPedidos() {
     this.loading = true;
