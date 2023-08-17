@@ -13,6 +13,7 @@ import { DialogModule } from 'primeng/dialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ImageModule } from 'primeng/image';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputMaskModule } from 'primeng/inputmask';
 import { FileUploadModule } from 'primeng/fileupload';
@@ -47,6 +48,7 @@ import { ToastModule } from 'primeng/toast';
     DynamicDialogModule,
     ImageModule,
     InputTextModule,
+    InputTextareaModule,
     InputNumberModule,
     InputMaskModule,
     FileUploadModule,
