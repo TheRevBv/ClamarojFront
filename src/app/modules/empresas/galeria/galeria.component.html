@@ -1,0 +1,102 @@
+<div class="container p-0" >
+  <div class="card">
+    <p-dataView
+      #dv
+      [value]="products"
+      [sortField]="sortField"
+      [sortOrder]="sortOrder"
+    >
+      <ng-template let-product pTemplate="listItem">
+        <div class="col-12">
+          <div
+            class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4"
+          >
+            <img
+              class="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round"
+              [src]="product.image"
+              [alt]="product.name"
+            />
+            <div
+              class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4"
+            >
+              <div
+                class="flex flex-column align-items-center sm:align-items-start gap-3"
+              >
+                <div class="text-2xl font-bold text-900">
+                  {{ product.name }}
+                </div>
+                <p-rating [(ngModel)]="product.rating"></p-rating>
+                <div class="flex align-items-center gap-3">
+                  <span class="flex align-items-center gap-2">
+                    <i class="pi pi-tag"></i>
+                    <span class="font-semibold">{{ product.category }}</span>
+                  </span>
+                  <p-tag [value]="product.inventoryStatus"></p-tag>
+                </div>
+              </div>
+              <div
+                class="flex sm:flex-column align-items-center sm:align-items-end gap-3 sm:gap-2"
+              >
+                <span class="text-2xl font-semibold">{{
+                  "$" + product.price
+                }}</span>
+                <button
+                  pButton
+                  icon="pi pi-shopping-cart"
+                  class="md:align-self-end mb-2 p-button-rounded"
+                  [disabled]="product.inventoryStatus === 'OUTOFSTOCK'"
+                ></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </p-dataView>
+  </div>
+  <div class="col-3">
+    <div
+      class="p-3 flex flex-column border-200 pricing-card cursor-pointer border-2 hover:border-primary transition-duration-300 transition-all"
+      style="border-radius: 10px"
+    >
+      <h3 class="text-900 text-center my-5">MicheChela</h3>
+      <img
+        src="assets/logos/Clamaroj-2.png"
+        class="w-10 h-10 mx-auto"
+        alt="enterprise"
+      />
+      <div class="my-5 text-center">
+        <span class="text-5xl font-bold mr-2 text-900">$99</span>
+        <span class="text-600">Comprar Ahora</span>
+        <button
+          pButton
+          pRipple
+          label="Get a Quote"
+          class="block mx-auto mt-4 p-button-rounded border-none ml-3 font-light line-height-2 bg-blue-500 text-white"
+        ></button>
+      </div>
+    </div>
+  </div>
+  <div class="col-3">
+    <div
+      class="p-3 flex flex-column border-200 pricing-card cursor-pointer border-2 hover:border-primary transition-duration-300 transition-all"
+      style="border-radius: 10px"
+    >
+      <h3 class="text-900 text-center my-5">MicheChela</h3>
+      <img
+        src="assets/logos/Clamaroj-2.png"
+        class="w-10 h-10 mx-auto"
+        alt="enterprise"
+      />
+      <div class="my-5 text-center">
+        <span class="text-5xl font-bold mr-2 text-900">$99</span>
+        <span class="text-600">Comprar Ahora</span>
+        <button
+          pButton
+          pRipple
+          label="Get a Quote"
+          class="block mx-auto mt-4 p-button-rounded border-none ml-3 font-light line-height-2 bg-blue-500 text-white"
+        ></button>
+      </div>
+    </div>
+  </div>
+</div>

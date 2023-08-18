@@ -1,0 +1,228 @@
+<div class="main-wrapper">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-7 col-sm-12">
+                <div class="tr-section p-3">
+                    <div class="cart-title">
+                        <span>Entrega</span>
+                    </div>
+                    <!-- <form  name="contact-form" #form="ngForm" (ngSubmit)="udpdatePago(form)"> -->
+                    <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="contact-form">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="first-name">Nombre</label>
+                                    <input type="text" class="form-control" required="required"
+                                        formControlName="c_nombre" name="nombre">
+                                    <div *ngIf="paymentForm.controls.c_nombre.invalid">
+                                        <div *ngIf="paymentForm.controls.c_nombre.errors.required"
+                                            class="text-danger validate">
+                                            * Campo obligatorio.</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="last-name">Apellido Paterno</label>
+                                    <input type="text" class="form-control" required="required"
+                                        formControlName="c_apaterno" name="amaterno">
+                                    <div *ngIf="paymentForm.controls.c_apaterno.invalid">
+                                        <div *ngIf="paymentForm.controls.c_apaterno.errors.required"
+                                            class="text-danger validate">
+                                            * Campo obligatorio.</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label for="last-name">Apellido Materno</label>
+                                    <input type="text" class="form-control" required="required"
+                                        formControlName="c_amaterno" name="apaterno">
+                                    <div *ngIf="paymentForm.controls.c_amaterno.invalid">
+                                        <div *ngIf="paymentForm.controls.c_amaterno.errors.required"
+                                            class="text-danger validate">
+                                            * Campo obligatorio.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="email">Correo electrónico</label>
+                                    <input type="email" class="form-control" required="required"
+                                        formControlName="c_email" name="email">
+                                    <div *ngIf="paymentForm.controls.c_email.invalid">
+                                        <div *ngIf="paymentForm.controls.c_email.errors.required"
+                                            class="text-danger validate">
+                                            * Campo obligatorio.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="mobile-number">Número de teléfono móvil</label>
+                                    <input type="number" class="form-control" required="required"
+                                        formControlName="c_telefono" name="telefono">
+                                    <div *ngIf="paymentForm.controls.c_telefono.invalid">
+                                        <div *ngIf="paymentForm.controls.c_telefono.errors.required"
+                                            class="text-danger validate">
+                                            * Campo obligatorio.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="form-group address">
+                                    <label for="address">Dirección</label>
+                                    <input type="text" class="form-control" required="required"
+                                        formControlName="c_direccion" name="direccion"
+                                        placeholder="Col, Calle #123 León Gto">
+                                    <div *ngIf="paymentForm.controls.c_direccion.invalid">
+                                        <div *ngIf="paymentForm.controls.c_direccion.errors.required"
+                                            class="text-danger validate">
+                                            * Campo obligatorio.</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cart-title">
+                            <span>Pago</span>
+                        </div>
+                        <div class="border p-3 mb-3 rounded">
+                            <div class="row mt-4">
+                                <div class="col-md-12">
+                                    <div class="mb-3">
+                                        <label for="card-number" class="form-label">Número de tarjeta</label>
+                                        <input formControlName="p_tarjeta" name="tarjeta" type="text"
+                                            class="form-control" required="required" data-toggle="input-mask"
+                                            data-mask-format="0000 0000 0000 0000" placeholder="4242 4242 4242 4242">
+                                        <div
+                                            *ngIf="paymentForm.controls.p_tarjeta.invalid && (paymentForm.controls.p_tarjeta.dirty || paymentForm.controls.p_tarjeta.touched)">
+                                            <div *ngIf="paymentForm.controls.p_tarjeta.errors.required"
+                                                class="text-danger validate">El número de
+                                                tarjeta de crédito es obligatorio.</div>
+                                            <div *ngIf="paymentForm.controls.p_tarjeta.errors.pattern"
+                                                class="text-danger validate">El número de
+                                                tarjeta de crédito debe tener 16 dígitos numéricos.</div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div> <!-- end row -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="card-name-on" class="form-label">Nombre en la tarjeta</label>
+                                        <input formControlName="p_pagodesc" name="pagodesc" type="text"
+                                            class="form-control" required="required" placeholder="">
+                                        <div *ngIf="paymentForm.controls.p_pagodesc.invalid">
+                                            <div *ngIf="paymentForm.controls.p_pagodesc.errors.required"
+                                                class="text-danger validate">
+                                                * Campo obligatorio.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label for="card-expiry-date" class="form-label">Fecha Vencimiento</label>
+                                        <input type="text" formControlName="p_fechaven" name="fechaven"
+                                            class="form-control" required data-toggle="input-mask"
+                                            data-mask-format="00/00" placeholder="MM/YY">
+                                        <div
+                                            *ngIf="paymentForm.controls.p_fechaven.invalid && (paymentForm.controls.p_fechaven.dirty || paymentForm.controls.p_fechaven.touched)">
+                                            <div *ngIf="paymentForm.controls.p_fechaven.errors.required"
+                                                class="text-danger validate">La fecha de
+                                                vencimiento es obligatoria.</div>
+                                            <div *ngIf="paymentForm.controls.p_fechaven.errors.pattern"
+                                                class="text-danger validate">La fecha de
+                                                vencimiento debe tener el formato MM/AA.</div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <!-- <div class="mb-3"> -->
+                                    <label for="card-cvv" class="form-label">Código CVV </label>
+                                    <input type="text" formControlName="p_cvv" class="form-control" name="cvv"
+                                        data-toggle="input-mask" required data-mask-format="000" placeholder="012">
+
+                                    <div
+                                        *ngIf="paymentForm.controls.p_cvv.invalid && (paymentForm.controls.p_cvv.dirty || paymentForm.controls.p_cvv.touched)">
+                                        <div *ngIf="paymentForm.controls.p_cvv.errors.required"
+                                            class="text-danger validate">El CVV es obligatorio.
+                                        </div>
+                                        <div *ngIf="paymentForm.controls.p_cvv.errors.pattern"
+                                            class="text-danger validate">El CVV debe tener 3
+                                            dígitos
+                                            numéricos.</div>
+                                    </div>
+
+                                    <!-- </div> -->
+                                </div>
+                            </div> <!-- end row -->
+                        </div>
+
+                        <button type="submit" [disabled]="paymentForm.invalid"
+                            class="btn btn-primary pull-right">Confirmar Pago</button>
+
+                    </form>
+                </div>
+
+            </div>
+            <div class="col-md-5 col-sm-12">
+                <div class="tr-section p-3">
+
+                    <div class="cart-title">
+                        <span>Resumen de la venta
+                        </span>
+                    </div>
+                    <div class="border mt-4 rounded">
+                        <div class="table-responsive">
+                            <table class="table table-centered table-nowrap mb-0">
+                                <tbody>
+                                    <tr *ngFor="let item of ventadet">
+                                        <th scope="row">{{item.articulo}}</th>
+                                        <td><img src="{{item.imagen}}" alt="product-img" height="32"></td>
+                                        <td>{{item.cantidad}}</td>
+                                        <td>${{item.precio | number: '1.2-2'}}</td>
+                                        <td>${{item.total | number: '1.2-2'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" colspan="4" class="text-right">Sub Total :</th>
+                                        <td>
+                                            <div class="fw-bold">${{venta.total | number: '1.2-2'}}</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" colspan="4" class="text-right">Gastos de envío :</th>
+                                        <td>$70.00</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" colspan="4" class="text-right">Impuesto estimado :</th>
+                                        <td>${{venta.total * 0.16 | number: '1.2-2'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" colspan="4" class="text-right">Total :</th>
+                                        <td>
+                                            <div class="fw-bold">${{((venta.total * 1.16) + 70) | number: '1.2-2'}}
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end table-responsive -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .validate {
+        margin-top: -20px;
+    }
+</style>
