@@ -74,3 +74,28 @@
     </div>
   </div>
 </div>
+<!-- Disminuir tamaño de card -->
+
+<div class="surface-ground px-4 py-5 md:px-6 lg:px-8 lg:py-6 mt-5">
+  <div class="grid">
+    <p-card
+      class="col-12 md:col-6 lg:col-3"
+      [header]="header"
+      [subheader]="subHeader"
+      [style]="{ width: '100%' }"
+      styleClass="col-6"
+    >
+      <p-chart type="bar" [data]="basicData" [options]="basicOptions"></p-chart>
+    </p-card>
+
+    <p-card
+      class="col-12 md:col-6 lg:col-3"
+      [header]="header"
+      [subheader]="subHeader"
+      [style]="{ width: '100%' }"
+      styleClass="col-6"
+    >
+      <p-chart type="bar" [data]="data" [options]="options"></p-chart>
+    </p-card>
+  </div>
+</div>

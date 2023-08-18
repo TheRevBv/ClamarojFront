@@ -16,7 +16,7 @@ export class RecetasService {
 
   constructor(private http: HttpClient, private cookie: CookieService) {}
 
-  getRecetas(params: any): Observable<Receta[]> {
+  getRecetas(params?: any): Observable<Receta[]> {
     return this.http.get<Receta[]>('/api/recetas', {
       params,
       headers: this.header,

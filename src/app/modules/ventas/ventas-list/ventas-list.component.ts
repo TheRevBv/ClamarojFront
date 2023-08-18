@@ -11,7 +11,7 @@ import { EstatusService } from '@services/estatus.service';
 import { VentasService } from '@services/ventas.service';
 
 import { Estatus } from '@models/estatus';
-import { Venta } from '@models/ventas';
+import { Ventas } from '@models/Ventas';
 
 @Component({
   selector: 'app-ventas-list',
@@ -20,7 +20,7 @@ import { Venta } from '@models/ventas';
   providers: [MessageService, ConfirmationService],
 })
 export class VentasListComponent implements OnInit {
-  ventas: Venta[] = [];
+  ventas: Ventas[] = [];
   selectedVenta!: any;
   totalRecords!: number;
   loading = true;

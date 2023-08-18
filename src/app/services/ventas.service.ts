@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie';
 import { Observable } from 'rxjs';
 
-import { Venta } from '@models/ventas';
+import { Ventas } from '@models/Ventas';
 
 @Injectable({
   providedIn: 'root',
@@ -17,8 +17,8 @@ export class VentasService {
 
   constructor(private http: HttpClient, private cookie: CookieService) {}
 
-  getVentas(): Observable<Venta[]> {
-    return this.http.get<Venta[]>('api/ventas', { headers: this.header });
+  getVentas(): Observable<Ventas[]> {
+    return this.http.get<Ventas[]>('api/ventas', { headers: this.header });
   }
 
   getCookie(key: string): string | undefined {

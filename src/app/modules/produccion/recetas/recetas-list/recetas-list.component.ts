@@ -36,20 +36,19 @@ export class RecetasListComponent implements OnInit {
 
   ngOnInit() {
     this.getEstatus();
+    this.loadRecetas();
   }
 
-  loadRecetas(event: TableLazyLoadEvent) {
-    this.getRecetas(event);
+  loadRecetas() {
+    this.getRecetas();
   }
 
-  getRecetas(event: TableLazyLoadEvent) {
-    this.recetasSvc.getRecetas({ lazyEvent: JSON.stringify(event) }).subscribe(
+  getRecetas() {
+    this.recetasSvc.getRecetas().subscribe(
       (receta) => {
-        // console.log(receta);
         this.recetas = receta;
         this.totalRecords = receta.length;
         this.loading = false;
-        console.log(this.recetas);
       },
       (error) => {
         console.log(error);
@@ -93,7 +92,7 @@ export class RecetasListComponent implements OnInit {
         this.recetasSvc
           .deleteReceta(this.selectedReceta.idReceta)
           .subscribe((data) => {
-            this.getRecetas({} as TableLazyLoadEvent);
+            this.getRecetas();
           });
         this.messageSvc.add({
           severity: 'success',

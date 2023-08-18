@@ -17,8 +17,8 @@ const routes: Routes = [
     component: AdminPanelComponent,
     // canActivate: [adminGuard],
     // canActivateChild: [adminChildGuard],
-    // canActivate: [AuthAdminGuard],
-    // canActivateChild: [AuthAdminGuard],
+    canActivate: [AuthAdminGuard],
+    canActivateChild: [AuthAdminGuard],
     children: [
       {
         path: 'dashboard',
@@ -99,11 +99,11 @@ const routes: Routes = [
     component: LoginComponent,
     canActivate: [nonAdminGuard],
   },
-  {
-    path: 'registro',
-    component: RegistroComponent,
-    canActivate: [nonAdminGuard],
-  },
+  // {
+  //   path: 'registro',
+  //   component: RegistroComponent,
+  //   canActivate: [nonAdminGuard],
+  // },
   {
     path: '**',
     redirectTo: 'dashboard',

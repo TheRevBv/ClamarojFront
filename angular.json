@@ -42,7 +42,7 @@
               "node_modules/primeflex/primeflex.css",
               "node_modules/font-awesome/css/font-awesome.min.css"
             ],
-            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.min.js"]
+            "scripts": ["node_modules/chart.js/dist/chart.js"]
           },
           "configurations": {
             "production": {

@@ -32,7 +32,6 @@ import { ScrollTopModule } from 'primeng/scrolltop';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
-import { DataViewModule } from 'primeng/dataview';
 
 // import { Divi }
 // import { ScrollPanelModule } from 'primeng/scrollpanel';
@@ -71,7 +70,6 @@ import { DataViewModule } from 'primeng/dataview';
     TableModule,
     TagModule,
     ToastModule,
-    DataViewModule,
     // ScrollPanelModule,
   ],
 })
