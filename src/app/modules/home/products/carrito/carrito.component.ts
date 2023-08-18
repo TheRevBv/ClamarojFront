@@ -34,7 +34,8 @@ export class CarritoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    /*this.clienteService.getProfile().then((r) => r);
+    this.clienteService.getProfile().then((r) => r);
+
     let data = JSON.parse(this.clienteService.cliente);
     if (!data) {
       this.userLog = false;
@@ -42,14 +43,16 @@ export class CarritoComponent implements OnInit {
       this.userLog = true;
       this.cliente = data;
       this.getCarritoList();
-    }*/
+    }
   }
 
   getCarritoList() {
-    this.api.get(`api/carrito?cliente=${this.cliente.id}`).subscribe((item) => {
-      let { data } = item;
-      this.carrito = data;
-    });
+    this.api
+      .get(`api/Carritos/cliente/${this.cliente.id}`)
+      .subscribe((item) => {
+        let { data } = item;
+        this.carrito = data;
+      });
   }
 
   logouth() {

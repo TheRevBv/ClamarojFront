@@ -17,19 +17,14 @@ export class ProdetComponent implements OnInit {
   list?: Articulos[];
 
   articulo: Articulos = {
-    id: '',
-    categoria: '',
-    categoria_id: '',
-    create_date: '',
+    codigo: '',
     descripcion: '',
-    imagen: '',
+    estatus: '',
+    foto: '',
+    idProducto: '',
+    merma: '',
     nombre: '',
     precio: '',
-    status: '',
-    status_id: '',
-    almacen: '',
-    almacen_id: '',
-    update_date: '',
   };
 
   constructor(
@@ -48,7 +43,7 @@ export class ProdetComponent implements OnInit {
   getArticulos() {
     if (parseInt(this.id) && parseInt(this.id) > 0) {
       this.id = parseInt(this.id);
-      this.ApiService.get(`api/articulos?id=${this.id}`).subscribe((item) => {
+      this.ApiService.get(`api/Productos/${this.id}`).subscribe((item) => {
         if (!item.message) {
           this.articulo = item;
         } else {
@@ -56,9 +51,8 @@ export class ProdetComponent implements OnInit {
         }
       });
 
-      this.ApiService.get('api/articulos').subscribe((item) => {
-        let { data } = item;
-        this.list = data;
+      this.ApiService.get('api/Productos').subscribe((item) => {
+        this.list = item;
       });
     } else {
       this.toastr.error('No se encontro el producto!');
@@ -67,21 +61,30 @@ export class ProdetComponent implements OnInit {
   }
 
   addCarrito() {
-    let cliente = this.clienteSvc.getCliente(this.id);
+    let data = {
+      nombre: 'brian moreno',
+      apellido: 'brian moreno',
+    };
 
-    if (cliente) {
+    localStorage.setItem('cliente', JSON.stringify(data));
+
+    let cliente = JSON.parse(this.clienteSvc.cliente);
+    console.log(cliente);
+
+    if (cliente === null) {
       console.log(cliente);
 
       let clientedate = cliente as any;
       let shopdata = {
-        id: null,
-        cliente_id: clientedate.id,
-        articulo_id: this.articulo.id,
+        idCarrito: 0,
+        idCliente: 1, // clientedate.id,
+        idProducto: this.articulo.idProducto,
+        cantidad: 1,
       };
 
       console.log(shopdata);
 
-      this.ApiService.post(`api/carrito`, shopdata).subscribe((item) => {
+      this.ApiService.post(`api/Carritos`, shopdata).subscribe((item) => {
         if (!item.message) {
           this.toastr.success('Se agrego al carrito');
         } else {
@@ -89,12 +92,34 @@ export class ProdetComponent implements OnInit {
         }
       });
     } else {
-      this.toastr.error('Es necesario iniciar sesión');
-      this.router.navigate([`home/singin`]);
+      alert('Es necesario iniciar sesión');
+      this.router.navigate([`inicio/singin`]);
     }
   }
 
   showArticulo(id: any) {
-    this.router.navigate([`home/products/show/${id}`]);
+    this.router.navigate([`inicio/products/show/${id}`]);
+    this.ApiService.get(`api/Productos/${id}`).subscribe((item) => {
+      if (!item.message) {
+        this.articulo = item;
+        window.scrollTo({ top: 250, behavior: 'smooth' });
+      } else {
+        alert(item.message);
+      }
+    });
+  }
+
+  getArticulosCarrito() {
+    // uri Carritos/cliente/1
+    let idCliente = 1;
+    this.ApiService.get(`api/Carritos/cliente/${idCliente}`).subscribe(
+      (item) => {
+        if (!item.message) {
+          this.articulo = item;
+        } else {
+          alert(item.message);
+        }
+      }
+    );
   }
 }

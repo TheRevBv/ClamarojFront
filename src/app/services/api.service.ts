@@ -12,10 +12,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class ApiService {
-  delete(arg0: string) {
-      throw new Error('Method not implemented.');
-  }
-  private readonly BASE_URL = ''; // Provide the base URL
+  private readonly BASE_URL = 'https://localhost:7092/'; // Provide the base URL
 
   constructor(private http: HttpClient, private cookie: CookieService) {}
 
@@ -41,6 +38,12 @@ export class ApiService {
   post(uri: string, model: any): Observable<any> {
     return this.http
       .post(`${this.BASE_URL}${uri}`, model, { headers: this.getHeaders() })
+      .pipe(catchError((error) => this.handleError(error)));
+  }
+
+  delete(uri: string): Observable<any> {
+    return this.http
+      .delete(`${this.BASE_URL}${uri}`, { headers: this.getHeaders() })
       .pipe(catchError((error) => this.handleError(error)));
   }
 

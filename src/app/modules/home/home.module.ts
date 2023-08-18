@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { RouterModule } from '@angular/router';
 //import {SharedModule} from "@shared/shared.module"; --Modulo para compartir componentes
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -11,7 +12,6 @@ import { MenuStoreComponent } from '@modules/home/menu-store/menu-store.componen
 import { ProductsComponent } from '@modules/home/products/products.component';
 import { ShoppingCartComponent } from '@modules/home/shopping-cart/shopping-cart.component';
 import { ProdetComponent } from '@modules/home/products/prodet/prodet.component';
-
 // import { SinginComponent } from './singin/singin.component';
 import { InicioComponent } from './inicio/inicio.component';
 import { FooterComponent } from './footer/footer.component';
@@ -46,6 +46,7 @@ import { ValidateComponent } from './shopping-cart/validate/validate.component';
     HomeRoutingModule,
     FormsModule,
     NgOptimizedImage,
+    RouterModule
     // MainModule
   ],
 })

@@ -16,9 +16,8 @@ export class ProductsComponent implements OnInit {
   }
 
   getArticulos() {
-    this.ApiService.get('api/articulos?almacen=1').subscribe((item) => {
-      let { data } = item;
-      this.list = data;
+    this.ApiService.get('api/Productos').subscribe((item) => {
+      this.list = item;
     });
   }
 }

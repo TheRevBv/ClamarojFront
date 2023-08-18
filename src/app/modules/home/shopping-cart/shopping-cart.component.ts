@@ -4,44 +4,41 @@ import { Ventas } from '@models/Ventas';
 // import { Cliente } from '@models/clientes';
 import { ApiService } from '@services/api.service';
 import { ClientesService } from '@services/clientes.service';
-import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-
-export interface Cliente {
-  id: string;
-  nombre: string;
-  apaterno: string;
-  amaterno: string;
-  email: string;
-  password: string;
-  telefono: string;
-  direccion: string;
-  status: number;
-}
+import { Cliente } from '@app/models/clientes';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-shopping-cart',
-  // templateUrl: './shopping-cart.component.html',
+  templateUrl: './shopping-cart.component.html',
   template: '',
   styleUrls: ['../home.component.scss'],
+  providers: [MessageService],
 })
 export class ShoppingCartComponent implements OnInit {
   userLog: boolean = false;
   carrito: any = [];
   cliente: Cliente = {
-    id: '',
-    nombre: '',
-    apaterno: '',
-    amaterno: '',
-    email: '',
-    password: '',
-    telefono: '',
+    idCliente: 1,
     direccion: '',
-    status: 1,
+    telefono: '',
+    rfc: '',
+    usuario: {
+      id: 0,
+      nombre: '',
+      apellido: '',
+      correo: '',
+      password: '',
+      foto: '',
+      fechaNacimiento: new Date(1900, 0, 1),
+      fechaRegistro: new Date(),
+      idStatus: 0,
+    },
   };
+
   venta: Ventas = {
     id: 0,
-    cliente_id: parseInt(this.cliente.id),
+    cliente_id: this.cliente.idCliente,
     total: 0,
     subtotal: 0,
     iva: 0,
@@ -50,34 +47,34 @@ export class ShoppingCartComponent implements OnInit {
   };
 
   constructor(
-    ClienteService: ClientesService,
+    private clienteSvc: ClientesService,
     private api: ApiService,
-    private toastr: ToastrService,
+    private messageSvc: MessageService,
     private router: Router
   ) {
-    /*let data = ClienteService.getCliente();
-        if (!data) {
-            this.userLog = false;
-        } else {
-            this.userLog = true;
-            this.cliente = data;
-        }*/
+    // let data = ClienteService.getCliente();
+    let idCliente = 1;
+    this.clienteSvc.getCliente(idCliente).subscribe((cliente) => {
+      this.cliente = cliente;
+    });
   }
   ngOnInit(): void {
     this.getCarritoList();
   }
 
   getCarritoList() {
-    this.api.get(`api/carrito?cliente=${this.cliente.id}`).subscribe((item) => {
-      let { data } = item;
-      this.carrito = data;
-      this.sumProducts();
-    });
+    this.api
+      .get(`api/Carritos/cliente/${this.cliente.idCliente}`)
+      .subscribe((item) => {
+        this.carrito = item;
+        this.sumProducts();
+      });
   }
 
   sumCantidadProducto(event: any, data: any) {
+    console.log(data);
     for (let i = 0; i < this.carrito.length; i++) {
-      if (this.carrito[i].id === data.id) {
+      if (this.carrito[i].idCarrito === data.idCarrito) {
         this.carrito[i].cantidad = this.carrito[i].cantidad + 1;
         this.carrito[i].total =
           this.carrito[i].cantidad * this.carrito[i].precio;
@@ -88,7 +85,7 @@ export class ShoppingCartComponent implements OnInit {
     this.sumProducts();
   }
 
-  restarCantidadProducto({ event, data }: { event: any; data: any }) {
+  restarCantidadProducto(event: any, data: any) {
     for (let i = 0; i < this.carrito.length; i++) {
       if (this.carrito[i].id === data.id) {
         if (this.carrito[i].cantidad - 1 == 0) return false;
@@ -109,19 +106,24 @@ export class ShoppingCartComponent implements OnInit {
     this.venta.iva = 0;
     this.venta.total = 0;
     for (let i = 0; i < this.carrito.length; i++) {
-      this.venta.subtotal += parseFloat(this.carrito[i].total);
+      let total = this.carrito[i].cantidad * this.carrito[i].precio;
+      this.venta.subtotal += total;
       this.venta.iva = this.venta.subtotal * 0.16;
       this.venta.total = this.venta.subtotal + this.venta.iva;
     }
   }
 
   guardarVenta() {
-    this.venta.cliente_id = parseInt(this.cliente.id);
+    this.venta.cliente_id = this.cliente.idCliente;
     if (this.carrito.length == 0) {
-      this.toastr.success('Es necesario agregar productos al carrito');
+      this.messageSvc.add({
+        severity: 'warn',
+        summary: 'Es necesario agregar productos al carrito',
+        detail: '',
+      });
     } else {
       //insert venta
-      this.api.post(`api/ventas`, this.venta).subscribe((item) => {
+      this.api.post(`api/Ventas`, this.venta).subscribe((item) => {
         if (!item.message) {
           // this.toastr.success('Se agrego al carrito');
           console.log(item.id);
@@ -139,17 +141,25 @@ export class ShoppingCartComponent implements OnInit {
             this.api.post(`api/ventasdet`, venta_detalle).subscribe((item) => {
               if (!item.message) {
                 // this.toastr.success('Se completo la venta');
-                this.deleteCart(this.cliente.id);
+                this.deleteCart(this.cliente.idCliente);
                 this.router.navigate([
                   `home/shopping-cart/pago/${item.venta_id}`,
                 ]);
               } else {
-                this.toastr.warning(item.message);
+                this.messageSvc.add({
+                  severity: 'warn',
+                  summary: item.message,
+                  detail: '',
+                });
               }
             });
           }
         } else {
-          this.toastr.warning(item.message);
+          this.messageSvc.add({
+            severity: 'warn',
+            summary: item.message,
+            detail: '',
+          });
         }
       });
     }
@@ -157,24 +167,38 @@ export class ShoppingCartComponent implements OnInit {
 
   deleteProductCart(event: any, id: any) {
     let data = { id: id };
-    /*this.api.delete(`api/carrito`).subscribe((item) => {
-      if (!item.message) {
-        this.toastr.error('Se elimino del carrito');
-        this.carrito = this.getCarritoList();
-      } else {
-        this.toastr.warning(item.message);
-      }
-    });*/
+    this.api
+      .delete(`api/Carrito/${id}`)
+      .subscribe((item: { message: string | undefined }): void => {
+        if (!item.message) {
+          this.messageSvc.add({
+            severity: 'success',
+            summary: 'Se elimino del carrito',
+            detail: '',
+          });
+          this.carrito = this.getCarritoList();
+        } else {
+          this.messageSvc.add({
+            severity: 'warn',
+            summary: item.message,
+            detail: '',
+          });
+        }
+      });
   }
 
   deleteCart(id: any) {
-    /*let data = { cliente: id };
-    this.api.delete(`api/carrito`).then((item) => {
+    let data = { cliente: id };
+    this.api.delete(`api/Carrito`).subscribe((item) => {
       if (!item.message) {
         // this.toastr.error('Se elimino del carrito');
       } else {
-        this.toastr.warning(item.message);
+        this.messageSvc.add({
+          severity: 'warn',
+          summary: item.message,
+          detail: '',
+        });
       }
-    });*/
+    });
   }
 }

@@ -1,134 +1,171 @@
 <div class="tr-breadcrumb">
-    <div class="container">
-        <div class="breadcrumb-info">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a>Inicio</a></li>
-                <li class="breadcrumb-item active">Shopping Cart</li>
-            </ol>
-            <div class="page-title">
-                <h1>CARRITO</h1>
-            </div>
-        </div>
+  <div class="container">
+    <div class="breadcrumb-info">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a>Inicio</a></li>
+        <li class="breadcrumb-item active">Shopping Cart</li>
+      </ol>
+      <div class="page-title text-center">
+        <h2>MI CARRITO</h2>
+        <h1>Del Carrito a tu Puerta</h1>
+      </div>
     </div>
+  </div>
 </div>
 <div class="main-wrapper">
-    <div class="container">
-        <div class="tr-section p-5">
-            <div class="cart-title">
-                <span>Cart</span>
-            </div>
+  <div class="container">
+    <div class="tr-section p-5">
+      <div class="cart-title">
+        <span> Tu Sabor Favorito a un Clic de Distancia</span>
+      </div>
 
-            <div class="card-body">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-lg-8">
+            <form class="woocommerce-cart-form" action="#">
+              <div class="item-info-menu">
                 <div class="row">
-                    <div class="col-lg-8">
-
-                        <form class="woocommerce-cart-form" action="#">
-                            <div class="item-info-menu">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <b>Producto</b>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <b>Costo</b>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <b>Cantidad</b>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <b class="price">Total</b>
-                                    </div>
-                                </div>
-                            </div>
-                            <ul class="tr-list cart-list">
-                                <li class="cart-item remove-item" *ngFor="let data of carrito">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="product">
-                                                <a routerLink="products/show/{{data.id}}">
-                                                    <span class="product-image">
-                                                        <img src="{{data.imagen}}" alt="Image" class="img-fluid">
-                                                    </span>
-                                                    <b>{{data.nombre}}</b>
-                                                    <span class="color"><b>Size:</b> Large</span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <span class="price">${{data.precio | number: '1.2-2'}}</span>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="product-quantity">
-                                                <div class="quantity" data-trigger="spinner">
-                                                    <a class="btn pull-left mb-3"
-                                                        (click)="restarCantidadProducto($event , data)"
-                                                        data-spin="down"><i class="fa fa-minus"></i></a>
-                                                    <input type="text" name="quantity" value="{{data.cantidad}}"
-                                                        title="quantity" class="input-text">
-                                                    <a class="btn pull-right mb-3"
-                                                        (click)="sumCantidadProducto($event , data)" data-spin="up"><i
-                                                            class="fa fa-plus"></i></a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <span class="price">${{data.total | number: '1.2-2'}}</span>
-                                        </div>
-                                        <div class="col-md-2 mt-3">
-                                            <a (click)="deleteProductCart($event , data.id)" class="action-icon"> <i
-                                                    class="fas fa-trash"></i></a>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-
-                        </form>
-
-                        <!-- Add note input-->
-                        <div class="mt-3">
-                            <label for="example-textarea" class="form-label">Agrega una nota:</label>
-                            <textarea class="form-control" [(ngModel)]="venta.nota" id="example-textarea" rows="3"
-                                placeholder="Escribe alguna nota.."></textarea>
-                        </div>
-
-                        <div class="buttons">
-                            <a routerLink="home/products" class="btn btn-primary button-back pull-left">Seguir
-                                Comprando</a>
-                            <a (click)="guardarVenta()" class="btn btn-primary pull-right">Pasar por la caja</a>
-                        </div>
+                  <div class="col-md-4">
+                    <b>Producto</b>
+                  </div>
+                  <div class="col-md-2">
+                    <b>Costo</b>
+                  </div>
+                  <div class="col-md-2">
+                    <b>Cantidad</b>
+                  </div>
+                  <div class="col-md-2">
+                    <b class="price">Total</b>
+                  </div>
+                </div>
+              </div>
+              <ul class="tr-list cart-list">
+                <li class="cart-item remove-item" *ngFor="let data of carrito">
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="product">
+                        <a routerLink="products/show/{{ data.idProducto }}">
+                          <span class="product-image">
+                            <img
+                              src="{{ data.foto }}"
+                              alt="Image"
+                              class="img-fluid"
+                            />
+                          </span>
+                          <b>{{ data.nombre }}</b>
+                          <span class="color">{{ data.descripcion }}</span>
+                        </a>
+                      </div>
                     </div>
-
-                    <div class="col-lg-4">
-                        <div class="border p-3 mt-4 mt-lg-0 rounded">
-                            <h4 class="header-title mb-3">Resumen del pedido</h4>
-
-                            <div class="table-responsive">
-                                <table class="table mb-0">
-                                    <tbody>
-                                        <tr>
-                                            <td>Total general :</td>
-                                            <td>${{venta.subtotal | number: '1.2-2'}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Impuesto estimado : </td>
-                                            <td>${{venta.iva | number: '1.2-2'}}</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Costo de Envio : </td>
-                                            <td>${{70 | number: '1.2-2'}}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Total :</th>
-                                            <th>${{((venta.total) + 70) | number: '1.2-2'}}</th>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- end table-responsive -->
+                    <div class="col-md-2">
+                      <span class="price"
+                        >${{ data.precio | number : "1.2-2" }}</span
+                      >
+                    </div>
+                    <div class="col-md-2">
+                      <div class="product-quantity">
+                        <div class="quantity" data-trigger="spinner">
+                          <a
+                            class="btn pull-left mb-3"
+                            (click)="restarCantidadProducto($event, data)"
+                            data-spin="down"
+                            ><i class="fa fa-minus"></i
+                          ></a>
+                          <input
+                            type="text"
+                            name="quantity"
+                            value="{{ data.cantidad }}"
+                            title="quantity"
+                            class="input-text"
+                          />
+                          <a
+                            class="btn pull-right mb-3"
+                            (click)="sumCantidadProducto($event, data)"
+                            data-spin="up"
+                            ><i class="fa fa-plus"></i
+                          ></a>
                         </div>
-                    </div> <!-- end col -->
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <span class="price"
+                        >${{
+                          data.cantidad * data.precio | number : "1.2-2"
+                        }}</span
+                      >
+                    </div>
+                    <div class="col-md-2 mt-3">
+                      <a
+                        (click)="deleteProductCart($event, data.idCarrito)"
+                        class="action-icon"
+                      >
+                        <i class="pi pi-trash"></i
+                      ></a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </form>
 
-                </div> <!-- end row -->
+            <!-- Add note input-->
+            <div class="mt-3">
+              <label for="example-textarea" class="form-label"
+                >Agrega una nota:</label
+              >
+              <textarea
+                class="form-control"
+                [(ngModel)]="venta.nota"
+                id="example-textarea"
+                rows="3"
+                placeholder="Escribe alguna nota.."
+              ></textarea>
             </div>
+
+            <div class="buttons">
+              <a
+                routerLink="home/products"
+                class="btn btn-primary button-back pull-left"
+                >Seguir Comprando</a
+              >
+              <a (click)="guardarVenta()" class="btn btn-primary pull-right"
+                >Aplicar Pago</a
+              >
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="border p-3 mt-4 mt-lg-0 rounded">
+              <h4 class="header-title mb-3">Resumen del pedido</h4>
+
+              <div class="table-responsive">
+                <table class="table mb-0">
+                  <tbody>
+                    <tr>
+                      <td>Total general :</td>
+                      <td>${{ venta.subtotal | number : "1.2-2" }}</td>
+                    </tr>
+                    <tr>
+                      <td>Impuesto estimado :</td>
+                      <td>${{ venta.iva | number : "1.2-2" }}</td>
+                    </tr>
+                    <tr>
+                      <td>Costo de Envio :</td>
+                      <td>${{ 0 | number : "1.2-2" }} <b>Envío Gratis</b></td>
+                    </tr>
+                    <tr>
+                      <th>Total :</th>
+                      <th>${{ venta.total | number : "1.2-2" }}</th>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- end table-responsive -->
+            </div>
+          </div>
+          <!-- end col -->
         </div>
+        <!-- end row -->
+      </div>
     </div>
+  </div>
 </div>

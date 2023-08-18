@@ -14,21 +14,25 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['../../home.component.scss'],
 })
 export class CheckoutComponent implements OnInit {
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
-  /*  id = null;
+  id = null;
   cliente: Cliente = {
-    id: '',
-    nombre: '',
-    apaterno: '',
-    amaterno: '',
-    email: '',
-    password: '',
-    telefono: '',
+    idCliente: 0,
     direccion: '',
-    status: 1,
+    telefono: '',
+    rfc: '',
+    usuario: {
+      id: 0,
+      nombre: '',
+      apellido: '',
+      correo: '',
+      password: '',
+      foto: '',
+      fechaNacimiento: new Date(1900, 0, 1),
+      fechaRegistro: new Date(),
+      idStatus: 0,
+    },
   };
+
   userLog: boolean = false;
   venta: any = [];
   ventadet: any = [];
@@ -81,14 +85,13 @@ export class CheckoutComponent implements OnInit {
     } else {
       this.userLog = true;
       this.cliente = data;
-      this.id = this.activatedRoute.snapshot.params.id;
+      this.id = this.activatedRoute.snapshot.params['id'];
       this.getVenta(this.id);
 
       this.paymentForm.setValue({
-        c_nombre: this.cliente.nombre,
-        c_apaterno: this.cliente.apaterno,
-        c_amaterno: this.cliente.amaterno,
-        c_email: this.cliente.email,
+        c_nombre: this.cliente.usuario.nombre,
+        c_paterno: this.cliente.usuario.apellido,
+        c_email: this.cliente.usuario.correo,
         c_telefono: this.cliente.telefono,
         c_direccion: this.cliente.direccion,
         p_pagodesc: this.pago.pagodesc,
@@ -99,8 +102,8 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  getVenta(idventa) {
-    if (parseInt(idventa) && parseInt(idventa) > 0) {
+  getVenta(idventa: any) {
+    /*if (parseInt(idventa) && parseInt(idventa) > 0) {
       this.id = parseInt(idventa);
       this.api.uri = `api/ventas?id=${this.id}`;
       this.api.get().then((item) => {
@@ -117,10 +120,10 @@ export class CheckoutComponent implements OnInit {
     } else {
       this.toastr.warning('No tienes permisos para ver esta venta');
       this.router.navigate(['/home']);
-    }
+    }*/
   }
   getVentaDet() {
-    if (parseInt(this.id) && parseInt(this.id) > 0) {
+    /*if (parseInt(this.id) && parseInt(this.id) > 0) {
       this.id = parseInt(this.id);
       this.api.uri = `api/ventasdet?id=${this.id}`;
       this.api.get().then((item) => {
@@ -132,10 +135,11 @@ export class CheckoutComponent implements OnInit {
       });
     } else {
       this.id = null;
-    }
+    }*/
   }
+
   onSubmit() {
-    if (this.paymentForm.valid) {
+    /*if (this.paymentForm.valid) {
       this.api.uri = 'api/clientes';
       // Obtener los valores del formulario
       this.cliente.nombre = this.paymentForm.value.c_nombre;
@@ -167,10 +171,10 @@ export class CheckoutComponent implements OnInit {
           this.toastr.warning(response.message);
         }
       });
-    }
+    }*/
   }
 
-  validateCreditCardNumber(cardNumber) {
+  validateCreditCardNumber(cardNumber: string) {
     // Remove any non-digit characters from the input value
     const sanitizedValue = cardNumber.replace(/\D+/g, '');
 
@@ -184,15 +188,6 @@ export class CheckoutComponent implements OnInit {
 
     let valid = false;
     let cardType = '';
-
-    // // Iterate through the patterns to find a match
-    // for (let type in patterns) {
-    //     if (patterns[type].test(sanitizedValue)) {
-    //         valid = true;
-    //         cardType = type;
-    //         break;
-    //     }
-    // }
 
     if (valid) {
       // Perform Luhn algorithm check
@@ -212,5 +207,5 @@ export class CheckoutComponent implements OnInit {
     }
 
     return { valid, cardType };
-  }*/
+  }
 }

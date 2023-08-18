@@ -1,34 +1,54 @@
-<!-- <div class="main-wrapper product-details">
-    <div class="container">
-        <div class="row">
-            <div class="col-8 m-auto">
-                <div class="card card-outline card-primary">
-                    <div class="card-header text-center">
-                        <a [routerLink]="['/']" class="h1"><b>Blue</b>Crow</a>
-                    </div>
-                    <div class="card-body">
-                        <p class="login-box-msg">
-                            Ingresa tu usuario y contraseña o
-                            <a [routerLink]="['/home/singup']" class="text-primary font-weight-bold">Crea una cuenta</a>
-                        </p>
-                        <form [formGroup]="loginForm" (ngSubmit)="loginByAuthCliente()" class="row">
-                            <div class="col-12">
-                                <label class="form-label">Correo Electrónico</label>
-                                <input formControlName="email" name="email" type="email" class="form-control"
-                                    placeholder="Email" />
-                            </div>
-                            <div class="col-12">
-                                <label class="form-label">Password</label>
-                                <input formControlName="password" name="password" type="password" class="form-control"
-                                    placeholder="Password" />
-                            </div>
+<div class="main-wrapper product-details">
+  <div class="container">
+    <div class="row">
+      <div class="col-8 m-auto">
+        <div class="card card-outline card-primary">
+          <div class="card-header text-center">
+            <a routerLink="/" class="h1"><b>Blue</b>Crow</a>
+          </div>
+          <div class="card-body">
+            <p class="login-box-msg">
+              <a routerLink="../other-component">Go to Other Component</a>
+              <a routerLink="details">View Details</a>
 
-                            <button type="submit" class="btn btn-primary"> Iniciar Sesión</button>
+              Ingresa tu usuario y contraseña o
+              <a routerLink="/home/singup" class="text-primary font-weight-bold"
+                >Crea una cuenta</a
+              >
+            </p>
+            <!-- <form
+              [formGroup]="loginForm"
+              (ngSubmit)="loginByAuthCliente()"
+              class="row"
+            >
+              <div class="col-12">
+                <label class="form-label">Correo Electrónico</label>
+                <input
+                  formControlName="email"
+                  name="email"
+                  type="email"
+                  class="form-control"
+                  placeholder="Email"
+                />
+              </div>
+              <div class="col-12">
+                <label class="form-label">Password</label>
+                <input
+                  formControlName="password"
+                  name="password"
+                  type="password"
+                  class="form-control"
+                  placeholder="Password"
+                />
+              </div>
 
-                        </form>
-                    </div>
-                </div>
-            </div>
+              <button type="submit" class="btn btn-primary">
+                Iniciar Sesión
+              </button>
+            </form> -->
+          </div>
         </div>
+      </div>
     </div>
-</div> -->
+  </div>
+</div>
