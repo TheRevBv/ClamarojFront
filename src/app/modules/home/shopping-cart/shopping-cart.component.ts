@@ -7,6 +7,9 @@ import { ClientesService } from '@services/clientes.service';
 import { Router } from '@angular/router';
 import { Cliente } from '@app/models/clientes';
 import { MessageService } from 'primeng/api';
+import { Pedido } from '@app/models/pedidos';
+import { DetallePedido } from '@app/models/detallepedidos';
+import { PedidosService } from '@services/pedidos.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -36,6 +39,25 @@ export class ShoppingCartComponent implements OnInit {
     },
   };
 
+  pedido: Pedido = {
+    idPedido: 0,
+    idUsuario: 0,
+    idStatus: 0,
+    fecha: new Date(),
+    fechaEntrega: new Date(),
+    domicilio: '',
+    telefono: '',
+    razonSocial: '',
+    rfc: '',
+    tipoPago: '',
+    tipoEnvio: '',
+    tipoPedido: '',
+    total: 0,
+    detallesPedidos: [],
+  };
+
+  detallesPedido: DetallePedido[] = [];
+
   venta: Ventas = {
     id: 0,
     cliente_id: this.cliente.idCliente,
@@ -50,6 +72,7 @@ export class ShoppingCartComponent implements OnInit {
     private clienteSvc: ClientesService,
     private api: ApiService,
     private messageSvc: MessageService,
+    private pedidosSvc: PedidosService,
     private router: Router
   ) {
     // let data = ClienteService.getCliente();
@@ -114,6 +137,7 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   guardarVenta() {
+    this.detallesPedido = [];
     this.venta.cliente_id = this.cliente.idCliente;
     if (this.carrito.length == 0) {
       this.messageSvc.add({
@@ -122,8 +146,69 @@ export class ShoppingCartComponent implements OnInit {
         detail: '',
       });
     } else {
-      //insert venta
-      this.api.post(`api/Ventas`, this.venta).subscribe((item) => {
+      let fechaActual = new Date();
+
+      //insert detalle pedido
+      for (let i = 0; i < this.carrito.length; i++) {
+        this.detallesPedido.push({
+          idDetallePedido: 0,
+          idPedido: 0,
+          fecha: new Date(
+            fechaActual.getFullYear(),
+            fechaActual.getMonth(),
+            fechaActual.getDate()
+          ),
+          idProducto: this.carrito[i].idProducto,
+          cantidad: this.carrito[i].cantidad,
+          precioUnitario: this.carrito[i].precio,
+          subtotal: this.carrito[i].cantidad * this.carrito[i].precio,
+        });
+      }
+      //insert pedido
+
+      this.pedido = {
+        idPedido: 0,
+        idUsuario: this.cliente.idCliente,
+        idStatus: 1,
+        fecha: new Date(
+          fechaActual.getFullYear(),
+          fechaActual.getMonth(),
+          fechaActual.getDate()
+        ),
+        fechaEntrega: new Date(),
+        domicilio: this.cliente.direccion ?? '',
+        telefono: this.cliente.direccion ?? '',
+        razonSocial: '',
+        rfc: this.cliente.rfc ?? '',
+        tipoPago: '1',
+        tipoEnvio: '1',
+        tipoPedido: '1',
+        total: this.venta.total,
+        detallesPedidos: this.detallesPedido,
+      };
+
+      console.log(this.pedido);
+      this.pedidosSvc.addPedido(this.pedido).subscribe(
+        (data) => {
+          console.log(data);
+
+          this.messageSvc.add({
+            severity: 'success',
+            summary: '¡Correcto!',
+            detail: `Pedido agregado correctamente`,
+          });
+          this.router.navigate(['admin', 'pedidos']);
+        },
+        (err) => {
+          this.messageSvc.add({
+            severity: 'error',
+            summary: '¡Error!',
+            detail: `Error al agregar el pedido`,
+          });
+        }
+      );
+      //
+      /*this.api.post(`api/Ventas`, this.venta).subscribe((item) => {
         if (!item.message) {
           // this.toastr.success('Se agrego al carrito');
           console.log(item.id);
@@ -161,7 +246,7 @@ export class ShoppingCartComponent implements OnInit {
             detail: '',
           });
         }
-      });
+      });*/
     }
   }
 
