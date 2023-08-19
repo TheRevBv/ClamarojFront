@@ -20,6 +20,30 @@
       </div>
       <!-- label="Show" -->
     </ng-template>
+    <ng-template pTemplate="end">
+      <div class="flex flex-row align-items-center">
+        <ng-container *ngIf="usuario; else elseTemplate">
+          <div>
+            <i class="pi pi-user"></i>
+            <span class="uppercase">{{ usuario.nombre }}</span>
+          </div>
+          <div>
+            <p-button
+              icon="pi pi-sign-out"
+              label="Salir"
+              (click)="logout()"
+              styleClass="p-button-rounded p-button-primary p-button-text p-button-outlined"
+            >
+            </p-button>
+          </div>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <div class="p-link layout-topbar-button">
+            <i class="pi pi-user"></i>
+          </div>
+        </ng-template>
+      </div>
+    </ng-template>
   </p-menubar>
   <!-- <p-breadcrumb [model]="items"></p-breadcrumb> -->
 </div>

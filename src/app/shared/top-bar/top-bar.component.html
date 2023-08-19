@@ -18,21 +18,28 @@
   </button>
 
   <div #topbarmenu class="layout-topbar-menu">
-    <!-- [ngClass]="{
-      'layout-topbar-menu-mobile-active':
-        layoutService.state.profileSidebarVisible
-    }" -->
-    <button class="p-link layout-topbar-button">
-      <i class="pi pi-calendar"></i>
-      <span>Calendar</span>
-    </button>
-    <button class="p-link layout-topbar-button">
-      <i class="pi pi-user"></i>
-      <span>Profile</span>
-    </button>
-    <!-- <button class="p-link layout-topbar-button" [routerLink]="'/documentation'">
-      <i class="pi pi-cog"></i>
-      <span>Settings</span>
-    </button> -->
+    <div class="flex flex-row align-items-center">
+      <ng-container *ngIf="usuario; else elseTemplate">
+        <div>
+          <i class="pi pi-user"></i>
+          <span class="uppercase">{{ usuario.nombre }}</span>
+        </div>
+        <div>
+          <button
+            class="p-link layout-topbar-button"
+            (click)="logout()"
+            pRipple
+          >
+            <i class="pi pi-sign-out"></i>
+            <span>Salir</span>
+          </button>
+        </div>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <div class="p-link layout-topbar-button">
+          <i class="pi pi-user"></i>
+        </div>
+      </ng-template>
+    </div>
   </div>
 </div>

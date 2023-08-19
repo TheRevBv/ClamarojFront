@@ -9,9 +9,11 @@ import { PortalProveedoresRoutingModule } from './portal-proveedores-routing.mod
 import { PortalProveedoresComponent } from '@pages/portal-proveedores/portal-proveedores.component';
 import { PortalFormComponent } from './portal-form/portal-form.component';
 import { PortalListComponent } from './portal-list/portal-list.component';
+import { LoginComponent } from './login/login.component';
+import { RegistroComponent } from './registro/registro.component';
 
 @NgModule({
-  declarations: [PortalProveedoresComponent, PortalFormComponent, PortalListComponent],
+  declarations: [PortalProveedoresComponent, PortalFormComponent, PortalListComponent, LoginComponent, RegistroComponent],
   imports: [
     CommonModule,
     PortalProveedoresRoutingModule,

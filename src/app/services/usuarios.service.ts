@@ -13,6 +13,11 @@ import { Usuario } from '@models/usuarios';
 })
 export class UsuariosService {
   public usuario: Usuario | null = null;
+  public header = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'X-CSRFToken': this.getCookie('csrftoken') || '',
+    Authorization: 'Bearer ' + localStorage.getItem('access_token') || '',
+  });
 
   constructor(
     private http: HttpClient,
@@ -23,38 +28,25 @@ export class UsuariosService {
 
   login(data: Login): Observable<any> {
     return this.http.post<Login>(`/api/Auth/login`, data, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'X-CSRFToken': this.getCookie('csrftoken') || '',
-      }),
+      headers: this.header,
     });
   }
 
   registrar(data: Usuario): Observable<any> {
     return this.http.post<Usuario>(`/api/Auth/registrar`, data, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'X-CSRFToken': this.getCookie('csrftoken') || '',
-      }),
+      headers: this.header,
     });
   }
 
   getUsuarioByEmail(email: string): Observable<Usuario> {
     return this.http.get<Usuario>(`/api/Auth/usuario/${email}`, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'X-CSRFToken': this.getCookie('csrftoken') || '',
-      }),
+      headers: this.header,
     });
   }
 
   getUsuarios(params?: any): Observable<Usuario[]> {
     return this.http.get<Usuario[]>(`/api/Usuarios`, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'X-CSRFToken': this.getCookie('csrftoken') || '',
-        Authorization: 'Bearer ' + localStorage.getItem('access_token') || '',
-      }),
+      headers: this.header,
       params: new HttpParams({
         fromObject: params,
       }),
@@ -63,21 +55,13 @@ export class UsuariosService {
 
   getUsuario(id: number): Observable<Usuario> {
     return this.http.get<Usuario>(`/api/Usuarios/${id}`, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'X-CSRFToken': this.getCookie('csrftoken') || '',
-        Authorization: 'Bearer ' + localStorage.getItem('access_token') || '',
-      }),
+      headers: this.header,
     });
   }
 
   updateUsuario(data: Usuario): Observable<Usuario> {
     return this.http.put<Usuario>(`/api/Usuarios/${data.id}`, data, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'X-CSRFToken': this.getCookie('csrftoken') || '',
-        Authorization: 'Bearer ' + localStorage.getItem('access_token') || '',
-      }),
+      headers: this.header,
     });
   }
 
@@ -86,6 +70,7 @@ export class UsuariosService {
       this.usuario = localStorage.getItem('usuario')
         ? JSON.parse(localStorage.getItem('usuario') || '')
         : null;
+      // console.log(this.usuario);
     } catch (e) {
       console.log(e);
     }
@@ -93,21 +78,13 @@ export class UsuariosService {
 
   deleteUsuario(id: number): Observable<Usuario> {
     return this.http.delete<Usuario>(`/api/Usuarios/${id}`, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'X-CSRFToken': this.getCookie('csrftoken') || '',
-        Authorization: 'Bearer ' + localStorage.getItem('access_token') || '',
-      }),
+      headers: this.header,
     });
   }
 
   addUsuario(data: Usuario): Observable<Usuario> {
     return this.http.post<Usuario>(`/api/Usuarios`, data, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'X-CSRFToken': this.getCookie('csrftoken') || '',
-        Authorization: 'Bearer ' + localStorage.getItem('access_token') || '',
-      }),
+      headers: this.header,
     });
   }
 

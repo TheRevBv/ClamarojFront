@@ -1,0 +1,96 @@
+<p-toast position="top-left"></p-toast>
+<div
+  class="flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden bg-red-700 hover:bg-red-600"
+>
+  <div class="flex flex-column align-items-center justify-content-center">
+    <div
+      style="
+        border-radius: 56px;
+        padding: 0.3rem;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.8) 0%,
+          rgba(33, 150, 243, 0) 30%
+        );
+      "
+    >
+      <p-card [style]="{ 'border-radius': '56px' }">
+        <div class="text-center mb-5">
+          <img
+            src="assets/logos/logo3.png"
+            [width]="100"
+            alt="Sakai logo"
+            class="mb-5 w-6rem flex-shrink-0"
+          />
+          <div class="text-900 text-3xl font-medium mb-3">
+            Bienvenido a nuestro portal de proveedores
+            <span class="text-600 font-medium">ClamaROJ</span>
+          </div>
+          <span class="text-600 font-medium">Inicia sesión para continuar</span>
+        </div>
+
+        <form
+          [formGroup]="loginForm"
+          (ngSubmit)="onSubmit()"
+          class="flex align-items-center justify-content-between flex-wrap flex-column"
+        >
+          <label for="email1" class="block text-900 text-xl font-medium mb-2"
+            >Email</label
+          >
+          <input
+            type="text"
+            formControlName="email"
+            placeholder="Email address"
+            pInputText
+            class="w-full md:w-30rem mb-5 focus:border-red-700 hover:border-red-700"
+            style="padding: 1rem"
+          />
+
+          <label for="password1" class="block text-900 font-medium text-xl mb-2"
+            >Password</label
+          >
+          <p-password
+            class="input-password w-full md:w-30rem mb-5"
+            formControlName="password"
+            placeholder="Password"
+            [toggleMask]="true"
+            styleClass="mb-5 w-full md:w-30rem focus:border-red-700 hover:border-red-700"
+          ></p-password>
+
+          <!-- <div
+            class="flex align-items-center justify-content-between mb-5 gap-5"
+          >
+            <div class="flex align-items-center">
+              <p-checkbox
+                id="rememberme1"
+                [binary]="true"
+                styleClass="mr-2"
+              ></p-checkbox>
+              <label for="rememberme1">Remember me</label>
+            </div>
+            <a
+              class="font-medium no-underline ml-2 text-right cursor-pointer"
+              style="color: var(--primary-color)"
+              >Forgot password?</a
+            >
+          </div> -->
+          <button
+            pButton
+            pRipple
+            type="submit"
+            label="Iniciar sesión"
+            class="w-full p-3 text-xl font-medium mb-5 border-none"
+            style="background: var(--red-500)"
+            [routerLink]="['/portal-proveedores']"
+          ></button>
+          <a
+            [routerLink]="['portal-proveedores', 'registro']"
+            class="font-medium no-underline ml-2 text-right cursor-pointer"
+            style="color: var(--cyan-800)"
+            >Registrarse</a
+          >
+        </form>
+      </p-card>
+    </div>
+  </div>
+</div>
