@@ -7,8 +7,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./menu-user.component.css'],
 })
 export class MenuUserComponent {
-  router: Router;
-  constructor(router: Router) {
-    this.router = router;
-  }
+  // router: Router;
+  constructor(private router: Router) {}
 }

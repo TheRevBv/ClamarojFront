@@ -1,14 +1,12 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie';
 import { Observable } from 'rxjs';
-
-import { Ventas } from '@models/ventas';
 
 @Injectable({
   providedIn: 'root',
 })
-export class VentasService {
+export class CarritosService {
   public header = new HttpHeaders({
     'Content-Type': 'application/json',
     'X-CSRFToken': this.getCookie('csrftoken') || '',
@@ -17,8 +15,8 @@ export class VentasService {
 
   constructor(private http: HttpClient, private cookie: CookieService) {}
 
-  getVentas(): Observable<Ventas[]> {
-    return this.http.get<Ventas[]>('api/ventas', { headers: this.header });
+  getCarritosCliente(idCliente: number): Observable<any> {
+    return this.http.get<any>(`api/carritos/cliente/${idCliente}`);
   }
 
   getCookie(key: string): string | undefined {

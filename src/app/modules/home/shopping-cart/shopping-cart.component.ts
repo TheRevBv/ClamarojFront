@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Carrito } from '@models/Carrito';
-import { Ventas } from '@models/Ventas';
+import { Ventas } from '@models/ventas';
 // import { Cliente } from '@models/clientes';
 import { ApiService } from '@services/api.service';
 import { ClientesService } from '@services/clientes.service';
 import { Router } from '@angular/router';
-import { Cliente } from '@app/models/clientes';
+import { Cliente } from '@models/clientes';
 import { MessageService } from 'primeng/api';
-import { Pedido } from '@app/models/pedidos';
-import { DetallePedido } from '@app/models/detallepedidos';
+import { Pedido } from '@models/pedidos';
+import { DetallePedido } from '@models/detallepedidos';
 import { PedidosService } from '@services/pedidos.service';
+import { CarritosService } from '@services/carritos.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -71,6 +72,7 @@ export class ShoppingCartComponent implements OnInit {
   constructor(
     private clienteSvc: ClientesService,
     private api: ApiService,
+    private carritoSvc: CarritosService,
     private messageSvc: MessageService,
     private pedidosSvc: PedidosService,
     private router: Router
@@ -85,9 +87,18 @@ export class ShoppingCartComponent implements OnInit {
     this.getCarritoList();
   }
 
+  // getCarritoList() {
+  //   this.api
+  //     .get(`api/Carritos/cliente/${this.cliente.idCliente}`)
+  //     .subscribe((item) => {
+  //       this.carrito = item;
+  //       this.sumProducts();
+  //     });
+  // }
+
   getCarritoList() {
-    this.api
-      .get(`api/Carritos/cliente/${this.cliente.idCliente}`)
+    this.carritoSvc
+      .getCarritosCliente(this.cliente.idCliente)
       .subscribe((item) => {
         this.carrito = item;
         this.sumProducts();
@@ -197,7 +208,7 @@ export class ShoppingCartComponent implements OnInit {
             summary: '¡Correcto!',
             detail: `Pedido agregado correctamente`,
           });
-          this.router.navigate(['admin', 'pedidos']);
+          this.router.navigate(['home', 'shopping-cart']);
         },
         (err) => {
           this.messageSvc.add({

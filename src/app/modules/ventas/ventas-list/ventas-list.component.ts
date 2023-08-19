@@ -11,7 +11,7 @@ import { EstatusService } from '@services/estatus.service';
 import { VentasService } from '@services/ventas.service';
 
 import { Estatus } from '@models/estatus';
-import { Ventas } from '@models/Ventas';
+import { Ventas } from '@models/ventas';
 
 @Component({
   selector: 'app-ventas-list',
