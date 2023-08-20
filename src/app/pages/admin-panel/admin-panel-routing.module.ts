@@ -99,11 +99,11 @@ const routes: Routes = [
     component: LoginComponent,
     canActivate: [nonAdminGuard],
   },
-  {
-    path: 'registro',
-    component: RegistroComponent,
-    canActivate: [nonAdminGuard],
-  },
+  // {
+  //   path: 'registro',
+  //   component: RegistroComponent,
+  //   canActivate: [nonAdminGuard],
+  // },
   {
     path: '**',
     redirectTo: 'dashboard',

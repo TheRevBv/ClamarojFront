@@ -158,7 +158,7 @@ export class PedidosFormComponent implements OnInit, OnDestroy {
               fechaActual.getMonth(),
               fechaActual.getDate()
             ),
-            idProducto: articulo.idArticulo,
+            idProducto: articulo.id,
             cantidad: articulo.cantidad,
             precioUnitario: articulo.precio,
             subtotal: articulo.subtotal,
@@ -166,6 +166,7 @@ export class PedidosFormComponent implements OnInit, OnDestroy {
           this.total += articulo.subtotal;
           this.detallesPedido.push(detallesPedido);
         });
+        // this.pedidoForm.controls['total'].setValue(this.total);
       } else {
         this.messageSvc.add({
           severity: 'info',
@@ -221,7 +222,7 @@ export class PedidosFormComponent implements OnInit, OnDestroy {
           idUsuario: this.pedido.idUsuario,
           idStatus: this.pedido.idStatus,
           fecha: this.pedido.fecha,
-          fechaEntrega: this.pedido.fechaEntrega,
+          fechaEntrega: new Date(this.pedido.fechaEntrega),
           domicilio: this.pedido.domicilio,
           telefono: this.pedido.telefono,
           razonSocial: this.pedido.razonSocial,
@@ -239,7 +240,7 @@ export class PedidosFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.pedidoForm);
+    // console.log(this.pedidoForm);
     if (this.pedidoForm.invalid && this.detallesPedido.length === 0) {
       this.messageSvc.add({
         severity: 'error',

@@ -15,20 +15,20 @@ export class PedidosService {
   });
 
   public tiposPedido = [
-    { id: 'c', nombre: 'Compra' },
-    { id: 'v', nombre: 'Venta' },
+    { id: 'C', nombre: 'Compra' },
+    { id: 'V', nombre: 'Venta' },
   ];
 
   public tiposPago = [
-    { id: 'e', nombre: 'Efectivo' },
-    { id: 'tc', nombre: 'Tarjeta de crédito' },
-    { id: 'td', nombre: 'Tarjeta de débito' },
-    { id: 'tb', nombre: 'Transferencia bancaria' },
+    { id: 'E', nombre: 'Efectivo' },
+    { id: 'TC', nombre: 'Tarjeta de crédito' },
+    { id: 'TD', nombre: 'Tarjeta de débito' },
+    { id: 'TB', nombre: 'Transferencia bancaria' },
   ];
 
   public tiposEnvio = [
-    { id: 'd', nombre: 'A domicilio' },
-    { id: 't', nombre: 'Recoger en tienda' },
+    { id: 'D', nombre: 'A domicilio' },
+    { id: 'T', nombre: 'Recoger en tienda' },
   ];
 
   constructor(private http: HttpClient, private cookie: CookieService) {}

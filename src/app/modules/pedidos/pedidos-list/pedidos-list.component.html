@@ -23,7 +23,7 @@
             label="Editar"
             icon="pi pi-pencil"
             styleClass="p-button-rounded p-button-warning"
-            [routerLink]="['editar', selectedPedido?.id]"
+            [routerLink]="['editar', selectedPedido?.idPedido]"
             [disabled]="!selectedPedido"
           ></p-button>
         </div>
@@ -48,7 +48,13 @@
     [paginator]="true"
     [rows]="10"
     (onRowSelect)="onRowSelect($event)"
-    [globalFilterFields]="['idPedido', 'usuario', 'fecha', 'total', 'estatus']"
+    [globalFilterFields]="[
+      'idPedido',
+      'usuarioNombre',
+      'fecha',
+      'total',
+      'estatus'
+    ]"
     [responsive]="true"
     [(selection)]="selectedPedido"
     [rowHover]="true"
@@ -62,8 +68,8 @@
         <th pSortableColumn="idPedido">
           Id<p-sortIcon field="idPedido"></p-sortIcon>
         </th>
-        <th pSortableColumn="usuario">
-          Usuario <p-sortIcon field="usuario"></p-sortIcon>
+        <th pSortableColumn="usuarioNombre">
+          Usuario <p-sortIcon field="usuarioNombre"></p-sortIcon>
         </th>
         <th pSortableColumn="fecha">
           Fecha Pedido <p-sortIcon field="fecha"></p-sortIcon>
@@ -85,7 +91,7 @@
           ></p-columnFilter>
         </th>
         <th>
-          <p-columnFilter type="text" field="usuario"></p-columnFilter>
+          <p-columnFilter type="text" field="usuarioNombre"></p-columnFilter>
         </th>
         <th>
           <p-columnFilter type="text" field="fecha"></p-columnFilter>
@@ -103,14 +109,14 @@
         <td>
           <p-tableRadioButton [value]="pedido"></p-tableRadioButton>
         </td>
-        <td>{{ pedido.id }}</td>
-        <td>{{ pedido.usuario }}</td>
+        <td>{{ pedido.idPedido }}</td>
+        <td>{{ pedido.usuarioNombre }}</td>
         <td>{{ pedido.fecha | date : "dd/MM/yyyy" }}</td>
         <td>{{ pedido.total | currency : "MXN" }}</td>
         <td>
           <p-tag
             [value]="pedido.estatus"
-            [severity]="getSeverity(pedido.estatus)"
+            [severity]="getSeverity(pedido.estatus.toLowerCase())"
           ></p-tag>
         </td>
       </tr>

@@ -1,0 +1,129 @@
+<p-toast position="top-left"></p-toast>
+<p-card>
+  <p-header>
+    <div class="flex justify-content-between">
+      <h2 class="ml-3 text-2xl font-medium">Listado de Ordenes de Compra</h2>
+      <!-- <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-plus"
+        label="Nuevo producto"
+        class="p-button-success"
+        [routerLink]="['/portal-proveedores', 'productos', 'nuevo']"
+      ></button> -->
+    </div>
+  </p-header>
+  <p-table
+    #dt
+    [columns]="cols"
+    [value]="pedidos"
+    selectionMode="single"
+    [(selection)]="selectedPedido"
+    dataKey="idPedido"
+    (onRowSelect)="onRowSelect($event)"
+    responsiveLayout="scroll"
+    [paginator]="true"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [rows]="5"
+    [loading]="loading"
+    [exportHeader]="'customExportHeader'"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [globalFilterFields]="['idPedido', 'fecha', 'total', 'estatus']"
+    [selectionPageOnly]="true"
+    [responsive]="true"
+    [rowHover]="true"
+  >
+    <ng-template pTemplate="caption">
+      <div class="flex">
+        <!-- <button
+          type="button"
+          pButton
+          pRipple
+          icon="pi pi-file"
+          (click)="dt.exportCSV()"
+          class="mr-2"
+          pTooltip="CSV"
+          tooltipPosition="bottom"
+        ></button> -->
+        <!-- <button
+          type="button"
+          pButton
+          pRipple
+          icon="pi pi-file-excel"
+          class="p-button-success mr-2"
+          pTooltip="XLS"
+          tooltipPosition="bottom"
+        ></button> -->
+        <!-- (click)="exportExcel()" -->
+        <button
+          type="button"
+          pButton
+          pRipple
+          icon="pi pi-file-pdf"
+          (click)="exportPdf()"
+          class="p-button-warning mr-2"
+          pTooltip="PDF"
+          tooltipPosition="bottom"
+        ></button>
+        <!-- <button
+          type="button"
+          pButton
+          pRipple
+          icon="pi pi-filter"
+          (click)="dt.exportCSV({ selectionOnly: true })"
+          class="p-button-info ml-auto"
+          pTooltip="Selection Only"
+          tooltipPosition="bottom"
+        ></button> -->
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="idPedido">
+          Orden de Compra <p-sortIcon field="idPedido"></p-sortIcon>
+        </th>
+        <th pSortableColumn="fecha">
+          Fecha Pedido <p-sortIcon field="fecha"></p-sortIcon>
+        </th>
+        <th pSortableColumn="total">
+          Total <p-sortIcon field="total"></p-sortIcon>
+        </th>
+        <th pSortableColumn="estatus">
+          Estatus <p-sortIcon field="estatus"></p-sortIcon>
+        </th>
+      </tr>
+      <tr>
+        <th>
+          <p-columnFilter type="text" field="idPedido"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="fecha"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="total"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="estatus"></p-columnFilter>
+        </th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-pedido>
+      <tr [pSelectableRow]="pedido">
+        <!-- <td>
+          <p-tableCheckbox [value]="pedido"></p-tableCheckbox>
+        </td> -->
+        <td>{{ pedido.fecha | date : "yyyyMMdd" }}{{ pedido.idPedido }}</td>
+        <td>{{ pedido.fecha | date : "dd/MM/yyyy" }}</td>
+        <td>{{ pedido.total | currency : "MXN" }}</td>
+        <td>
+          <p-tag
+            [value]="pedido.estatus"
+            [severity]="getSeverity(pedido.estatus.toLowerCase())"
+          ></p-tag>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

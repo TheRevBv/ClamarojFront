@@ -5,7 +5,8 @@ import { InicioClientesComponent } from './inicio-clientes.component';
 const routes: Routes = [
   {
     path: '',
-    component: InicioClientesComponent,
+    loadChildren: () =>
+      import('../../modules/home/home.module').then((m) => m.HomeModule),
   },
   {
     path: '**',

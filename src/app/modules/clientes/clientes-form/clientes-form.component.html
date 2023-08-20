@@ -15,41 +15,82 @@
     <form [formGroup]="clienteForm" (ngSubmit)="onSubmit()">
       <div class="formgrid grid">
         <div class="field col-12 md:col-4 mb-5">
-          <input id="disabled-input" type="text" pInputText [disabled]="true" class="w-full"
-            [value]="cliente.idCliente" />
+          <input
+            id="disabled-input"
+            type="text"
+            pInputText
+            [disabled]="true"
+            class="w-full"
+            [value]="cliente.idCliente"
+          />
         </div>
         <div class="field col-12 md:col-4 mb-5">
           <span class="p-float-label">
-            <input pInputText id="nombre" formControlName="nombre" class="w-full" [required]="true" [minlength]="3"
-              [maxlength]="45" />
+            <input
+              pInputText
+              id="nombre"
+              formControlName="nombre"
+              class="w-full"
+              [required]="true"
+              [minlength]="3"
+              [maxlength]="45"
+            />
             <label htmlFor="nombre">Nombre</label>
           </span>
         </div>
         <div class="field col-12 md:col-4 mb-5">
           <span class="p-float-label">
-            <input pInputText id="apellido" formControlName="apellido" class="w-full" [required]="true" [minlength]="3"
-              [maxlength]="45" />
+            <input
+              pInputText
+              id="apellido"
+              formControlName="apellido"
+              class="w-full"
+              [required]="true"
+              [minlength]="3"
+              [maxlength]="45"
+            />
             <label htmlFor="apellido">Apellido</label>
           </span>
         </div>
         <div class="field col-12 md:col-4 mb-5">
           <span class="p-float-label">
-            <input pInputText id="direccion" formControlName="direccion" class="w-full" [required]="true"
-              [minlength]="3" [maxlength]="45" />
+            <input
+              pInputText
+              id="direccion"
+              formControlName="direccion"
+              class="w-full"
+              [required]="true"
+              [minlength]="3"
+              [maxlength]="255"
+            />
             <label htmlFor="direccion">Direccion</label>
           </span>
         </div>
         <div class="field col-12 md:col-4 mb-5">
           <span class="p-float-label">
-            <p-inputMask mask="(999) 999-9999" formControlName="telefono" styleClass="w-full" [minlength]="14"
-              [required]="true" [maxlength]="14"></p-inputMask>
+            <p-inputMask
+              mask="(999) 999-9999"
+              formControlName="telefono"
+              styleClass="w-full"
+              [minlength]="14"
+              [required]="true"
+              [maxlength]="14"
+            ></p-inputMask>
             <label htmlFor="telefono">Telefono</label>
           </span>
         </div>
         <div class="field col-12 md:col-4 mb-5">
           <span class="p-float-label">
-            <input pInputText id="rfc" formControlName="rfc" class="w-full uppercase" [required]="true" [minlength]="13"
-              [maxlength]="13" [pattern]="patternRFC" />
+            <input
+              pInputText
+              id="rfc"
+              formControlName="rfc"
+              class="w-full uppercase"
+              [required]="true"
+              [minlength]="13"
+              [maxlength]="13"
+              [pattern]="patternRFC"
+            />
             <label htmlFor="rfc">RFC</label>
           </span>
           <p class="text-xs text-gray-500">
@@ -62,52 +103,102 @@
 
         <div class="field col-12 md:col-4 mb-5">
           <span class="p-float-label">
-            <p-calendar formControlName="fechaNacimiento" dateFormat="dd/mm/yy" styleClass="w-full" [minDate]="minDate"
-              [showIcon]="true" [maxDate]="maxDate" [readonlyInput]="true" [touchUI]="true"
-              [defaultDate]="maxDate"></p-calendar>
+            <p-calendar
+              formControlName="fechaNacimiento"
+              dateFormat="dd/mm/yy"
+              styleClass="w-full"
+              [minDate]="minDate"
+              [showIcon]="true"
+              [maxDate]="maxDate"
+              [readonlyInput]="true"
+              [touchUI]="true"
+              [defaultDate]="maxDate"
+            ></p-calendar>
             <label htmlFor="fechaNacimiento">Fecha Nacimiento</label>
           </span>
         </div>
         <div class="field col-12 md:col-4 mb-5">
           <span class="p-float-label">
-            <input pInputText id="correo" formControlName="correo" class="w-full lowercase" [email]="true"
-              [required]="true" [minlength]="10" [maxlength]="255" />
+            <input
+              pInputText
+              id="correo"
+              formControlName="correo"
+              class="w-full lowercase"
+              [email]="true"
+              [required]="true"
+              [minlength]="10"
+              [maxlength]="255"
+            />
             <label htmlFor="correo">Correo</label>
           </span>
         </div>
         <div class="field col-12 md:col-4 mb-5">
           <span class="p-float-label">
-            <p-password formControlName="password" [toggleMask]="true" class="input-password"
-              styleClass="w-full"></p-password>
+            <p-password
+              formControlName="password"
+              [toggleMask]="true"
+              class="input-password"
+              styleClass="w-full"
+            ></p-password>
             <label htmlFor="password">Password</label>
           </span>
         </div>
         <div class="field col-12 md:col-4 mb-5">
           <span class="p-float-label">
-            <p-dropdown [options]="estatus" formControlName="idStatus" [style]="{ width: '100%' }" [showClear]="true"
-              optionValue="idEstatus" optionLabel="nombre" [filter]="true" [required]="true"
-              [placeholder]="'Seleccione un estatus'">
+            <p-dropdown
+              [options]="estatus"
+              formControlName="idStatus"
+              [style]="{ width: '100%' }"
+              [showClear]="true"
+              optionValue="idEstatus"
+              optionLabel="nombre"
+              [filter]="true"
+              [required]="true"
+              [placeholder]="'Seleccione un estatus'"
+            >
             </p-dropdown>
             <label for="float-label">Estatus</label>
           </span>
         </div>
         <div class="field col-12 md:col-4 mb-5">
           <p-toast position="top-left"></p-toast>
-          <p-fileUpload name="image" chooseLabel="Seleccionar imagen" [showUploadButton]="false"
-            (onSelect)="onSelectFile($event)" [maxFileSize]="1000000" accept="image/*"></p-fileUpload>
+          <p-fileUpload
+            name="image"
+            chooseLabel="Seleccionar imagen"
+            [showUploadButton]="false"
+            (onSelect)="onSelectFile($event)"
+            [maxFileSize]="1000000"
+            accept="image/*"
+          ></p-fileUpload>
         </div>
         <div class="field col-12 md:col-4 mb-5" *ngIf="cliente.usuario.foto">
-          <p-image [src]="cliente.usuario.foto" alt="Image" width="250" [preview]="true"></p-image>
+          <p-image
+            [src]="cliente.usuario.foto"
+            alt="Image"
+            width="250"
+            [preview]="true"
+          ></p-image>
         </div>
       </div>
       <div class="flex flex-row justify-content-end">
         <div class="p-col-12 p-md-3 p-lg-3 mr-3">
-          <button pButton pRipple type="submit" label="Guardar"
-            class="p-button-success p-button-rounded p-button-outlined"></button>
+          <button
+            pButton
+            pRipple
+            type="submit"
+            label="Guardar"
+            class="p-button-success p-button-rounded p-button-outlined"
+          ></button>
         </div>
         <div class="p-col-12 p-md-3 p-lg-3">
-          <button pButton pRipple type="button" label="Cancelar" (click)="cancelar()"
-            class="p-button-danger p-button-rounded p-button-outlined"></button>
+          <button
+            pButton
+            pRipple
+            type="button"
+            label="Cancelar"
+            (click)="cancelar()"
+            class="p-button-danger p-button-rounded p-button-outlined"
+          ></button>
         </div>
       </div>
     </form>

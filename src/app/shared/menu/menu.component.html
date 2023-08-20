@@ -5,9 +5,9 @@
     <ng-template pTemplate="start">
       <div class="flex align-items-center px-5" style="height: 60px">
         <img
-          src="https://primefaces.org/cdn/primeng/images/primeng-logo-dark.svg"
+          src="assets/images/logo inicio.png"
           alt="Image"
-          height="30"
+          height="70"
           class="mr-5"
         />
         <button
@@ -16,9 +16,33 @@
           icon="pi pi-bars"
           class="p-mr-2 p-button-rounded p-button-text p-button-plain"
           (click)="onToggleSidebar()"
-          ></button>
+        ></button>
       </div>
-        <!-- label="Show" -->
+      <!-- label="Show" -->
+    </ng-template>
+    <ng-template pTemplate="end">
+      <div class="flex flex-row align-items-center">
+        <ng-container *ngIf="usuario; else elseTemplate">
+          <div>
+            <i class="pi pi-user"></i>
+            <span class="uppercase">{{ usuario.nombre }}</span>
+          </div>
+          <div>
+            <p-button
+              icon="pi pi-sign-out"
+              label="Salir"
+              (click)="logout()"
+              styleClass="p-button-rounded p-button-primary p-button-text p-button-outlined"
+            >
+            </p-button>
+          </div>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <div class="p-link layout-topbar-button">
+            <i class="pi pi-user"></i>
+          </div>
+        </ng-template>
+      </div>
     </ng-template>
   </p-menubar>
   <!-- <p-breadcrumb [model]="items"></p-breadcrumb> -->

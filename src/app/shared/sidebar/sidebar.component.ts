@@ -104,11 +104,11 @@ export class SidebarComponent implements OnInit {
             icon: 'fa fa-book fa-fw',
             routerLink: '/produccion/recetas',
           },
-          {
-            label: 'Unidades de Medida',
-            icon: 'fa fa-cutlery fa-fw',
-            routerLink: '/produccion/unidades-medida',
-          },
+          // {
+          //   label: 'Unidades de Medida',
+          //   icon: 'fa fa-cutlery fa-fw',
+          //   routerLink: '/produccion/unidades-medida',
+          // },
         ],
       },
       {
@@ -132,27 +132,27 @@ export class SidebarComponent implements OnInit {
           },
         ],
       },
-      {
-        label: 'Configuración',
-        icon: 'pi pi-fw pi-cog',
-        items: [
-          {
-            label: 'Roles',
-            icon: 'pi pi-fw pi-users',
-            routerLink: '/configuracion/roles',
-          },
-          {
-            label: 'Estatus',
-            icon: 'pi pi-fw pi-users',
-            routerLink: '/configuracion/estatus',
-          },
-          // {
-          //   label: 'Categorías',
-          //   icon: 'pi pi-fw pi-users',
-          //   routerLink: '/configuracion/categorias',
-          // }
-        ],
-      },
+      // {
+      //   label: 'Configuración',
+      //   icon: 'pi pi-fw pi-cog',
+      //   items: [
+      //     {
+      //       label: 'Roles',
+      //       icon: 'pi pi-fw pi-users',
+      //       routerLink: '/configuracion/roles',
+      //     },
+      //     {
+      //       label: 'Estatus',
+      //       icon: 'pi pi-fw pi-users',
+      //       routerLink: '/configuracion/estatus',
+      //     },
+      //     // {
+      //     //   label: 'Categorías',
+      //     //   icon: 'pi pi-fw pi-users',
+      //     //   routerLink: '/configuracion/categorias',
+      //     // }
+      //   ],
+      // },
     ];
 
     this.layoutSvc.sidebarVisible$.subscribe((value) => {

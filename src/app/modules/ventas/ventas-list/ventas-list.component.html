@@ -1,1 +1,114 @@
-<p>ventas-list works!</p>
+<p-card>
+  <ng-template pTemplate="header">
+    <div class="flex flex-row justify-content-between mx-5">
+      <div class="flex flex-row mt-3">
+        <div class="flex flex-column justify-content-center align-items-center">
+          <i class="pi pi-dollar text-2xl"></i>
+        </div>
+        <div class="flex flex-column justify-content-center">
+          <h1 class="text-xl font-bold">Ventas</h1>
+        </div>
+      </div>
+      <!-- <div class="flex flex-row mt-3 gap-2">
+        <div class="flex flex-column justify-content-center align-items-center">
+          <p-button
+            label="Nuevo"
+            icon="pi pi-plus"
+            styleClass="p-button-rounded p-button-success p-mr-2"
+            [routerLink]="['agregar']"
+          ></p-button>
+        </div>
+        <div class="flex flex-column justify-content-center align-items-center">
+          <p-button
+            label="Editar"
+            icon="pi pi-pencil"
+            styleClass="p-button-rounded p-button-warning"
+            [routerLink]="['editar', selectedVenta?.id]"
+            [disabled]="!selectedVenta"
+          ></p-button>
+        </div>
+        <div class="flex flex-column justify-content-center align-items-center">
+          <p-confirmDialog [style]="{ width: '50vw' }"></p-confirmDialog>
+          <p-button
+            label="Eliminar"
+            icon="pi pi-trash"
+            styleClass="p-button-rounded p-button-danger"
+            (click)="deleteVenta()"
+            [disabled]="!selectedVenta"
+          ></p-button>
+        </div>
+      </div> -->
+    </div>
+  </ng-template>
+  <p-toast position="top-left"></p-toast>
+  <p-table
+    #dt
+    [value]="ventas"
+    responsiveLayout="scroll"
+    [paginator]="true"
+    [rows]="10"
+    (onRowSelect)="onRowSelect($event)"
+    [globalFilterFields]="['id', 'usuarioNombre', 'fecha', 'total', 'idPedido']"
+    [responsive]="true"
+    [(selection)]="selectedVenta"
+    [rowHover]="true"
+    [totalRecords]="totalRecords"
+    [loading]="loading"
+    [rowsPerPageOptions]="[10, 25, 50]"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 1rem"></th>
+        <th pSortableColumn="id">Id<p-sortIcon field="id"></p-sortIcon></th>
+        <th pSortableColumn="usuarioNombre">
+          Usuario <p-sortIcon field="usuarioNombre"></p-sortIcon>
+        </th>
+        <th pSortableColumn="fecha">
+          Fecha venta <p-sortIcon field="fecha"></p-sortIcon>
+        </th>
+        <th pSortableColumn="total">
+          Total <p-sortIcon field="total"></p-sortIcon>
+        </th>
+        <th pSortableColumn="idPedido">
+          Pedido <p-sortIcon field="idPedido"></p-sortIcon>
+        </th>
+      </tr>
+      <tr>
+        <th style="width: 1rem"></th>
+        <th>
+          <p-columnFilter
+            matchMode="contains"
+            type="text"
+            field="id"
+          ></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="usuarioNombre"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="fecha"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="total"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter type="text" field="idPedido"></p-columnFilter>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-venta>
+      <tr>
+        <td>
+          <p-tableRadioButton [value]="venta"></p-tableRadioButton>
+        </td>
+        <td>{{ venta.id }}</td>
+        <td>{{ venta.usuarioNombre }}</td>
+        <td>{{ venta.fecha | date : "dd/MM/yyyy" }}</td>
+        <td>{{ venta.total | currency : "MXN" }}</td>
+        <td>
+          {{ venta.idPedido }}
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

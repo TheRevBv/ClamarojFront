@@ -1,0 +1,45 @@
+<div class="layout-topbar">
+  <a class="layout-topbar-logo" routerLink="">
+    <img src="assets/images/logo inicio.png" alt="logo" [width]="200" />
+    <!-- <span>ClamaROJ</span> -->
+  </a>
+
+  <button #menubutton class="p-link layout-menu-button layout-topbar-button">
+    <!-- (click)="layoutService.onMenuToggle()" -->
+    <i class="pi pi-bars"></i>
+  </button>
+
+  <button
+    #topbarmenubutton
+    class="p-link layout-topbar-menu-button layout-topbar-button"
+  >
+    <!-- (click)="layoutService.showProfileSidebar()" -->
+    <i class="pi pi-ellipsis-v"></i>
+  </button>
+
+  <div #topbarmenu class="layout-topbar-menu">
+    <div class="flex flex-row align-items-center">
+      <ng-container *ngIf="usuario; else elseTemplate">
+        <div>
+          <i class="pi pi-user"></i>
+          <span class="uppercase">{{ usuario.nombre }}</span>
+        </div>
+        <div>
+          <button
+            class="p-link layout-topbar-button"
+            (click)="logout()"
+            pRipple
+          >
+            <i class="pi pi-sign-out"></i>
+            <span>Salir</span>
+          </button>
+        </div>
+      </ng-container>
+      <ng-template #elseTemplate>
+        <div class="p-link layout-topbar-button">
+          <i class="pi pi-user"></i>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

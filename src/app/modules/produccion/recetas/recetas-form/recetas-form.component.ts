@@ -30,6 +30,7 @@ import { IngredientesService } from '@services/ingredientes.service';
 export class RecetasFormComponent implements OnInit, OnDestroy {
   recetaForm!: FormGroup;
   title = '';
+  activarIngrediente: boolean = false;
   tipoForm = '';
   ingredientes: any = [];
   estatus: Estatus[] = [];
@@ -128,9 +129,11 @@ export class RecetasFormComponent implements OnInit, OnDestroy {
     if (id) {
       this.title = 'Editar receta #' + id;
       this.tipoForm = 'E';
+      this.activarIngrediente = true;
       this.getReceta(id);
       this.getIngredientesByReceta(id);
     } else {
+      this.activarIngrediente = false;
       this.title = 'Registrar receta';
       this.tipoForm = 'N';
     }
