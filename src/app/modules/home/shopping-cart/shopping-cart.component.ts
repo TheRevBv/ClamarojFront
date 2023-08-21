@@ -186,8 +186,6 @@ export class ShoppingCartComponent implements OnInit {
         total: this.venta.total,
         detallesPedidos: this.detallesPedido,
       };
-
-      console.log(this.pedido);
       this.pedidosSvc.addPedido(this.pedido).subscribe(
         (data) => {
           console.log(data);
