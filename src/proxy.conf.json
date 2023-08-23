@@ -1,6 +1,6 @@
 {
   "/api/*": {
-      "target": "http://127.0.0.1:5031",
+      "target": "http://192.168.100.158:7092",
       "secure": false,
       "logLavel": "Debug"
   }

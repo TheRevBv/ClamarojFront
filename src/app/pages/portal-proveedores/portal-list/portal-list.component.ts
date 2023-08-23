@@ -103,7 +103,7 @@ export class PortalListComponent implements OnInit {
     //TODO: cambiar el id del usuario por el id del usuario logueado
     this.loading = true;
     setTimeout(() => {
-      this.pedidoSvc.getPedidosByIdUsuario(57).subscribe((res) => {
+      this.pedidoSvc.getPedidosByIdUsuario(idUsuario).subscribe((res) => {
         this.pedidos = res;
         this.loading = false;
       });

@@ -57,7 +57,7 @@ export class ProductoFormComponent implements OnInit {
     if (id) {
       this.title = `Editar producto ${id}`;
       this.productoSvc.getProducto(+id).subscribe((producto) => {
-        console.log(producto);
+        // console.log(producto);
         this.producto = producto;
         this.productoForm.patchValue({
           codigo: this.producto.codigo,
