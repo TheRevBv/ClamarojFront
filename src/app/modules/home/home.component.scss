@@ -1,4 +1,11 @@
+* {
+  box-sizing: border-box;
+}
 
+html {
+  height: 100%;
+  font-size: 14px;
+}
 
 @import url("https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css");
 body {
@@ -19,28 +26,28 @@ body {
 
 /* Table of Contents
 ==================================================
-# Global 
-# tr-breadcrumb 
-# Tr Topbar 
-# topbar-middle 
-# tr-menu 
-# Tr Banner 
-# tr-promotion 
-# tr-Products 
-# tr-cta 
-# daily-needs 
-# tr-convenience 
-# tr-brands 
-# Product Categories 
-# choices-option 
-# tr-color 
-# tr-size 
-# tr-pagination 
-# Details Page CSS 
-# Shopping Cart 
-# tr-account 
-# tr-footer 
-# Extra CSS 
+# Global
+# tr-breadcrumb
+# Tr Topbar
+# topbar-middle
+# tr-menu
+# Tr Banner
+# tr-promotion
+# tr-Products
+# tr-cta
+# daily-needs
+# tr-convenience
+# tr-brands
+# Product Categories
+# choices-option
+# tr-color
+# tr-size
+# tr-pagination
+# Details Page CSS
+# Shopping Cart
+# tr-account
+# tr-footer
+# Extra CSS
 
 
 ==================================================
@@ -1081,7 +1088,7 @@ select {
     position: relative;
     background-size: cover;
     background-image: url('/assets/logos/Clamaroj-2.png');
-    
+
 }
 
 .promotion-left .left-content {

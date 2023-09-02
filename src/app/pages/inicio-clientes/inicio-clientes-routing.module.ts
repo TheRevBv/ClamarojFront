@@ -5,8 +5,16 @@ import { InicioClientesComponent } from './inicio-clientes.component';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () =>
-      import('../../modules/home/home.module').then((m) => m.HomeModule),
+    component: InicioClientesComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('../../modules/home/home.module').then((m) => m.HomeModule),
+      },
+    ],
+    // loadChildren: () =>
+    //   import('../../modules/home/home.module').then((m) => m.HomeModule),
   },
   {
     path: '**',
