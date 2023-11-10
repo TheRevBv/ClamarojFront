@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IReceivedValue } from '@app/models/templete';
+import { IReceivedValue } from '@models/templete';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -10,7 +10,7 @@ export class SharedDataService {
     title: '',
     subtitle: '',
     text: '',
-    image: ''
+    image: '',
   });
 
   parentValue$ = this.parentValueSource.asObservable();

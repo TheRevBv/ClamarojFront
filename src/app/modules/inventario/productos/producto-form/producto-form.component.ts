@@ -78,6 +78,7 @@ export class ProductoFormComponent implements OnInit {
 
   getEstatus(): void {
     this.statusSvc.getEstatus().subscribe((data) => {
+      console.log(data);
       this.estatus = data;
     });
   }

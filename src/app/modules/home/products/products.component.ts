@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Articulos } from '@models/articulos';
-import { ApiService } from '@services/api.service';
+import { ProductosService } from '@services/productos.service';
+import { Producto } from '@models/productos';
 
 @Component({
   selector: 'app-products',
@@ -8,15 +8,15 @@ import { ApiService } from '@services/api.service';
   styleUrls: ['../home.component.scss'],
 })
 export class ProductsComponent implements OnInit {
-  list?: Articulos[];
-  constructor(private ApiService: ApiService) {}
+  list?: Producto[];
+  constructor(private productService: ProductosService) {}
 
   ngOnInit(): void {
     this.getArticulos();
   }
 
   getArticulos() {
-    this.ApiService.get('api/Productos').subscribe((item) => {
+    this.productService.getProductos().subscribe((item) => {
       this.list = item;
     });
   }

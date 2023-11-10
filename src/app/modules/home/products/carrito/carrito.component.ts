@@ -14,16 +14,20 @@ import { ToastrService } from 'ngx-toastr';
 export class CarritoComponent implements OnInit {
   @Input() carrito: Carrito[] = [];
   userLog: boolean = false;
-  cliente = {
-    id: '',
-    nombre: '',
-    apaterno: '',
-    amaterno: '',
-    email: '',
-    password: '',
+  cliente: Cliente = {
+    idCliente: 0,
     telefono: '',
     direccion: '',
-    status: 1,
+    usuario: {
+      id: 0,
+      nombre: '',
+      apellido: '',
+      correo: '',
+      password: '',
+      fechaNacimiento: new Date(1900, 0, 1),
+      idStatus: 0,
+      foto: '',
+    },
   };
 
   constructor(
@@ -36,19 +40,22 @@ export class CarritoComponent implements OnInit {
   ngOnInit(): void {
     this.clienteService.getProfile().then((r) => r);
 
-    let data = JSON.parse(this.clienteService.cliente);
+    let data = this.clienteService.cliente;
     if (!data) {
       this.userLog = false;
     } else {
       this.userLog = true;
-      this.cliente = data;
+      this.clienteService.getClienteByEmail(data.correo).subscribe((item) => {
+        this.cliente = item;
+      });
+      // this.cliente = data;
       this.getCarritoList();
     }
   }
 
   getCarritoList() {
     this.api
-      .get(`api/Carritos/cliente/${this.cliente.id}`)
+      .get(`api/Carritos/cliente/${this.cliente.idCliente}`)
       .subscribe((item) => {
         let { data } = item;
         this.carrito = data;

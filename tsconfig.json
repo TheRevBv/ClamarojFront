@@ -20,72 +20,27 @@
     "module": "ES2022",
     "useDefineForClassFields": false,
     "paths": {
-      "path": [
-        "node_modules/path-browserify"
-      ],
-      "os": [
-        "node_modules/os-browserify/browser"
-      ],
-      "fs": [
-        "node_modules/browserify-fs"
-      ],
-      "@modules/*": [
-        "src/app/modules/*"
-      ],
-      "@app/*": [
-        "src/app/*"
-      ],
-      "@components/*": [
-        "src/app/components/*"
-      ],
-      "@shared/*": [
-        "src/app/shared/*"
-      ],
-      "@primeng/*": [
-        "src/app/primeng/*"
-      ],
-      "@pages/*": [
-        "src/app/pages/*"
-      ],
-      "@services/*": [
-        "src/app/services/*"
-      ],
-      "@models/*": [
-        "src/app/models/*"
-      ],
-      "@pipes/*": [
-        "src/app/pipes/*"
-      ],
-      "@directives/*": [
-        "src/app/directives/*"
-      ],
-      "@guards/*": [
-        "src/app/guards/*"
-      ],
-      "@environments/*": [
-        "src/environments/*"
-      ],
-      "@assets/*": [
-        "src/assets/*"
-      ],
-      "@styles/*": [
-        "src/assets/styles/*"
-      ],
-      "@images/*": [
-        "src/assets/images/*"
-      ],
-      "@fonts/*": [
-        "src/assets/fonts/*"
-      ],
-      "@icons/*": [
-        "src/assets/icons/*"
-      ],
-      "@animations/*": [
-        "src/assets/animations/*"
-      ],
-      "@scripts/*": [
-        "src/assets/scripts/*"
-      ],
+      "path": ["node_modules/path-browserify"],
+      "os": ["node_modules/os-browserify/browser"],
+      "fs": ["node_modules/browserify-fs"],
+      "@modules/*": ["src/app/modules/*"],
+      "@components/*": ["src/app/components/*"],
+      "@shared/*": ["src/app/shared/*"],
+      "@primeng/*": ["src/app/primeng/*"],
+      "@pages/*": ["src/app/pages/*"],
+      "@services/*": ["src/app/services/*"],
+      "@models/*": ["src/app/models/*"],
+      "@pipes/*": ["src/app/pipes/*"],
+      "@directives/*": ["src/app/directives/*"],
+      "@guards/*": ["src/app/guards/*"],
+      "@environments/*": ["src/environments/*"],
+      "@assets/*": ["src/assets/*"],
+      "@styles/*": ["src/assets/styles/*"],
+      "@images/*": ["src/assets/images/*"],
+      "@fonts/*": ["src/assets/fonts/*"],
+      "@icons/*": ["src/assets/icons/*"],
+      "@animations/*": ["src/assets/animations/*"],
+      "@scripts/*": ["src/assets/scripts/*"]
     }
   },
   "angularCompilerOptions": {

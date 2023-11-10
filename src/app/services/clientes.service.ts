@@ -37,6 +37,10 @@ export class ClientesService {
     return this.http.delete<any>(`api/Clientes/${idCliente}`);
   }
 
+  getClienteByEmail(email: string): Observable<Cliente> {
+    return this.http.get<Cliente>(`api/Clientes/email/${email}`);
+  }
+
   //
 
   getCookie(key: string) {

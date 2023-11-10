@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { SharedDataService } from '../shared-data.service';
-import { IReceivedValue } from '@app/models/templete';
+import { IReceivedValue } from '@models/templete';
 
 @Component({
   selector: 'app-galeria',

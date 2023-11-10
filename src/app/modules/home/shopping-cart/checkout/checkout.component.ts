@@ -79,7 +79,11 @@ export class CheckoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let data = JSON.parse(this.clienteService.cliente);
+    const user = this.clienteService.cliente;
+    let data: Cliente | null = null;
+    this.clienteService.getClienteByEmail(user?.correo!).subscribe((item) => {
+      data = item;
+    });
     if (!data) {
       this.userLog = false;
     } else {

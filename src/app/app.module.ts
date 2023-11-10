@@ -10,7 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CookieModule } from 'ngx-cookie';
 import { ToastrModule } from 'ngx-toastr';
 
-import { AppRoutingModule } from '@app/app-routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { PrimeNgModule } from '@primeng/prime-ng.module';
 
 //Cambiar el locale de la app

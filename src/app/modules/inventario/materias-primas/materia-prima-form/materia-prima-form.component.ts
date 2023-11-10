@@ -12,8 +12,8 @@ import { MateriaPrima } from '@models/materiasprimas';
 import { Estatus } from '@models/estatus';
 import { MateriasPrimasService } from '@services/materiasprimas.service';
 import { ProveedoresService } from '@services/proveedores.service';
-import { EstatusService } from '@app/services/estatus.service';
-import { UnidadMedidaService } from '@app/services/unidad-medida.service';
+import { EstatusService } from '@services/estatus.service';
+import { UnidadMedidaService } from '@services/unidad-medida.service';
 import { MessageService } from 'primeng/api';
 
 @Component({

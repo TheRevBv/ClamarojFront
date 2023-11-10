@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TableLazyLoadEvent } from 'primeng/table';
 import { MateriaPrima } from '@models/materiasprimas';
-import { MateriasPrimasService } from '@app/services/materiasprimas.service';
+import { MateriasPrimasService } from '@services/materiasprimas.service';
 import {
   ConfirmationService,
   MessageService,

@@ -86,7 +86,9 @@ import { ActivatedRoute } from '@angular/router';
             <td>
               <p-tableCheckbox [value]="materia"></p-tableCheckbox>
             </td>
-            <td>{{ materia.nombre }}</td>
+            <td>
+              {{ materia.nombre }}
+            </td>
             <td>
               <img
                 [src]="materia.foto"
@@ -116,7 +118,7 @@ import { ActivatedRoute } from '@angular/router';
             <td>
               <p-tag
                 [value]="materia.estatus"
-                [severity]="getSeverity(materia.estatus.toLowerCase())"
+                [severity]="getSeverity(materia.estatus)"
               ></p-tag>
             </td>
           </tr>

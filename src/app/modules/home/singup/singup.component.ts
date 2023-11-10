@@ -6,10 +6,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Cliente } from '@app/models/clientes';
-import { Estatus } from '@app/models/estatus';
-import { ClientesService } from '@app/services/clientes.service';
-import { EstatusService } from '@app/services/estatus.service';
+import { Cliente } from '@models/clientes';
+import { Estatus } from '@models/estatus';
+import { ClientesService } from '@services/clientes.service';
+import { EstatusService } from '@services/estatus.service';
 import { MessageService } from 'primeng/api';
 
 @Component({

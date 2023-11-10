@@ -36,7 +36,7 @@ import { ValidateComponent } from './shopping-cart/validate/validate.component';
     // CheckoutComponent,
     ValidateComponent,
   ],
-  exports: [InicioComponent],
+  // exports: [InicioComponent],
   imports: [
     FormsModule,
     ReactiveFormsModule,

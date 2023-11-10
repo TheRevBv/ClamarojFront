@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 // import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { Producto } from '@app/models/productos';
+import { Producto } from '@models/productos';
 
 @Injectable({
   providedIn: 'root',

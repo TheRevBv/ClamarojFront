@@ -2,14 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '@services/api.service';
 import { Articulos } from '@models/articulos';
-import { ToastrService } from 'ngx-toastr';
+// import { ToastrService } from 'ngx-toastr';
+import { MessageService } from 'primeng/api';
 import { CarritoComponent } from '../carrito/carrito.component';
 import { ClientesService } from '@services/clientes.service';
+import { Cliente } from '@models/clientes';
 
 @Component({
   selector: 'app-prodet',
   templateUrl: './prodet.component.html',
   styleUrls: ['../../home.component.scss'],
+  providers: [MessageService],
 })
 export class ProdetComponent implements OnInit {
   public id: any;
@@ -29,7 +32,8 @@ export class ProdetComponent implements OnInit {
 
   constructor(
     private ApiService: ApiService,
-    private toastr: ToastrService,
+    // private toastr: ToastrService,
+    private messageSvc: MessageService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private clienteSvc: ClientesService
@@ -47,7 +51,12 @@ export class ProdetComponent implements OnInit {
         if (!item.message) {
           this.articulo = item;
         } else {
-          this.toastr.warning(item.message);
+          this.messageSvc.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: item.message,
+          });
+          this.router.navigate(['home/products']);
         }
       });
 
@@ -55,7 +64,11 @@ export class ProdetComponent implements OnInit {
         this.list = item;
       });
     } else {
-      this.toastr.error('No se encontro el producto!');
+      this.messageSvc.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'El id no es valido',
+      });
       this.router.navigate(['home/products']);
     }
   }
@@ -68,7 +81,13 @@ export class ProdetComponent implements OnInit {
 
     localStorage.setItem('cliente', JSON.stringify(data));
 
-    let cliente = JSON.parse(this.clienteSvc.cliente);
+    let usuarioCliente = this.clienteSvc.cliente!;
+    let cliente: Cliente | null = null;
+    this.clienteSvc
+      .getClienteByEmail(usuarioCliente.correo)
+      .subscribe((res) => {
+        cliente = res;
+      });
     console.log(cliente);
 
     if (cliente === null) {
@@ -86,9 +105,17 @@ export class ProdetComponent implements OnInit {
 
       this.ApiService.post(`api/Carritos`, shopdata).subscribe((item) => {
         if (!item.message) {
-          this.toastr.success('Se agrego al carrito');
+          this.messageSvc.add({
+            severity: 'success',
+            summary: 'Carrito',
+            detail: 'Se agrego al carrito',
+          });
         } else {
-          this.toastr.warning(item.message);
+          this.messageSvc.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: item.message,
+          });
         }
       });
     } else {

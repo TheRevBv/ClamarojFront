@@ -28,7 +28,10 @@ export class UsuariosService {
 
   login(data: Login): Observable<any> {
     return this.http.post<Login>(`/api/Auth/login`, data, {
-      headers: this.header,
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'X-CSRFToken': this.getCookie('csrftoken') || '',
+      }),
     });
   }
 

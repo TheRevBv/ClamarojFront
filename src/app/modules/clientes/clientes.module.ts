@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { PrimeNgModule } from '@app/primeng/prime-ng.module';
+import { PrimeNgModule } from '@primeng/prime-ng.module';
 
 import { ClientesRoutingModule } from './clientes-routing.module';
 import { ClientesListComponent } from './clientes-list/clientes-list.component';
