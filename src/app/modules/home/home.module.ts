@@ -18,6 +18,7 @@ import { InicioComponent } from './inicio/inicio.component';
 import { SingupComponent } from './singup/singup.component';
 // import { CheckoutComponent } from './shopping-cart/checkout/checkout.component';
 import { ValidateComponent } from './shopping-cart/validate/validate.component';
+import { PrimeNgModule } from '@primeng/prime-ng.module';
 // import { MainModule } from "@modules/main/main.module";
 
 @NgModule({
@@ -45,6 +46,7 @@ import { ValidateComponent } from './shopping-cart/validate/validate.component';
     FormsModule,
     NgOptimizedImage,
     RouterModule,
+    PrimeNgModule,
     // MainModule
   ],
 })

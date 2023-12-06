@@ -4,6 +4,7 @@ import { Cliente } from '@models/clientes';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie';
+import { Usuario } from '@models/usuarios';
 // import { environment } from '@environments/environment';
 
 @Injectable({
@@ -15,7 +16,7 @@ export class ClientesService {
     private router: Router,
     private cookie: CookieService
   ) {}
-  public cliente: any = null;
+  public cliente: Usuario | null = null;
 
   getClientes(params?: any): Observable<Cliente[]> {
     return this.http.get<Cliente[]>('api/Clientes', { params });
@@ -37,11 +38,9 @@ export class ClientesService {
     return this.http.delete<any>(`api/Clientes/${idCliente}`);
   }
 
-  getClienteByEmail(email: string): Observable<Cliente> {
-    return this.http.get<Cliente>(`api/Clientes/email/${email}`);
+  getClienteByUsuario(idUsuario: number): Observable<Cliente> {
+    return this.http.get<Cliente>(`api/Clientes/usuario/${idUsuario}`);
   }
-
-  //
 
   getCookie(key: string) {
     return this.cookie.get(key);
@@ -109,7 +108,7 @@ export class ClientesService {
 */
   async getProfile() {
     try {
-      this.cliente = localStorage.getItem('cliente');
+      this.cliente = JSON.parse(localStorage.getItem('cliente')!);
     } catch (error) {
       this.logout();
     }
@@ -119,6 +118,6 @@ export class ClientesService {
     localStorage.removeItem('token');
     localStorage.removeItem('cliente');
     this.cliente = null;
-    this.router.navigate(['/home/inicio']).then((r) => r);
+    this.router.navigate(['/inicio']).then((r) => r);
   }
 }

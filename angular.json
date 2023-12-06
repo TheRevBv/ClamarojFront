@@ -42,7 +42,12 @@
               "node_modules/primeflex/primeflex.css",
               "node_modules/font-awesome/css/font-awesome.min.css"
             ],
-            "scripts": ["node_modules/chart.js/dist/chart.js"]
+            "scripts": [
+              "node_modules/chart.js/dist/chart.js",
+              "node_modules/html2canvas/dist/html2canvas.min.js",
+              "node_modules/jspdf/dist/jspdf.es.min.js",
+              "node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js"
+            ]
           },
           "configurations": {
             "production": {

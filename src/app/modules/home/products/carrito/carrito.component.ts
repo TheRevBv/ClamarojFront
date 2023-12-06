@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Renderer2 } from '@angular/core';
 import { Carrito } from '@models/Carrito';
 import { Cliente } from '@models/clientes';
+import { Usuario } from '@models/usuarios';
 import { ApiService } from '@services/api.service';
 import { ClientesService } from '@services/clientes.service';
 import { ToastrService } from 'ngx-toastr';
@@ -14,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 export class CarritoComponent implements OnInit {
   @Input() carrito: Carrito[] = [];
   userLog: boolean = false;
+  user: Usuario | null = null;
   cliente: Cliente = {
     idCliente: 0,
     telefono: '',
@@ -39,16 +41,12 @@ export class CarritoComponent implements OnInit {
 
   ngOnInit(): void {
     this.clienteService.getProfile().then((r) => r);
-
-    let data = this.clienteService.cliente;
-    if (!data) {
-      this.userLog = false;
-    } else {
-      this.userLog = true;
-      this.clienteService.getClienteByEmail(data.correo).subscribe((item) => {
-        this.cliente = item;
-      });
-      // this.cliente = data;
+    this.userLog = this.clienteService.cliente ? true : false;
+    this.user = this.clienteService.cliente;
+    this.clienteService.getClienteByUsuario(this.user?.id!).subscribe((res) => {
+      this.cliente = res;
+    });
+    if (this.userLog) {
       this.getCarritoList();
     }
   }

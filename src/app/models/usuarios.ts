@@ -12,4 +12,5 @@ export interface Usuario {
   fechaRegistro?: Date;
   idStatus: number;
   roles?: Rol[];
+  idEstatus?: number;
 }

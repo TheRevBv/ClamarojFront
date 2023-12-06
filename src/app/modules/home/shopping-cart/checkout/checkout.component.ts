@@ -81,8 +81,8 @@ export class CheckoutComponent implements OnInit {
   ngOnInit(): void {
     const user = this.clienteService.cliente;
     let data: Cliente | null = null;
-    this.clienteService.getClienteByEmail(user?.correo!).subscribe((item) => {
-      data = item;
+    this.clienteService.getClienteByUsuario(user?.id!).subscribe((res) => {
+      data = res;
     });
     if (!data) {
       this.userLog = false;

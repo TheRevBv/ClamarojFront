@@ -25,6 +25,7 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   {
     path: 'products',
+    canActivateChild: [AuthClientesGuard],
     children: [
       { path: '', component: ProductsComponent },
       { path: 'show/:id', component: ProdetComponent },

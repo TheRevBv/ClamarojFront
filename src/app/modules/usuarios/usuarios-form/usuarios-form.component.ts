@@ -73,19 +73,18 @@ export class UsuariosFormComponent implements OnInit {
       this.title = `Editar usuario ${id}`;
       this.tipoForm = 'E';
       this.usuariosSvc.getUsuario(+id).subscribe((data) => {
-        // console.log(data);
         this.usuario = data;
         this.usuarioForm.patchValue({
-          nombre: this.usuario.nombre,
-          apellido: this.usuario.apellido,
-          correo: this.usuario.correo,
-          // password: this.usuario.password,
-          // password_confirmation: this.usuario.password,
-          foto: this.usuario.foto,
-          fechaNacimiento: new Date(this.usuario.fechaNacimiento!),
-          idStatus: this.usuario.idStatus,
-          // rols: this.usuario.roles?.map((rol) => rol.id),
-          roles: this.getRolesIds(this.usuario.roles!),
+          nombre: data.nombre,
+          apellido: data.apellido,
+          correo: data.correo,
+          // password: data.password,
+          // password_confirmation: data.password,
+          foto: data.foto,
+          fechaNacimiento: new Date(data.fechaNacimiento!),
+          idStatus: data.idEstatus,
+          // rols: data.roles?.map((rol) => rol.id),
+          roles: this.getRolesIds(data.roles!),
         });
       });
       // console.log(this.usuarioForm.value);

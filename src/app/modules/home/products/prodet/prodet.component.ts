@@ -7,6 +7,10 @@ import { MessageService } from 'primeng/api';
 import { CarritoComponent } from '../carrito/carrito.component';
 import { ClientesService } from '@services/clientes.service';
 import { Cliente } from '@models/clientes';
+import { ProductosService } from '@services/productos.service';
+import { Producto } from '@models/productos';
+import { Usuario } from '@models/usuarios';
+import { CarritosService } from '@services/carritos.service';
 
 @Component({
   selector: 'app-prodet',
@@ -15,25 +19,40 @@ import { Cliente } from '@models/clientes';
   providers: [MessageService],
 })
 export class ProdetComponent implements OnInit {
-  public id: any;
-  public user: any;
-  list?: Articulos[];
-
-  articulo: Articulos = {
-    codigo: '',
-    descripcion: '',
-    estatus: '',
-    foto: '',
-    idProducto: '',
-    merma: '',
+  id: any;
+  usuarioCliente: Usuario | null = null;
+  cliente: any = {
+    idCliente: 0,
     nombre: '',
-    precio: '',
+    apellido: '',
+    correo: '',
+    fechaNacimiento: new Date(),
+    foto: '',
+    idStatus: 0,
+    rfc: '',
+    direccion: '',
+    telefono: '',
+  };
+  productos: Producto[] = [];
+  producto: Producto = {
+    idProducto: 0,
+    nombre: '',
+    descripcion: '',
+    precio: 0,
+    codigo: '',
+    merma: 0,
+    foto: '',
+    idStatus: 0,
+    fechaRegistro: new Date(),
+    fechaModificacion: new Date(),
   };
 
   constructor(
-    private ApiService: ApiService,
+    // private ApiService: ApiService,
+    private carritosSvc: CarritosService,
     // private toastr: ToastrService,
     private messageSvc: MessageService,
+    private productosSvc: ProductosService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private clienteSvc: ClientesService
@@ -42,111 +61,89 @@ export class ProdetComponent implements OnInit {
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.params['id'];
     this.getArticulos();
+    this.usuarioCliente = this.clienteSvc.cliente;
+    if (this.usuarioCliente) {
+      this.getCliente();
+    }
   }
 
   getArticulos() {
     if (parseInt(this.id) && parseInt(this.id) > 0) {
       this.id = parseInt(this.id);
-      this.ApiService.get(`api/Productos/${this.id}`).subscribe((item) => {
-        if (!item.message) {
-          this.articulo = item;
-        } else {
-          this.messageSvc.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: item.message,
-          });
-          this.router.navigate(['home/products']);
-        }
-      });
-
-      this.ApiService.get('api/Productos').subscribe((item) => {
-        this.list = item;
+      this.productosSvc.getProducto(this.id).subscribe((res) => {
+        this.producto = res;
       });
     } else {
-      this.messageSvc.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'El id no es valido',
+      this.productosSvc.getProductos().subscribe((res) => {
+        this.productos = res;
       });
-      this.router.navigate(['home/products']);
     }
   }
 
+  getCliente() {
+    this.clienteSvc
+      .getClienteByUsuario(this.usuarioCliente?.id!)
+      .subscribe((res) => {
+        this.cliente = res;
+        console.log(this.cliente);
+      });
+  }
+
   addCarrito() {
-    let data = {
-      nombre: 'brian moreno',
-      apellido: 'brian moreno',
+    if (
+      this.usuarioCliente === null ||
+      this.usuarioCliente === undefined ||
+      this.cliente === null ||
+      this.cliente === undefined
+    ) {
+      this.messageSvc.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Es necesario iniciar sesión',
+      });
+      this.router.navigate([`inicio/singin`]);
+      return;
+    }
+    let carrito = {
+      idCarrito: 0,
+      idCliente: this.cliente.idCliente,
+      idProducto: this.producto.idProducto,
+      cantidad: 1,
     };
 
-    localStorage.setItem('cliente', JSON.stringify(data));
-
-    let usuarioCliente = this.clienteSvc.cliente!;
-    let cliente: Cliente | null = null;
-    this.clienteSvc
-      .getClienteByEmail(usuarioCliente.correo)
-      .subscribe((res) => {
-        cliente = res;
-      });
-    console.log(cliente);
-
-    if (cliente === null) {
-      console.log(cliente);
-
-      let clientedate = cliente as any;
-      let shopdata = {
-        idCarrito: 0,
-        idCliente: 1, // clientedate.id,
-        idProducto: this.articulo.idProducto,
-        cantidad: 1,
-      };
-
-      console.log(shopdata);
-
-      this.ApiService.post(`api/Carritos`, shopdata).subscribe((item) => {
-        if (!item.message) {
-          this.messageSvc.add({
-            severity: 'success',
-            summary: 'Carrito',
-            detail: 'Se agrego al carrito',
-          });
-        } else {
-          this.messageSvc.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: item.message,
-          });
-        }
-      });
-    } else {
-      alert('Es necesario iniciar sesión');
-      this.router.navigate([`inicio/singin`]);
-    }
+    this.carritosSvc.addCarrito(carrito).subscribe(
+      (res) => {
+        console.log(res);
+        this.messageSvc.add({
+          severity: 'success',
+          summary: 'Agregado',
+          detail: 'Producto agregado al carrito',
+        });
+        this.router.navigate([`inicio/shopping-cart`]);
+      },
+      (err) => {
+        console.log(err);
+        this.messageSvc.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Error al agregar producto al carrito',
+        });
+      }
+    );
   }
 
   showArticulo(id: any) {
     this.router.navigate([`inicio/products/show/${id}`]);
-    this.ApiService.get(`api/Productos/${id}`).subscribe((item) => {
-      if (!item.message) {
-        this.articulo = item;
-        window.scrollTo({ top: 250, behavior: 'smooth' });
-      } else {
-        alert(item.message);
-      }
+    this.productosSvc.getProducto(id).subscribe((res) => {
+      this.producto = res;
     });
   }
 
   getArticulosCarrito() {
-    // uri Carritos/cliente/1
-    let idCliente = 1;
-    this.ApiService.get(`api/Carritos/cliente/${idCliente}`).subscribe(
-      (item) => {
-        if (!item.message) {
-          this.articulo = item;
-        } else {
-          alert(item.message);
-        }
-      }
-    );
+    this.carritosSvc
+      .getCarritosCliente(this.cliente?.idCliente!)
+      .subscribe((res) => {
+        this.productos = res;
+      });
   }
 }

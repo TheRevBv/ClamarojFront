@@ -62,25 +62,25 @@ export class SinginComponent implements OnInit {
       (res) => {
         // console.log(res);
         let rol = res.usuario.roles.find(
-          (rol: Rol) => rol.nombre === 'Proveedor'
+          (rol: Rol) => rol.nombre === 'Cliente'
         );
         if (!rol) {
           this.messageSvc.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'No tienes permisos para acceder a este portal',
+            detail: 'No tienes permisos para acceder',
           });
           return;
         }
-        localStorage.setItem('access_token_proveedor', res.token);
-        localStorage.setItem('proveedor', JSON.stringify(res.usuario));
+        localStorage.setItem('access_token_cliente', res.token);
+        localStorage.setItem('cliente', JSON.stringify(res.usuario));
         setTimeout(() => {
           this.messageSvc.add({
             severity: 'success',
-            summary: 'Bienvenido al portal de proveedores de ClamaROJ',
+            summary: 'Bienvenido a ClamaROJ',
             detail: `Hola ${this.login.correo}`,
           });
-          this.router.navigate(['portal-proveedores']);
+          this.router.navigate(['/inicio']);
         }, 1000);
       },
       (err) => {

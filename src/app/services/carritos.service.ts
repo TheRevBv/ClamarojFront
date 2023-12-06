@@ -19,6 +19,12 @@ export class CarritosService {
     return this.http.get<any>(`api/carritos/cliente/${idCliente}`);
   }
 
+  addCarrito(carrito: any): Observable<any> {
+    return this.http.post<any>('api/Carritos', carrito, {
+      headers: this.header,
+    });
+  }
+
   getCookie(key: string): string | undefined {
     return this.cookie.get(key);
   }
