@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: 'inicio',
-    title: 'Inicio Clamaroj',
+    title: 'ClamaROJ',
     loadChildren: () =>
       import('@pages/inicio-clientes/inicio-clientes.module').then(
         (m) => m.InicioClientesModule

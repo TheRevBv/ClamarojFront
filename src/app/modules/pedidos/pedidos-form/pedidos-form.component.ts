@@ -99,6 +99,28 @@ export class PedidosFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  sendPedidoCliente() {
+    console.log(this.pedido.idPedido);
+
+    this.pedidosSvc.sendPedidoCliente(this.pedido).subscribe(
+      (data) => {
+        this.messageSvc.add({
+          severity: 'success',
+          summary: '¡Correcto!',
+          detail: `Pedido enviado correctamente`,
+        });
+        this.router.navigate(['admin', 'pedidos']);
+      },
+      (err) => {
+        this.messageSvc.add({
+          severity: 'error',
+          summary: '¡Error!',
+          detail: `Error al enviar el pedido`,
+        });
+      }
+    );
+  }
+
   createForm() {
     let fechaActual = new Date();
     this.maxDate = new Date(

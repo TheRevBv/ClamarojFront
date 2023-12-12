@@ -67,23 +67,26 @@
                 <i class="pi pi-cart-plus"></i> Mi Carrito</a
               >
             </li>
-            <li class="nav-item tr-dropdown">
-              <a class="nav-link" [routerLink]="['singin']">
-                <i class="pi pi-sign-in"></i> INICIAR SESIÓN
+            <!-- Cliente autenticado mostrar y ocultar  login, registro y logout -->
+            <li class="nav-item" *ngIf="isLogged">
+              <!-- Mostrar icono con inicial de nombre del cliente y  logout -->
+              <a class="nav-link" [routerLink]="['/']"
+                ><i class="pi pi-user"></i>
+                {{ cliente?.nombre }}
               </a>
-              <ul class="tr-dropdown-menu right">
-                <li>
-                  <a [routerLink]="['singin']">
-                    <i class="pi pi-user-plus"></i> LOGIN</a
-                  >
-                </li>
-                <li>
-                  <a [routerLink]="['singup']">
-                    <i class="pi pi-home"></i> REGISTRO</a
-                  >
-                </li>
-              </ul>
             </li>
+            <li class="nav-item" *ngIf="isLogged">
+              <a class="nav-link" [routerLink]="['singin']" (click)="logout()"
+                >Cerrar Sesión</a
+              >
+            </li>
+            <li class="nav-item" *ngIf="!isLogged">
+              <a class="nav-link" [routerLink]="['singin']">Iniciar Sesión</a>
+            </li>
+            <li class="nav-item" *ngIf="!isLogged">
+              <a class="nav-link" [routerLink]="['singup']">Registro</a>
+            </li>
+            <!-- Fin Cliente autenticado mostrar y ocultar  login, registro y logout -->
           </ul>
         </div>
       </div>

@@ -115,7 +115,7 @@ export class ClientesService {
   }
 
   logout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('access_token_cliente');
     localStorage.removeItem('cliente');
     this.cliente = null;
     this.router.navigate(['/inicio']).then((r) => r);

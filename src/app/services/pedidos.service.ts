@@ -78,6 +78,13 @@ export class PedidosService {
     });
   }
 
+  //actualizar pedido
+  sendPedidoCliente(pedido: Pedido): Observable<Pedido> {
+    return this.http.post<Pedido>(`api/pedidos/sendPedido/${pedido.idPedido}`, {
+      headers: this.header,
+    });
+  }
+
   getTipoPedido(): any[] {
     return this.tiposPedido;
   }
