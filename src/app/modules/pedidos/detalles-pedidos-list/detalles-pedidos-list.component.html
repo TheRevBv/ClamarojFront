@@ -1,0 +1,64 @@
+<!-- Tabla de detalles de pedido -->
+<div class="h-30rem">
+  <p-table
+    #dt1
+    [value]="detallesPedidos"
+    [paginator]="true"
+    [rows]="10"
+    [scrollable]="true"
+    scrollHeight="flex"
+    [resizableColumns]="true"
+    [columns]="cols"
+    [rowsPerPageOptions]="[5, 10, 25, 50]"
+  >
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+          {{ col.header }}
+          <p-sortIcon [field]="col.field"></p-sortIcon>
+        </th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-product let-columns="columns">
+      <tr>
+        <!-- <td *ngFor="let col of columns">
+          {{ product[col.field] }}
+        </td> -->
+        <td>
+          {{ product.idDetallePedido }}
+        </td>
+        <td>
+          {{ product.fecha | date : "dd/MM/yyyy" }}
+        </td>
+        <td>
+          {{ product.idPedido }}
+        </td>
+        <td>
+          {{ product.idProducto }}
+        </td>
+        <td>
+          {{ product.codigoProducto }}
+        </td>
+        <td>
+          {{ product.cantidad }}
+        </td>
+        <td>
+          {{ product.precioUnitario | currency : "MXN" : "symbol" : "1.2-2" }}
+        </td>
+        <td>
+          {{ product.subtotal | currency : "MXN" : "symbol" : "1.2-2" }}
+        </td>
+        <td>
+          <button
+            pButton
+            type="button"
+            icon="pi pi-trash"
+            class="p-button-rounded p-button-danger"
+          ></button>
+          <!-- (click)="deleteProduct(product)" -->
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

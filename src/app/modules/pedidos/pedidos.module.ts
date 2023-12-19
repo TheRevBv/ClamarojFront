@@ -7,9 +7,10 @@ import { PrimeNgModule } from '@primeng/prime-ng.module';
 import { PedidosRoutingModule } from './pedidos-routing.module';
 import { PedidosListComponent } from './pedidos-list/pedidos-list.component';
 import { PedidosFormComponent } from './pedidos-form/pedidos-form.component';
+import { DetallesPedidosListComponent } from './detalles-pedidos-list/detalles-pedidos-list.component';
 
 @NgModule({
-  declarations: [PedidosListComponent, PedidosFormComponent],
+  declarations: [PedidosListComponent, PedidosFormComponent, DetallesPedidosListComponent],
   imports: [
     CommonModule,
     PedidosRoutingModule,

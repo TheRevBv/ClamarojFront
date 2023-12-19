@@ -19,6 +19,7 @@ import { Pedido } from '@models/pedidos';
 import { Usuario } from '@models/usuarios';
 import { debounceTime } from 'rxjs';
 import { DetallePedido } from '@models/detallepedidos';
+import { DetallesPedidosService } from '@services/detalles-pedidos.service';
 
 @Component({
   selector: 'app-pedidos-form',
@@ -70,7 +71,8 @@ export class PedidosFormComponent implements OnInit, OnDestroy {
     private messageSvc: MessageService,
     private router: Router,
     private pedidosSvc: PedidosService,
-    private usuariosSvc: UsuariosService
+    private usuariosSvc: UsuariosService,
+    private detallesPedidosService: DetallesPedidosService
   ) {}
 
   ngOnInit(): void {
@@ -91,6 +93,7 @@ export class PedidosFormComponent implements OnInit, OnDestroy {
     this.getUsuarios();
     const id = this.route.snapshot.paramMap.get('id')!;
     this.getPedido(id);
+    this.getDetallesPedido(+id);
   }
 
   ngOnDestroy(): void {
@@ -99,9 +102,24 @@ export class PedidosFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  sendPedidoCliente() {
-    console.log(this.pedido.idPedido);
+  getDetallesPedido(idPedido: number) {
+    this.detallesPedidosService.getDetallesPedidos(idPedido).subscribe(
+      (data) => {
+        this.detallesPedido = data;
+        this.total =
+          this.detallesPedido
+            .map((detalle) => detalle.subtotal)
+            .reduce((a, b) => a + b, 0) * 1.16;
+        this.pedidoForm.controls['total'].setValue(this.total);
+        console.log('Detalles de pedido: ', this.detallesPedido);
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
 
+  sendPedidoCliente() {
     this.pedidosSvc.sendPedidoCliente(this.pedido).subscribe(
       (data) => {
         this.messageSvc.add({
@@ -240,6 +258,7 @@ export class PedidosFormComponent implements OnInit, OnDestroy {
       this.tipoForm = 'E';
       this.pedidosSvc.getPedido(+id).subscribe((data) => {
         this.pedido = data;
+        console.log(this.pedido);
         this.pedidoForm.patchValue({
           idUsuario: this.pedido.idUsuario,
           idStatus: this.pedido.idStatus,
@@ -363,6 +382,12 @@ export class PedidosFormComponent implements OnInit, OnDestroy {
       tipoPedido,
     } = this.pedidoForm.value;
 
+    // Sumar los subtotales de los detalles de pedido y al final asignar el total multiplicado por 1.16
+    let tot =
+      this.detallesPedido
+        .map((detalle) => detalle.subtotal)
+        .reduce((a, b) => a + b, 0) * 1.16;
+
     this.pedido = {
       idPedido: this.pedido.idPedido,
       idUsuario: idUsuario,
@@ -382,9 +407,11 @@ export class PedidosFormComponent implements OnInit, OnDestroy {
       tipoPago: tipoPago,
       tipoEnvio: tipoEnvio,
       tipoPedido: tipoPedido,
-      total: this.total,
+      total: Number(tot.toFixed(2)),
       detallesPedidos: this.detallesPedido,
     };
+
+    console.log(this.pedido);
 
     this.pedidosSvc.updatePedido(this.pedido).subscribe(
       (data) => {

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { DetallePedido } from '@models/detallepedidos';
+import { DetallePedido, DetallePedidoDto } from '@models/detallepedidos';
 import { CookieService } from 'ngx-cookie';
 import { Observable } from 'rxjs';
 
@@ -33,6 +33,19 @@ export class DetallesPedidosService {
       headers: this.header,
       params: params,
     });
+  }
+
+  getDetallesPedidosDto(
+    idPedido: number,
+    params?: any
+  ): Observable<DetallePedidoDto[]> {
+    return this.http.get<DetallePedidoDto[]>(
+      `/api/DetallePedidos/Dto/${idPedido}`,
+      {
+        headers: this.header,
+        params: params,
+      }
+    );
   }
 
   getDetallePedido(
