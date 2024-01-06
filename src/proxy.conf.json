@@ -2,7 +2,7 @@
   "/api/*": {
     // "target": "http://192.168.100.158:7092",
     // "target": "http://localhost:7092",
-    "target": "http://clamaroj-api.somee.com",
+    "target": "https://clamaroj-api.somee.com",
     "secure": false,
     "logLavel": "Debug"
   }
